@@ -27,7 +27,8 @@ func PostUser(c *gin.Context) {
 }
 
 func GetUser(c *gin.Context) {
-	if db.UserInstance == nil {
+	// db.UserInstance == nil 으로 처리하면 C -> D 시 메모리가 1회 할당되어 더이상 해당 값이 nil으로 출력되지 않습니다.
+	if len(db.UserInstance) == 0 {
 		c.JSON(http.StatusOK, gin.H{"message": "사용자 데이터가 없습니다."})
 		return
 	}
