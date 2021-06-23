@@ -9,14 +9,6 @@ import (
 	"github.com/parkgang/gin-mock-server-user/model"
 )
 
-func GetUser(c *gin.Context) {
-	if db.UserInstance == nil {
-		c.JSON(http.StatusOK, gin.H{"message": "저장된 데이터가 없습니다."})
-		return
-	}
-	c.JSON(http.StatusOK, db.UserInstance)
-}
-
 func PostUser(c *gin.Context) {
 	var req model.User
 
@@ -31,4 +23,12 @@ func PostUser(c *gin.Context) {
 
 	db.UserInstance = append(db.UserInstance, req)
 	fmt.Printf("%+v\n", req)
+}
+
+func GetUser(c *gin.Context) {
+	if db.UserInstance == nil {
+		c.JSON(http.StatusOK, gin.H{"message": "저장된 데이터가 없습니다."})
+		return
+	}
+	c.JSON(http.StatusOK, db.UserInstance)
 }
