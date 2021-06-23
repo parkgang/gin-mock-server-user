@@ -1,0 +1,15 @@
+@URL = http://localhost:8080
+
+###
+GET {{URL}}/ping
+
+###
+GET {{URL}}/
+
+###
+POST {{URL}}/
+
+{
+    "name": "kyungeun",
+    "arg": 99
+}
