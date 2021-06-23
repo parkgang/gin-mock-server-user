@@ -19,6 +19,7 @@ func main() {
 	r.POST("/", controller.PostUser)
 	r.GET("/", controller.GetUser)
 	r.PUT("/:id", controller.PutUser)
+	r.DELETE("/:id", controller.DeleteUser)
 
 	fmt.Println("gin server listen")
 	r.Run()

@@ -60,3 +60,21 @@ func PutUser(c *gin.Context) {
 
 	c.JSON(http.StatusBadRequest, gin.H{"message": "존재하지 않는 사용자 입니다."})
 }
+
+func DeleteUser(c *gin.Context) {
+	paramUserId := c.Param("id")
+	userId, err := strconv.ParseUint(paramUserId, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	for i, v := range db.UserInstance {
+		if v.Id == uint(userId) {
+			db.UserInstance = append(db.UserInstance[:i], db.UserInstance[i+1:]...)
+			return
+		}
+	}
+
+	c.JSON(http.StatusBadRequest, gin.H{"message": "존재하지 않는 사용자 입니다."})
+}

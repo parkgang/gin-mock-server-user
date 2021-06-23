@@ -21,3 +21,6 @@ PUT {{URL}}/2
     "name": "이름 변경",
     "arg": 123
 }
+
+###
+DELETE  {{URL}}/2
