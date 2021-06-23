@@ -4,12 +4,20 @@
 GET {{URL}}/ping
 
 ###
-GET {{URL}}/
-
-###
 POST {{URL}}/
 
 {
     "name": "kyungeun",
     "arg": 99
+}
+
+###
+GET {{URL}}/
+
+###
+PUT {{URL}}/2
+
+{
+    "name": "kyungeun",
+    "arg": 123
 }

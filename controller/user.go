@@ -3,6 +3,7 @@ package controller
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/parkgang/gin-mock-server-user/db"
@@ -31,4 +32,31 @@ func GetUser(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, db.UserInstance)
+}
+
+func PutUser(c *gin.Context) {
+	var req model.User
+
+	paramUserId := c.Param("id")
+	userId, err := strconv.ParseUint(paramUserId, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	err = c.BindJSON(&req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	for i, v := range db.UserInstance {
+		if v.Id == uint(userId) {
+			db.UserInstance[i].Name = req.Name
+			db.UserInstance[i].Arg = req.Arg
+			return
+		}
+	}
+
+	c.JSON(http.StatusBadRequest, gin.H{"message": "존재하지 않는 id 입니다"})
 }

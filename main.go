@@ -16,8 +16,9 @@ func main() {
 		})
 	})
 
-	r.GET("/", controller.GetUser)
 	r.POST("/", controller.PostUser)
+	r.GET("/", controller.GetUser)
+	r.PUT("/:id", controller.PutUser)
 
 	fmt.Println("gin server listen")
 	r.Run()
