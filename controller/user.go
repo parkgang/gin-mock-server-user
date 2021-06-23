@@ -28,7 +28,7 @@ func PostUser(c *gin.Context) {
 
 func GetUser(c *gin.Context) {
 	if db.UserInstance == nil {
-		c.JSON(http.StatusOK, gin.H{"message": "저장된 데이터가 없습니다."})
+		c.JSON(http.StatusOK, gin.H{"message": "사용자 데이터가 없습니다."})
 		return
 	}
 	c.JSON(http.StatusOK, db.UserInstance)
@@ -58,5 +58,5 @@ func PutUser(c *gin.Context) {
 		}
 	}
 
-	c.JSON(http.StatusBadRequest, gin.H{"message": "존재하지 않는 id 입니다"})
+	c.JSON(http.StatusBadRequest, gin.H{"message": "존재하지 않는 사용자 입니다."})
 }

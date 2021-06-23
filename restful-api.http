@@ -18,6 +18,6 @@ GET {{URL}}/
 PUT {{URL}}/2
 
 {
-    "name": "kyungeun",
+    "name": "이름 변경",
     "arg": 123
 }
