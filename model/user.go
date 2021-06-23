@@ -1,6 +1,7 @@
 package model
 
 type User struct {
-	Name string `json:"name"`
-	Arg  uint8  `json:"arg"`
+	Id   uint   `json:"id"`
+	Name string `json:"name" binding:"required"`
+	Arg  uint8  `json:"arg" binding:"required"`
 }

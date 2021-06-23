@@ -4,4 +4,7 @@ import (
 	"github.com/parkgang/gin-mock-server-user/model"
 )
 
-var UserInstance []model.User
+var (
+	UserAutoIncrement uint = 0
+	UserInstance      []model.User
+)
