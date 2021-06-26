@@ -9,6 +9,8 @@ import (
 )
 
 func main() {
+	const port string = ":8080"
+
 	r := gin.Default()
 
 	r.Use(cors.Default())
@@ -24,6 +26,6 @@ func main() {
 	r.PUT("/:id", controller.PutUser)
 	r.DELETE("/:id", controller.DeleteUser)
 
-	fmt.Println("gin server listen")
-	r.Run()
+	fmt.Printf("gin server listening at http://localhost%s\n", port)
+	r.Run(port)
 }
