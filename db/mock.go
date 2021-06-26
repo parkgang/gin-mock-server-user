@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/parkgang/gin-mock-server-user/model"
+	"github.com/parkgang/modern-board/model"
 )
 
 var (

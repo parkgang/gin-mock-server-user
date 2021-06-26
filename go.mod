@@ -1,4 +1,4 @@
-module github.com/parkgang/gin-mock-server-user
+module github.com/parkgang/modern-board
 
 go 1.16
 

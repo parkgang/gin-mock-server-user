@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/parkgang/gin-mock-server-user/controller"
+	"github.com/parkgang/modern-board/controller"
 )
 
 func main() {

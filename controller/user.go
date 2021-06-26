@@ -6,8 +6,8 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/parkgang/gin-mock-server-user/db"
-	"github.com/parkgang/gin-mock-server-user/model"
+	"github.com/parkgang/modern-board/db"
+	"github.com/parkgang/modern-board/model"
 )
 
 func PostUser(c *gin.Context) {
