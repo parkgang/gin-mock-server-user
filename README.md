@@ -1,9 +1,3 @@
 # modern-board
 
-Client Cache 테스트를 위한 mock server
-
-# mod
-
-```shell
-go mod init github.com/parkgang/modern-board
-```
+신세데 스텍을 활용한 모던 게시판
