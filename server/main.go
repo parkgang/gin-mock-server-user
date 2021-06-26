@@ -11,21 +11,23 @@ import (
 func main() {
 	const port string = ":8080"
 
-	r := gin.Default()
+	router := gin.Default()
 
-	r.Use(cors.Default())
+	router.Use(cors.Default())
 
-	r.GET("/ping", func(c *gin.Context) {
+	router.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",
 		})
 	})
 
-	r.POST("/", controller.PostUser)
-	r.GET("/", controller.GetUser)
-	r.PUT("/:id", controller.PutUser)
-	r.DELETE("/:id", controller.DeleteUser)
+	router.POST("/", controller.PostUser)
+	router.GET("/", controller.GetUser)
+	router.PUT("/:id", controller.PutUser)
+	router.DELETE("/:id", controller.DeleteUser)
+
+	router.Static("/", "../webapp")
 
 	fmt.Printf("gin server listening at http://localhost%s\n", port)
-	r.Run(port)
+	router.Run(port)
 }
