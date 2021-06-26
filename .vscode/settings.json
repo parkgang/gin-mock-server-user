@@ -1,1 +1,17 @@
-{}
+{
+  // json에 주석을 사용할 수 있도록 기본 포멧터 변경
+  "files.associations": {
+    "*.json": "jsonc"
+  },
+
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    // For ESLint
+    "source.fixAll.eslint": true
+  },
+
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
+  }
+}
