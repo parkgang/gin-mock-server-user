@@ -11,7 +11,13 @@ import { version } from "../package.json";
 
 import "./index.css";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+    },
+  },
+});
 
 console.log(`version: ${version}`);
 
