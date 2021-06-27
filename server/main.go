@@ -14,6 +14,8 @@ func main() {
 
 	router := gin.Default()
 
+	router.Use(cors.Default())
+
 	// SPA
 	{
 		const spaPath string = "../webapp/build"
@@ -26,16 +28,13 @@ func main() {
 		})
 	}
 
-	router.Use(cors.Default())
-
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-
 	api := router.Group("/api")
 	{
+		api.GET("/ping", func(c *gin.Context) {
+			c.JSON(200, gin.H{
+				"message": "pong",
+			})
+		})
 		api.POST("/", controller.PostUser)
 		api.GET("/", controller.GetUser)
 		api.PUT("/:id", controller.PutUser)
