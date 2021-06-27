@@ -1,14 +1,13 @@
 import axios, { AxiosInstance } from "axios";
 
-export default class ApiClient {
-  private readonly axios: AxiosInstance;
+const apiClient: AxiosInstance = axios.create({
+  baseURL: `http://localhost:8080/api`,
+  headers: {
+    "Content-Type": "application/json;charset=UTF-8",
+  },
+});
 
-  constructor() {
-    this.axios = axios.create({
-      baseURL: `${window.location.origin}/api`,
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
-  }
+export async function getUser() {
+  const { data } = await apiClient.get(`/`);
+  return data;
 }
