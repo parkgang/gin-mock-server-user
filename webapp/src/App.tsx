@@ -8,18 +8,24 @@ import Users from "./pages/Users";
 
 import { themeState } from "./states/fluentui-northstar";
 
+import AppLayout from "./components/AppLayout";
+import Header from "./components/Header";
+
 export default function App() {
   const theme = useRecoilValue(themeState);
 
   return (
     <FluentuiNorthstarProvider theme={theme}>
-      <Router>
-        <Switch>
-          <Route path="/about" component={About} />
-          <Route path="/users" component={Users} />
-          <Route path="/" component={Home} />
-        </Switch>
-      </Router>
+      <AppLayout>
+        <Router>
+          <Header />
+          <Switch>
+            <Route path="/about" component={About} />
+            <Route path="/users" component={Users} />
+            <Route path="/" component={Home} />
+          </Switch>
+        </Router>
+      </AppLayout>
     </FluentuiNorthstarProvider>
   );
 }
