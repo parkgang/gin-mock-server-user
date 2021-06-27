@@ -7,9 +7,13 @@ import reportWebVitals from "./reportWebVitals";
 
 import App from "./App";
 
+import { version } from "../package.json";
+
 import "./index.css";
 
 const queryClient = new QueryClient();
+
+console.log(`version: ${version}`);
 
 ReactDOM.render(
   <React.StrictMode>
