@@ -11,7 +11,7 @@ import {
 import { useSetRecoilState } from "recoil";
 import { useHistory } from "react-router-dom";
 
-import { themeState } from "../../states/fluentui-northstar";
+import { themeState } from "states/fluentui-northstar";
 
 export default function Header() {
   const setTheme = useSetRecoilState(themeState);
