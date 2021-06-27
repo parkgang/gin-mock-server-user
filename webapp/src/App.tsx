@@ -5,6 +5,7 @@ import { useRecoilValue } from "recoil";
 import About from "./pages/About";
 import Home from "./pages/Home";
 import Users from "./pages/Users";
+import NotFound from "./pages/NotFound";
 
 import { themeState } from "./states/fluentui-northstar";
 
@@ -20,9 +21,10 @@ export default function App() {
         <Router>
           <Header />
           <Switch>
-            <Route path="/about" component={About} />
-            <Route path="/users" component={Users} />
-            <Route path="/" component={Home} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/users" component={Users} />
+            <Route exact path="/" component={Home} />
+            <Route component={NotFound} />
           </Switch>
         </Router>
       </AppLayout>
