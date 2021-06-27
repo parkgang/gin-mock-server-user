@@ -1,4 +1,4 @@
-# core stack
+# Core Stack
 
 1. go1.16.3 darwin/amd64
 1. gin
