@@ -16,12 +16,13 @@ func main() {
 
 	// SPA
 	{
+		const spaPath string = "../webapp/build"
 		// 정적파일 서빙
-		router.Use(static.Serve("/", static.LocalFile("../webapp/build", true)))
+		router.Use(static.Serve("/", static.LocalFile(spaPath, true)))
 		// [CSR Router를 위함](https://github.com/gin-gonic/contrib/issues/90#issuecomment-286924994)
 		router.NoRoute(func(c *gin.Context) {
-			// 반드시 index.html 파일 경로로 지정해야합니다.
-			c.File("../webapp/build/index.html")
+			// CRA에서 "homepage": "./" 와 같이 경로를 지정하면 index.html 파일 경로까지 지정해야합니다.
+			c.File(spaPath)
 		})
 	}
 
