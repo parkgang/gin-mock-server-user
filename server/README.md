@@ -8,3 +8,10 @@
 ```shell
 go mod init github.com/parkgang/modern-board
 ```
+
+# swag
+
+```shell
+export PATH=$(go env GOPATH)/bin:$PATH
+swag i
+```
