@@ -39,6 +39,7 @@ func main() {
 	{
 		const spaPath string = "../webapp/build"
 		// 정적파일 서빙
+		// TODO: 캐쉬 헤더 추가해야함
 		router.Use(static.Serve("/", static.LocalFile(spaPath, true)))
 		// [CSR Router를 위함](https://github.com/gin-gonic/contrib/issues/90#issuecomment-286924994)
 		router.NoRoute(func(c *gin.Context) {
