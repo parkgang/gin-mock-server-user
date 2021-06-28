@@ -1,16 +1,55 @@
-basePath: /v2
-host: petstore.swagger.io
+definitions:
+  model.User:
+    properties:
+      arg:
+        example: 99
+        type: integer
+      name:
+        example: kyungeun
+        type: string
+    required:
+    - arg
+    - name
+    type: object
 info:
-  contact:
-    email: support@swagger.io
-    name: API Support
-    url: http://www.swagger.io/support
-  description: This is a sample server Petstore server.
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
-  title: Swagger Example API
-  version: "1.0"
-paths: {}
+  contact: {}
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: 사용자 정보를 반환합니다.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 사용자 정보 조회
+    post:
+      consumes:
+      - application/json
+      description: 사용자를 생성합니다.
+      parameters:
+      - description: 사용자 메타데이터
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 사용자 정보 생성
 swagger: "2.0"

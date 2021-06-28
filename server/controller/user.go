@@ -10,6 +10,14 @@ import (
 	"github.com/parkgang/modern-board/model"
 )
 
+// @Summary 사용자 정보 생성
+// @Description 사용자를 생성합니다.
+// @Accept json
+// @Produce json
+// @Param data body model.User true "사용자 메타데이터"
+// @Success 200
+// @Failure 500 {string} err.Error()
+// @Router / [post]
 func PostUser(c *gin.Context) {
 	var req model.User
 
@@ -26,6 +34,13 @@ func PostUser(c *gin.Context) {
 	fmt.Printf("%+v\n", req)
 }
 
+// @Summary 사용자 정보 조회
+// @Description 사용자 정보를 반환합니다.
+// @Accept json
+// @Produce json
+// @Success 200 {object} model.User
+// @Failure 500 {string} err.Error()
+// @Router / [get]
 func GetUser(c *gin.Context) {
 	// db.UserInstance == nil 으로 처리하면 C -> D 시 메모리가 1회 할당되어 더이상 해당 값이 nil으로 출력되지 않습니다.
 	if len(db.UserInstance) == 0 {

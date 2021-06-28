@@ -7,28 +7,17 @@ import (
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/parkgang/modern-board/controller"
-	_ "github.com/parkgang/modern-board/docs"
+	"github.com/parkgang/modern-board/docs"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// @title Swagger Example API
-// @version 1.0
-// @description This is a sample server Petstore server.
-// @termsOfService http://swagger.io/terms/
+const (
+	version string = "0.1.0"
+	port    string = ":8080"
+)
 
-// @contact.name API Support
-// @contact.url http://www.swagger.io/support
-// @contact.email support@swagger.io
-
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
-
-// @host petstore.swagger.io
-// @BasePath /v2
 func main() {
-	const port string = ":8080"
-
 	router := gin.Default()
 
 	router.Use(cors.Default())
@@ -60,6 +49,13 @@ func main() {
 
 	// Swagger
 	{
+		docs.SwaggerInfo.Title = "modern-board example API"
+		docs.SwaggerInfo.Description = "사용자 데이터를 관리할 수 있는 API를 제공합니다."
+		docs.SwaggerInfo.Version = version
+		docs.SwaggerInfo.Host = fmt.Sprintf("localhost%s", port)
+		docs.SwaggerInfo.BasePath = "/api"
+		docs.SwaggerInfo.Schemes = []string{"http"}
+
 		url := ginSwagger.URL(fmt.Sprintf("http://localhost%s/swagger/doc.json", port))
 		router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 	}
