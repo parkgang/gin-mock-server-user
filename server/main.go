@@ -9,16 +9,19 @@ import (
 	_ "github.com/parkgang/modern-board/config"
 	"github.com/parkgang/modern-board/controller"
 	"github.com/parkgang/modern-board/docs"
+	_ "github.com/parkgang/modern-board/mysql"
+	"github.com/spf13/viper"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 const (
 	version string = "0.1.0"
-	port    string = ":8080"
 )
 
 func main() {
+	port := viper.GetString("server.port")
+
 	router := gin.Default()
 
 	router.Use(cors.Default())
@@ -56,7 +59,7 @@ func main() {
 		docs.SwaggerInfo.Version = version
 		docs.SwaggerInfo.Host = fmt.Sprintf("localhost%s", port)
 		docs.SwaggerInfo.BasePath = "/api"
-		docs.SwaggerInfo.Schemes = []string{"http"}
+		docs.SwaggerInfo.Schemes = []string{"http", "https"}
 
 		url := ginSwagger.URL(fmt.Sprintf("http://localhost%s/swagger/doc.json", port))
 		router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))

@@ -26,25 +26,31 @@ var doc = `{
     "paths": {
         "/": {
             "get": {
-                "description": "사용자 정보를 반환합니다.",
+                "description": "전체 사용자 정보를 반환합니다.",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "사용자 정보 조회",
+                "tags": [
+                    "User"
+                ],
+                "summary": "전체 사용자 정보 조회",
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.User"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.User"
+                            }
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/model.ErrResponse"
                         }
                     }
                 }
@@ -56,6 +62,9 @@ var doc = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "User"
                 ],
                 "summary": "사용자 정보 생성",
                 "parameters": [
@@ -84,6 +93,14 @@ var doc = `{
         }
     },
     "definitions": {
+        "model.ErrResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
         "model.User": {
             "type": "object",
             "required": [

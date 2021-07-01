@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/parkgang/modern-board/db"
 	"github.com/parkgang/modern-board/model"
+	"github.com/parkgang/modern-board/mysql"
 )
 
 // @Summary 사용자 정보 생성
@@ -35,21 +36,26 @@ func PostUser(c *gin.Context) {
 	fmt.Printf("%+v\n", req)
 }
 
-// @Summary 사용자 정보 조회
-// @Description 사용자 정보를 반환합니다.
+// @Summary 전체 사용자 정보 조회
+// @Description 전체 사용자 정보를 반환합니다.
 // @Tags User
 // @Accept json
 // @Produce json
-// @Success 200 {object} model.User
-// @Failure 500 {string} err.Error()
+// @Success 200 {object} []model.User
+// @Failure 500 {object} model.ErrResponse
 // @Router / [get]
 func GetUser(c *gin.Context) {
-	// db.UserInstance == nil 으로 처리하면 C -> D 시 메모리가 1회 할당되어 더이상 해당 값이 nil으로 출력되지 않습니다.
-	if len(db.UserInstance) == 0 {
-		c.JSON(http.StatusOK, gin.H{"message": "사용자 데이터가 없습니다."})
+	users := []model.User{}
+
+	err := mysql.Client.Find(&users)
+	if err.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error.Error(),
+		})
 		return
 	}
-	c.JSON(http.StatusOK, db.UserInstance)
+
+	c.JSON(http.StatusOK, users)
 }
 
 func PutUser(c *gin.Context) {

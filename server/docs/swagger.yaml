@@ -1,4 +1,9 @@
 definitions:
+  model.ErrResponse:
+    properties:
+      message:
+        type: string
+    type: object
   model.User:
     properties:
       arg:
@@ -18,19 +23,23 @@ paths:
     get:
       consumes:
       - application/json
-      description: 사용자 정보를 반환합니다.
+      description: 전체 사용자 정보를 반환합니다.
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.User'
+            items:
+              $ref: '#/definitions/model.User'
+            type: array
         "500":
           description: Internal Server Error
           schema:
-            type: string
-      summary: 사용자 정보 조회
+            $ref: '#/definitions/model.ErrResponse'
+      summary: 전체 사용자 정보 조회
+      tags:
+      - User
     post:
       consumes:
       - application/json
@@ -52,4 +61,6 @@ paths:
           schema:
             type: string
       summary: 사용자 정보 생성
+      tags:
+      - User
 swagger: "2.0"
