@@ -12,6 +12,7 @@ import (
 
 // @Summary 사용자 정보 생성
 // @Description 사용자를 생성합니다.
+// @Tags User
 // @Accept json
 // @Produce json
 // @Param data body model.User true "사용자 메타데이터"
@@ -36,6 +37,7 @@ func PostUser(c *gin.Context) {
 
 // @Summary 사용자 정보 조회
 // @Description 사용자 정보를 반환합니다.
+// @Tags User
 // @Accept json
 // @Produce json
 // @Success 200 {object} model.User

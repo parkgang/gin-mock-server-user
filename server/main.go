@@ -6,6 +6,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
+	_ "github.com/parkgang/modern-board/config"
 	"github.com/parkgang/modern-board/controller"
 	"github.com/parkgang/modern-board/docs"
 	swaggerFiles "github.com/swaggo/files"
