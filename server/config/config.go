@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 
+	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 )
 
@@ -20,8 +21,10 @@ func init() {
 		panic("GO_ENV 값이 지정되지 않았습니다.")
 	case development:
 		viper.SetConfigName("config.dev")
+		gin.SetMode(gin.DebugMode)
 	case production:
 		viper.SetConfigName("config.prod")
+		gin.SetMode(gin.ReleaseMode)
 	default:
 		panic("알려지지 않은 GO_ENV 값 입니다.")
 	}
