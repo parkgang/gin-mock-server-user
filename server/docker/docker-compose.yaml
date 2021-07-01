@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  mysql:
+    build: .
+    image: "mysql-modern-board"
+    container_name: "dev-mysql-modern-board"
+    volumes:
+      - "./mysql-data:/var/lib/mysql"
+    ports:
+      - 3306:3306
