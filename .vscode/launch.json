@@ -9,7 +9,10 @@
       "type": "go",
       "request": "launch",
       "mode": "auto",
-      "program": "${workspaceFolder}/server"
+      "program": "${workspaceFolder}/server",
+      "env": {
+        "GO_ENV": "development"
+      }
     },
     {
       "name": "CRA Webpack Dev Server",
