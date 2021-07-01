@@ -1,1 +1,4 @@
 __debug_bin
+
+# docker
+docker/mysql-data/
