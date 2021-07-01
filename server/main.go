@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/contrib/static"
@@ -65,6 +66,6 @@ func main() {
 		router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 	}
 
-	fmt.Printf("gin server listening at http://localhost%s\n", port)
+	log.Printf("gin server listening at http://localhost%s\n", port)
 	router.Run(port)
 }

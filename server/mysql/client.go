@@ -26,13 +26,13 @@ func init() {
 	log.Println("mysql connection...")
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic("DB 연결에 실패하였습니다.\n\t" + err.Error())
+		log.Panic("DB 연결에 실패하였습니다.\n\t" + err.Error())
 	}
 
 	log.Println("mysql migration...")
 	err = db.AutoMigrate(&model.User{})
 	if err != nil {
-		panic("DB 마이그레이션에 실패하였습니다.\n\t" + err.Error())
+		log.Panic("DB 마이그레이션에 실패하였습니다.\n\t" + err.Error())
 	}
 
 	log.Printf("mysql starting at %s\n", dsn)
