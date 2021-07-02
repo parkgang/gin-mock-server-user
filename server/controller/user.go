@@ -60,6 +60,41 @@ func GetAllUser(c *gin.Context) {
 	c.JSON(http.StatusOK, users)
 }
 
+// @Summary 사용자 조회
+// @Description 사용자 정보를 반환합니다.
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param id path int true "사용자 id"
+// @Success 200 {object} model.User
+// @Failure 500 {object} model.ErrResponse
+// @Router /{id} [get]
+func GetUser(c *gin.Context) {
+	paramUserId := c.Param("id")
+
+	userId, err := common.ConvertStringToUint(paramUserId)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	users := model.User{
+		Id: userId,
+	}
+
+	result := mysql.Client.First(&users)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": result.Error.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, users)
+}
+
 // @Summary 사용자 수정
 // @Description 사용자 정보를 수정합니다.
 // @Tags User

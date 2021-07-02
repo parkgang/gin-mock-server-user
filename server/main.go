@@ -37,6 +37,7 @@ func main() {
 		})
 		api.POST("/", controller.PostUser)
 		api.GET("/", controller.GetAllUser)
+		api.GET("/:id", controller.GetUser)
 		api.PUT("/:id", controller.PutUser)
 		api.DELETE("/:id", controller.DeleteUser)
 	}

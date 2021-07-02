@@ -92,6 +92,42 @@ var doc = `{
             }
         },
         "/{id}": {
+            "get": {
+                "description": "사용자 정보를 반환합니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "사용자 조회",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "사용자 id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrResponse"
+                        }
+                    }
+                }
+            },
             "put": {
                 "description": "사용자 정보를 수정합니다.",
                 "consumes": [
