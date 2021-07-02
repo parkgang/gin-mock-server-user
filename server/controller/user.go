@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -18,22 +17,26 @@ import (
 // @Produce json
 // @Param data body model.User true "사용자 메타데이터"
 // @Success 200
-// @Failure 500 {string} err.Error()
+// @Failure 500 {object} model.ErrResponse
 // @Router / [post]
 func PostUser(c *gin.Context) {
-	var req model.User
+	user := model.User{}
 
-	err := c.BindJSON(&req)
+	err := c.BindJSON(&user)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
 		return
 	}
 
-	req.Id = db.UserAutoIncrement
-	db.UserAutoIncrement++
-
-	db.UserInstance = append(db.UserInstance, req)
-	fmt.Printf("%+v\n", req)
+	result := mysql.Client.Create(&user)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": result.Error.Error(),
+		})
+		return
+	}
 }
 
 // @Summary 전체 사용자 정보 조회
@@ -47,10 +50,10 @@ func PostUser(c *gin.Context) {
 func GetUser(c *gin.Context) {
 	users := []model.User{}
 
-	err := mysql.Client.Find(&users)
-	if err.Error != nil {
+	result := mysql.Client.Find(&users)
+	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": err.Error.Error(),
+			"message": result.Error.Error(),
 		})
 		return
 	}
