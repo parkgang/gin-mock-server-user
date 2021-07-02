@@ -17,7 +17,7 @@ import (
 // @Param data body model.User true "사용자 메타데이터"
 // @Success 200
 // @Failure 500 {object} model.ErrResponse
-// @Router / [post]
+// @Router /users [post]
 func PostUser(c *gin.Context) {
 	user := model.User{}
 
@@ -45,7 +45,7 @@ func PostUser(c *gin.Context) {
 // @Produce json
 // @Success 200 {object} []model.User
 // @Failure 500 {object} model.ErrResponse
-// @Router / [get]
+// @Router /users [get]
 func GetAllUser(c *gin.Context) {
 	users := []model.User{}
 
@@ -68,7 +68,7 @@ func GetAllUser(c *gin.Context) {
 // @Param id path int true "사용자 id"
 // @Success 200 {object} model.User
 // @Failure 500 {object} model.ErrResponse
-// @Router /{id} [get]
+// @Router /users/{id} [get]
 func GetUser(c *gin.Context) {
 	paramUserId := c.Param("id")
 
@@ -104,7 +104,7 @@ func GetUser(c *gin.Context) {
 // @Param data body model.User true "사용자 메타데이터"
 // @Success 200
 // @Failure 500 {object} model.ErrResponse
-// @Router /{id} [put]
+// @Router /users/{id} [put]
 func PutUser(c *gin.Context) {
 	user := model.User{}
 
@@ -151,7 +151,7 @@ func PutUser(c *gin.Context) {
 // @Produce json
 // @Success 200
 // @Failure 500 {object} model.ErrResponse
-// @Router / [delete]
+// @Router /users [delete]
 func DeleteAllUser(c *gin.Context) {
 	result := mysql.Client.Where("1 = 1").Delete(&model.User{})
 	if result.Error != nil {
@@ -170,7 +170,7 @@ func DeleteAllUser(c *gin.Context) {
 // @Param id path int true "사용자 id"
 // @Success 200
 // @Failure 500 {object} model.ErrResponse
-// @Router /{id} [delete]
+// @Router /users/{id} [delete]
 func DeleteUser(c *gin.Context) {
 	paramUserId := c.Param("id")
 

@@ -12,10 +12,13 @@ func Use(api *gin.RouterGroup) {
 			"message": "pong",
 		})
 	})
-	api.POST("/", controller.PostUser)
-	api.GET("/", controller.GetAllUser)
-	api.GET("/:id", controller.GetUser)
-	api.PUT("/:id", controller.PutUser)
-	api.DELETE("/", controller.DeleteAllUser)
-	api.DELETE("/:id", controller.DeleteUser)
+	users := api.Group("/users")
+	{
+		users.POST("/", controller.PostUser)
+		users.GET("/", controller.GetAllUser)
+		users.GET("/:id", controller.GetUser)
+		users.PUT("/:id", controller.PutUser)
+		users.DELETE("/", controller.DeleteAllUser)
+		users.DELETE("/:id", controller.DeleteUser)
+	}
 }
