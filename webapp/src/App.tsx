@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Provider as FluentuiNorthstarProvider } from "@fluentui/react-northstar";
 import { useRecoilValue } from "recoil";
+import { Provider as FluentuiNorthstarProvider } from "@fluentui/react-northstar";
 
 import About from "pages/About";
 import Home from "pages/Home";
@@ -10,7 +10,7 @@ import NotFound from "pages/NotFound";
 import { themeState } from "states/fluentui-northstar";
 
 import AppLayout from "components/AppLayout";
-import Header from "components/Header";
+import Header from "components/Gnb";
 
 export default function App() {
   const theme = useRecoilValue(themeState);
