@@ -1,26 +1,32 @@
 @URL = http://localhost:8080/api
 
-###
+### Server Health Check
 GET {{URL}}/ping
 
-###
-POST {{URL}}/
+### 사용자 생성
+POST {{URL}}/users
 
 {
     "name": "kyungeun",
     "arg": 99
 }
 
-###
-GET {{URL}}/
+### 전체 사용자 조회
+GET {{URL}}/users
 
-###
-PUT {{URL}}/2
+### 사용자 조회
+GET {{URL}}/users/1
+
+### 사용자 수정
+PUT {{URL}}/users/1
 
 {
     "name": "이름 변경",
     "arg": 123
 }
 
-###
-DELETE  {{URL}}/2
+### 전체 사용자 삭제
+DELETE  {{URL}}/users
+
+### 사용자 삭제
+DELETE  {{URL}}/users/1
