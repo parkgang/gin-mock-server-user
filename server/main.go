@@ -8,9 +8,9 @@ import (
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	_ "github.com/parkgang/modern-board/config"
-	"github.com/parkgang/modern-board/controller"
 	"github.com/parkgang/modern-board/docs"
 	_ "github.com/parkgang/modern-board/mysql"
+	apiRouter "github.com/parkgang/modern-board/router"
 	"github.com/spf13/viper"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -25,22 +25,13 @@ func main() {
 
 	router := gin.Default()
 
+	// CORS
 	router.Use(cors.Default())
 
+	// API
 	api := router.Group("/api")
 	{
-		// TODO: swaager 문서 등록
-		api.GET("/ping", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"message": "pong",
-			})
-		})
-		api.POST("/", controller.PostUser)
-		api.GET("/", controller.GetAllUser)
-		api.GET("/:id", controller.GetUser)
-		api.PUT("/:id", controller.PutUser)
-		api.DELETE("/", controller.DeleteAllUser)
-		api.DELETE("/:id", controller.DeleteUser)
+		apiRouter.Use(api)
 	}
 
 	// SPA
