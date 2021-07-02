@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { Provider as FluentuiNorthstarProvider } from "@fluentui/react-northstar";
 
 import About from "pages/About";
@@ -28,6 +29,7 @@ export default function App() {
           </Switch>
         </Router>
       </AppLayout>
+      <ReactQueryDevtools initialIsOpen={false} />
     </FluentuiNorthstarProvider>
   );
 }
