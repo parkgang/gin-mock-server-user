@@ -7,6 +7,6 @@ export type User = {
 };
 
 export async function getUser() {
-  const { data } = await client.get<User>(`/`);
+  const { data } = await client.get<User[]>(`/users`);
   return data;
 }
