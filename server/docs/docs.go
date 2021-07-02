@@ -90,6 +90,41 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/{id}": {
+            "delete": {
+                "description": "사용자를 삭제합니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "사용자 삭제",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "사용자 id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {

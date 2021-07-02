@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/parkgang/modern-board/common"
 	"github.com/parkgang/modern-board/db"
 	"github.com/parkgang/modern-board/model"
 	"github.com/parkgang/modern-board/mysql"
@@ -88,20 +89,41 @@ func PutUser(c *gin.Context) {
 	c.JSON(http.StatusBadRequest, gin.H{"message": "존재하지 않는 사용자 입니다."})
 }
 
+// @Summary 사용자 삭제
+// @Description 사용자를 삭제합니다.
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param id path int true "사용자 id"
+// @Success 200
+// @Failure 500 {object} model.ErrResponse
+// @Router /{id} [delete]
 func DeleteUser(c *gin.Context) {
 	paramUserId := c.Param("id")
-	userId, err := strconv.ParseUint(paramUserId, 10, 32)
+
+	userId, err := common.ConvertStringToUint(paramUserId)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
 		return
 	}
 
-	for i, v := range db.UserInstance {
-		if v.Id == uint(userId) {
-			db.UserInstance = append(db.UserInstance[:i], db.UserInstance[i+1:]...)
-			return
-		}
+	user := model.User{}
+
+	result := mysql.Client.First(&user, userId)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": result.Error.Error(),
+		})
+		return
 	}
 
-	c.JSON(http.StatusBadRequest, gin.H{"message": "존재하지 않는 사용자 입니다."})
+	result = mysql.Client.Delete(&user, userId)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": result.Error.Error(),
+		})
+		return
+	}
 }
