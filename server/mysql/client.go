@@ -23,13 +23,13 @@ func init() {
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", mysqlUser, mysqlPass, mysqlHost, mysqlPort, mysqlDbname)
 
-	log.Println("mysql connection...")
+	log.Println("mysql 연결 중...")
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Panic("DB 연결에 실패하였습니다.\n\t" + err.Error())
 	}
 
-	log.Println("mysql migration...")
+	log.Println("mysql 마이그레이션 중...")
 	err = db.AutoMigrate(&model.User{})
 	if err != nil {
 		log.Panic("DB 마이그레이션에 실패하였습니다.\n\t" + err.Error())
