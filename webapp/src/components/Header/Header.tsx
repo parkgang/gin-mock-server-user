@@ -22,6 +22,7 @@ function Header() {
     <>
       <Flex gap="gap.small" space="between" vAlign="center">
         <Menu
+          defaultActiveIndex={0}
           style={{
             height: "2.3rem",
           }}
