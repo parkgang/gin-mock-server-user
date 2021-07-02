@@ -9,8 +9,8 @@ import (
 	"github.com/parkgang/modern-board/mysql"
 )
 
-// @Summary 사용자 정보 생성
-// @Description 사용자 정보를 생성합니다.
+// @Summary 사용자 생성
+// @Description 사용자를 생성합니다.
 // @Tags User
 // @Accept json
 // @Produce json
@@ -38,8 +38,8 @@ func PostUser(c *gin.Context) {
 	}
 }
 
-// @Summary 모든 사용자 정보 조회
-// @Description 모든 사용자 정보를 반환합니다.
+// @Summary 전체 사용자 조회
+// @Description 전체 사용자를 반환합니다.
 // @Tags User
 // @Accept json
 // @Produce json
@@ -144,8 +144,8 @@ func PutUser(c *gin.Context) {
 	}
 }
 
-// @Summary 모든 사용자 삭제
-// @Description 모든 사용자 정보를 삭제합니다.
+// @Summary 전체 사용자 삭제
+// @Description 전체 사용자 정보를 삭제합니다. 모든데이터가 날라가므로 주의해서 사용해주세요😨
 // @Tags User
 // @Accept json
 // @Produce json
@@ -163,7 +163,7 @@ func DeleteAllUser(c *gin.Context) {
 }
 
 // @Summary 사용자 삭제
-// @Description 사용자 정보를 삭제합니다.
+// @Description 사용자를 삭제합니다.
 // @Tags User
 // @Accept json
 // @Produce json

@@ -49,8 +49,8 @@ func main() {
 
 	// Swagger
 	{
-		docs.SwaggerInfo.Title = "modern-board example API"
-		docs.SwaggerInfo.Description = "사용자 데이터를 관리할 수 있는 API를 제공합니다."
+		docs.SwaggerInfo.Title = "Modern Board API"
+		docs.SwaggerInfo.Description = "게시판 데이터를 관리할 수 있는 API를 제공합니다."
 		docs.SwaggerInfo.Version = version
 		docs.SwaggerInfo.Host = fmt.Sprintf("localhost%s", port)
 		docs.SwaggerInfo.BasePath = "/api"

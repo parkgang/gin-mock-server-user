@@ -24,9 +24,23 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/": {
+        "/ping": {
             "get": {
-                "description": "모든 사용자 정보를 반환합니다.",
+                "description": "gin server의 헬스를 체크합니다.",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Server Health Check",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "description": "전체 사용자를 반환합니다.",
                 "consumes": [
                     "application/json"
                 ],
@@ -36,7 +50,7 @@ var doc = `{
                 "tags": [
                     "User"
                 ],
-                "summary": "모든 사용자 정보 조회",
+                "summary": "전체 사용자 조회",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -56,7 +70,7 @@ var doc = `{
                 }
             },
             "post": {
-                "description": "사용자 정보를 생성합니다.",
+                "description": "사용자를 생성합니다.",
                 "consumes": [
                     "application/json"
                 ],
@@ -66,7 +80,7 @@ var doc = `{
                 "tags": [
                     "User"
                 ],
-                "summary": "사용자 정보 생성",
+                "summary": "사용자 생성",
                 "parameters": [
                     {
                         "description": "사용자 메타데이터",
@@ -91,7 +105,7 @@ var doc = `{
                 }
             },
             "delete": {
-                "description": "모든 사용자 정보를 삭제합니다.",
+                "description": "전체 사용자 정보를 삭제합니다. 모든데이터가 날라가므로 주의해서 사용해주세요😨",
                 "consumes": [
                     "application/json"
                 ],
@@ -101,7 +115,7 @@ var doc = `{
                 "tags": [
                     "User"
                 ],
-                "summary": "모든 사용자 삭제",
+                "summary": "전체 사용자 삭제",
                 "responses": {
                     "200": {
                         "description": ""
@@ -115,7 +129,7 @@ var doc = `{
                 }
             }
         },
-        "/{id}": {
+        "/users/{id}": {
             "get": {
                 "description": "사용자 정보를 반환합니다.",
                 "consumes": [
@@ -195,7 +209,7 @@ var doc = `{
                 }
             },
             "delete": {
-                "description": "사용자 정보를 삭제합니다.",
+                "description": "사용자를 삭제합니다.",
                 "consumes": [
                     "application/json"
                 ],

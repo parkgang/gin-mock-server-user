@@ -19,11 +19,20 @@ definitions:
 info:
   contact: {}
 paths:
-  /:
+  /ping:
+    get:
+      description: gin server의 헬스를 체크합니다.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Server Health Check
+  /users:
     delete:
       consumes:
       - application/json
-      description: 모든 사용자 정보를 삭제합니다.
+      description: "전체 사용자 정보를 삭제합니다. 모든데이터가 날라가므로 주의해서 사용해주세요\U0001F628"
       produces:
       - application/json
       responses:
@@ -33,13 +42,13 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.ErrResponse'
-      summary: 모든 사용자 삭제
+      summary: 전체 사용자 삭제
       tags:
       - User
     get:
       consumes:
       - application/json
-      description: 모든 사용자 정보를 반환합니다.
+      description: 전체 사용자를 반환합니다.
       produces:
       - application/json
       responses:
@@ -53,13 +62,13 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.ErrResponse'
-      summary: 모든 사용자 정보 조회
+      summary: 전체 사용자 조회
       tags:
       - User
     post:
       consumes:
       - application/json
-      description: 사용자 정보를 생성합니다.
+      description: 사용자를 생성합니다.
       parameters:
       - description: 사용자 메타데이터
         in: body
@@ -76,14 +85,14 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.ErrResponse'
-      summary: 사용자 정보 생성
+      summary: 사용자 생성
       tags:
       - User
-  /{id}:
+  /users/{id}:
     delete:
       consumes:
       - application/json
-      description: 사용자 정보를 삭제합니다.
+      description: 사용자를 삭제합니다.
       parameters:
       - description: 사용자 id
         in: path
