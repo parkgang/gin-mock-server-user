@@ -8,7 +8,7 @@ type Props = {
 function AppLayout({ children }: Props) {
   return (
     <>
-      <Flex fill hAlign="center" style={{ padding: "0.5rem" }}>
+      <Flex hAlign="center" style={{ height: "100vh", padding: "0.5rem" }}>
         <Flex column gap="gap.small" style={{ width: "70vw" }}>
           {children}
         </Flex>
