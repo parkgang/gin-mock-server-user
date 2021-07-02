@@ -144,6 +144,24 @@ func PutUser(c *gin.Context) {
 	}
 }
 
+// @Summary 모든 사용자 삭제
+// @Description 모든 사용자 정보를 삭제합니다.
+// @Tags User
+// @Accept json
+// @Produce json
+// @Success 200
+// @Failure 500 {object} model.ErrResponse
+// @Router / [delete]
+func DeleteAllUser(c *gin.Context) {
+	result := mysql.Client.Where("1 = 1").Delete(&model.User{})
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": result.Error.Error(),
+		})
+		return
+	}
+}
+
 // @Summary 사용자 삭제
 // @Description 사용자 정보를 삭제합니다.
 // @Tags User

@@ -20,6 +20,22 @@ info:
   contact: {}
 paths:
   /:
+    delete:
+      consumes:
+      - application/json
+      description: 모든 사용자 정보를 삭제합니다.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrResponse'
+      summary: 모든 사용자 삭제
+      tags:
+      - User
     get:
       consumes:
       - application/json
