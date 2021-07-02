@@ -71,6 +71,8 @@ func GetUser(c *gin.Context) {
 // @Failure 500 {object} model.ErrResponse
 // @Router /{id} [put]
 func PutUser(c *gin.Context) {
+	user := model.User{}
+
 	paramUserId := c.Param("id")
 
 	userId, err := common.ConvertStringToUint(paramUserId)
@@ -80,8 +82,6 @@ func PutUser(c *gin.Context) {
 		})
 		return
 	}
-
-	user := model.User{}
 
 	err = c.BindJSON(&user)
 	if err != nil {
