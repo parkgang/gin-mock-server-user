@@ -10,3 +10,7 @@ export async function getUser() {
   const { data } = await client.get<User[]>(`/users`);
   return data;
 }
+
+export async function deleteUser(id: number) {
+  await client.delete(`/users/${id}`);
+}

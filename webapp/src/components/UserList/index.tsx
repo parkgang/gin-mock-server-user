@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-import Loading from "components/Loading";
+import { LoadingCard } from "components/Loading";
 import ErrorFallback from "components/ErrorFallback";
 
 import { handlerOnError } from "libs/error";
@@ -15,7 +15,7 @@ function index() {
         fallbackRender={({ error }) => <ErrorFallback title="문제가 발생했어요!" error={error} />}
         onError={handlerOnError}
       >
-        <Suspense fallback={<Loading message="로딩 중" />}>
+        <Suspense fallback={<LoadingCard />}>
           <UserCard />
         </Suspense>
       </ErrorBoundary>
