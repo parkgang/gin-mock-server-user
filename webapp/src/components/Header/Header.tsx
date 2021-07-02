@@ -1,3 +1,5 @@
+import { useSetRecoilState } from "recoil";
+import { useHistory } from "react-router-dom";
 import {
   teamsTheme,
   teamsDarkTheme,
@@ -8,43 +10,51 @@ import {
   Dropdown,
   Menu,
 } from "@fluentui/react-northstar";
-import { useSetRecoilState } from "recoil";
-import { useHistory } from "react-router-dom";
 
 import { themeState } from "states/fluentui-northstar";
 
-export default function Header() {
+function Header() {
   const setTheme = useSetRecoilState(themeState);
 
   const history = useHistory();
 
   return (
     <>
-      <Flex gap="gap.small" space="between" style={{ padding: "0.3rem" }}>
+      <Flex gap="gap.small" space="between" vAlign="center">
         <Menu
-          defaultActiveIndex={0}
-          underlined
-          primary
+          style={{
+            height: "2.3rem",
+          }}
           items={[
             {
               key: "Home",
               content: "Home",
               onClick: () => history.push("/"),
+              styles: {
+                padding: "10px",
+              },
             },
             {
               key: "About",
               content: "About",
               onClick: () => history.push("/about"),
+              styles: {
+                padding: "10px",
+              },
             },
             {
               key: "Users",
               content: "Users",
               onClick: () => history.push("/users"),
+              styles: {
+                padding: "10px",
+              },
             },
           ]}
         />
         <Dropdown
           checkable
+          fluid
           defaultValue={["Teams"]}
           items={[
             {
@@ -88,3 +98,5 @@ export default function Header() {
     </>
   );
 }
+
+export default Header;

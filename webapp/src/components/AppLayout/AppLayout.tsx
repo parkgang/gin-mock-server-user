@@ -5,14 +5,16 @@ type Props = {
   children: ReactNode;
 };
 
-export default function AppLayout({ children }: Props) {
+function AppLayout({ children }: Props) {
   return (
     <>
-      <Flex fill gap="gap.small" hAlign="center">
-        <Flex column style={{ width: "70vw" }}>
+      <Flex fill hAlign="center" style={{ padding: "0.5rem" }}>
+        <Flex column gap="gap.small" style={{ width: "70vw" }}>
           {children}
         </Flex>
       </Flex>
     </>
   );
 }
+
+export default AppLayout;

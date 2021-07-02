@@ -10,7 +10,7 @@ import NotFound from "pages/NotFound";
 import { themeState } from "states/fluentui-northstar";
 
 import AppLayout from "components/AppLayout";
-import Header from "components/Gnb";
+import Header from "components/Header";
 
 export default function App() {
   const theme = useRecoilValue(themeState);

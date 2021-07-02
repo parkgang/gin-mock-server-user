@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 
 import { getUser } from "libs/api/user";
 
-export default function List() {
+function List() {
   const { data: user } = useQuery("users", getUser);
 
   console.log(user);
@@ -13,3 +13,5 @@ export default function List() {
     </>
   );
 }
+
+export default List;

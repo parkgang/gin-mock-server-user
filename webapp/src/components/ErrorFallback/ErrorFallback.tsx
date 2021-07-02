@@ -1,6 +1,6 @@
-import { Flex, Text, Segment, ErrorIcon } from "@fluentui/react-northstar";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { Flex, Text, Segment, ErrorIcon } from "@fluentui/react-northstar";
 
 type Props = {
   title?: string;
@@ -11,10 +11,7 @@ type Props = {
  * Client의 모든 에러를 관장하는 함수이자 컴포넌트 입니다.
  * 각 에러 instance에 맞는 적절한 컴포넌트를 바인딩 해줍니다.
  */
-export default function ErrorFallback({
-  title = "페이지를 표시하는 도중 문제가 발생했습니다.",
-  error,
-}: Props) {
+function ErrorFallback({ title = "페이지를 표시하는 도중 문제가 발생했습니다.", error }: Props) {
   const history = useHistory();
 
   // TODO: error instance에 맞게 컴포넌트 바인딩
@@ -43,3 +40,5 @@ export default function ErrorFallback({
     </>
   );
 }
+
+export default ErrorFallback;
