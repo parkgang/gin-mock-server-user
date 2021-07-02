@@ -6,12 +6,7 @@ import (
 )
 
 func Use(api *gin.RouterGroup) {
-	// TODO: swaager 문서 등록
-	api.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	api.GET("/ping", controller.Ping)
 	users := api.Group("/users")
 	{
 		users.POST("/", controller.PostUser)
