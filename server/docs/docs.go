@@ -26,7 +26,7 @@ var doc = `{
     "paths": {
         "/": {
             "get": {
-                "description": "전체 사용자 정보를 반환합니다.",
+                "description": "모든 사용자 정보를 반환합니다.",
                 "consumes": [
                     "application/json"
                 ],
@@ -36,7 +36,7 @@ var doc = `{
                 "tags": [
                     "User"
                 ],
-                "summary": "전체 사용자 정보 조회",
+                "summary": "모든 사용자 정보 조회",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -56,7 +56,7 @@ var doc = `{
                 }
             },
             "post": {
-                "description": "사용자를 생성합니다.",
+                "description": "사용자 정보를 생성합니다.",
                 "consumes": [
                     "application/json"
                 ],
@@ -92,8 +92,50 @@ var doc = `{
             }
         },
         "/{id}": {
+            "put": {
+                "description": "사용자 정보를 수정합니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "사용자 수정",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "사용자 id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "사용자 메타데이터",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrResponse"
+                        }
+                    }
+                }
+            },
             "delete": {
-                "description": "사용자를 삭제합니다.",
+                "description": "사용자 정보를 삭제합니다.",
                 "consumes": [
                     "application/json"
                 ],

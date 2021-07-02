@@ -23,7 +23,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: 전체 사용자 정보를 반환합니다.
+      description: 모든 사용자 정보를 반환합니다.
       produces:
       - application/json
       responses:
@@ -37,13 +37,13 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.ErrResponse'
-      summary: 전체 사용자 정보 조회
+      summary: 모든 사용자 정보 조회
       tags:
       - User
     post:
       consumes:
       - application/json
-      description: 사용자를 생성합니다.
+      description: 사용자 정보를 생성합니다.
       parameters:
       - description: 사용자 메타데이터
         in: body
@@ -67,7 +67,7 @@ paths:
     delete:
       consumes:
       - application/json
-      description: 사용자를 삭제합니다.
+      description: 사용자 정보를 삭제합니다.
       parameters:
       - description: 사용자 id
         in: path
@@ -84,6 +84,34 @@ paths:
           schema:
             $ref: '#/definitions/model.ErrResponse'
       summary: 사용자 삭제
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      description: 사용자 정보를 수정합니다.
+      parameters:
+      - description: 사용자 id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 사용자 메타데이터
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrResponse'
+      summary: 사용자 수정
       tags:
       - User
 swagger: "2.0"

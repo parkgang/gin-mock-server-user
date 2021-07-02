@@ -2,17 +2,15 @@ package controller
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/parkgang/modern-board/common"
-	"github.com/parkgang/modern-board/db"
 	"github.com/parkgang/modern-board/model"
 	"github.com/parkgang/modern-board/mysql"
 )
 
 // @Summary 사용자 정보 생성
-// @Description 사용자를 생성합니다.
+// @Description 사용자 정보를 생성합니다.
 // @Tags User
 // @Accept json
 // @Produce json
@@ -40,8 +38,8 @@ func PostUser(c *gin.Context) {
 	}
 }
 
-// @Summary 전체 사용자 정보 조회
-// @Description 전체 사용자 정보를 반환합니다.
+// @Summary 모든 사용자 정보 조회
+// @Description 모든 사용자 정보를 반환합니다.
 // @Tags User
 // @Accept json
 // @Produce json
@@ -62,35 +60,57 @@ func GetUser(c *gin.Context) {
 	c.JSON(http.StatusOK, users)
 }
 
+// @Summary 사용자 수정
+// @Description 사용자 정보를 수정합니다.
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param id path int true "사용자 id"
+// @Param data body model.User true "사용자 메타데이터"
+// @Success 200
+// @Failure 500 {object} model.ErrResponse
+// @Router /{id} [put]
 func PutUser(c *gin.Context) {
-	var req model.User
-
 	paramUserId := c.Param("id")
-	userId, err := strconv.ParseUint(paramUserId, 10, 32)
+
+	userId, err := common.ConvertStringToUint(paramUserId)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
 		return
 	}
 
-	err = c.BindJSON(&req)
+	user := model.User{}
+
+	err = c.BindJSON(&user)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
 		return
 	}
 
-	for i, v := range db.UserInstance {
-		if v.Id == uint(userId) {
-			db.UserInstance[i].Name = req.Name
-			db.UserInstance[i].Arg = req.Arg
-			return
-		}
+	result := mysql.Client.First(&model.User{}, userId)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": result.Error.Error(),
+		})
+		return
 	}
 
-	c.JSON(http.StatusBadRequest, gin.H{"message": "존재하지 않는 사용자 입니다."})
+	user.Id = userId
+	result = mysql.Client.Save(&user)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": result.Error.Error(),
+		})
+		return
+	}
 }
 
 // @Summary 사용자 삭제
-// @Description 사용자를 삭제합니다.
+// @Description 사용자 정보를 삭제합니다.
 // @Tags User
 // @Accept json
 // @Produce json
@@ -109,9 +129,7 @@ func DeleteUser(c *gin.Context) {
 		return
 	}
 
-	user := model.User{}
-
-	result := mysql.Client.First(&user, userId)
+	result := mysql.Client.First(&model.User{}, userId)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": result.Error.Error(),
@@ -119,7 +137,7 @@ func DeleteUser(c *gin.Context) {
 		return
 	}
 
-	result = mysql.Client.Delete(&user, userId)
+	result = mysql.Client.Delete(&model.User{}, userId)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": result.Error.Error(),
