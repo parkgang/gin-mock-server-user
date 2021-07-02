@@ -46,7 +46,7 @@ func PostUser(c *gin.Context) {
 // @Success 200 {object} []model.User
 // @Failure 500 {object} model.ErrResponse
 // @Router / [get]
-func GetUser(c *gin.Context) {
+func GetAllUser(c *gin.Context) {
 	users := []model.User{}
 
 	result := mysql.Client.Find(&users)
