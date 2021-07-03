@@ -8,6 +8,7 @@ import { handlerOnError } from "libs/error";
 
 import UserCard from "./UserCard";
 
+export { default as Header } from "./Header";
 export default function index() {
   return (
     <>

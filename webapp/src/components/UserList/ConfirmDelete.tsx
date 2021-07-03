@@ -1,10 +1,12 @@
 import { useState, cloneElement } from "react";
 import { useQueryClient } from "react-query";
+import { useErrorHandler } from "react-error-boundary";
 import { Flex, Button, Header } from "@fluentui/react-northstar";
 
 import { ConfirmDialog } from "components/Dialog";
 
 import { deleteUser } from "libs/api/user";
+import { WrapError } from "libs/error";
 
 type Props = {
   id: number;
@@ -14,15 +16,21 @@ type Props = {
 export default function ConfirmDelete({ id, trigger }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  const handleError = useErrorHandler();
   const queryClient = useQueryClient();
 
   function handlerTrigger() {
     setIsOpen(true);
   }
   async function handlerDelete() {
-    await deleteUser(id);
-    queryClient.invalidateQueries("userList");
-    setIsOpen(false);
+    try {
+      await deleteUser(id);
+      queryClient.invalidateQueries("userList");
+      setIsOpen(false);
+    } catch (error) {
+      WrapError(error, `handlerDelete 에러`);
+      handleError(error);
+    }
   }
   function handlerCancel() {
     setIsOpen(false);

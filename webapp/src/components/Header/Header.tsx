@@ -30,25 +30,31 @@ export default function Header() {
             {
               key: "Home",
               content: "Home",
-              onClick: () => history.push("/"),
+              onClick() {
+                history.push("/");
+              },
               styles: {
-                padding: "10px",
+                padding: "0.6rem",
               },
             },
             {
               key: "About",
               content: "About",
-              onClick: () => history.push("/about"),
+              onClick() {
+                history.push("/about");
+              },
               styles: {
-                padding: "10px",
+                padding: "0.6rem",
               },
             },
             {
               key: "Users",
               content: "Users",
-              onClick: () => history.push("/users"),
+              onClick() {
+                history.push("/users");
+              },
               styles: {
-                padding: "10px",
+                padding: "0.6rem",
               },
             },
           ]}
@@ -61,35 +67,35 @@ export default function Header() {
             {
               key: "Teams",
               header: "Teams",
-              onClick: () => {
+              onClick() {
                 setTheme(teamsTheme);
               },
             },
             {
               key: "Teams Dark",
               header: "Teams Dark",
-              onClick: () => {
+              onClick() {
                 setTheme(teamsDarkTheme);
               },
             },
             {
               key: "Teams High Contrast",
               header: "Teams High Contrast",
-              onClick: () => {
+              onClick() {
                 setTheme(teamsHighContrastTheme);
               },
             },
             {
               key: "Teams V2",
               header: "Teams V2",
-              onClick: () => {
+              onClick() {
                 setTheme(teamsV2Theme);
               },
             },
             {
               key: "Teams Dark V2",
               header: "Teams Dark V2",
-              onClick: () => {
+              onClick() {
                 setTheme(teamsDarkV2Theme);
               },
             },
