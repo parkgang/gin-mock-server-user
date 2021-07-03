@@ -5,10 +5,10 @@ export default function useKeyword(
 ): [string, Dispatch<SetStateAction<string>>, (e: any) => void] {
   const [value, setValue] = useState<string>(init);
 
-  function handleOnChange(e: any): void {
+  function handlerOnChange(e: any): void {
     const result = e.target.value;
     setValue(result);
   }
 
-  return [value, setValue, handleOnChange];
+  return [value, setValue, handlerOnChange];
 }
