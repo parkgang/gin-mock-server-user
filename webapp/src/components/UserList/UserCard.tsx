@@ -13,23 +13,15 @@ import {
 
 import { getUser } from "libs/api/user";
 
-import { LoadingCard } from "components/Loading";
-
 import ConfirmDelete from "./ConfirmDelete";
 
+import UserForm from "../Form/UserForm";
+
 export default function UserCard() {
-  const { data: userList, isFetching } = useQuery("userList", getUser);
+  const { data: userList } = useQuery("userList", getUser);
   if (userList === undefined) {
     // TODO: undefined 커스텀 에러를 만들어서 해당 에러의 경우에만 예쁜 에러 페이지를 보여줄 수 있도록 디자인
     throw new Error("userList 값이 존재하지 않습니다.");
-  }
-
-  if (isFetching) {
-    return (
-      <>
-        <LoadingCard />
-      </>
-    );
   }
 
   if (userList.length === 0) {
@@ -69,14 +61,19 @@ export default function UserCard() {
                           />
                         }
                       />
-                      <Button
-                        primary
-                        style={{
-                          minWidth: "0",
-                          padding: "0",
-                          width: "2.5rem",
-                        }}
-                        content={<EditIcon />}
+                      <UserForm
+                        id={x.id}
+                        trigger={
+                          <Button
+                            primary
+                            style={{
+                              minWidth: "0",
+                              padding: "0",
+                              width: "2.5rem",
+                            }}
+                            content={<EditIcon />}
+                          />
+                        }
                       />
                     </Flex>
                   </Flex>
