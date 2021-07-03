@@ -7,7 +7,7 @@ type Props = {
   content: ReactNode;
 };
 
-function ConfirmDialog({ isOpen, content }: Props) {
+export default function ConfirmDialog({ isOpen, content }: Props) {
   const parentDialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -34,5 +34,3 @@ function ConfirmDialog({ isOpen, content }: Props) {
     </>
   );
 }
-
-export default ConfirmDialog;

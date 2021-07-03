@@ -2,7 +2,7 @@ import { Flex, Input, SearchIcon, Button, ParticipantAddIcon } from "@fluentui/r
 
 import useKeyword from "hooks/useKeyword";
 
-function Header() {
+export default function Header() {
   const [name, , onChangeKeyword] = useKeyword("");
 
   return (
@@ -29,5 +29,3 @@ function Header() {
     </>
   );
 }
-
-export default Header;

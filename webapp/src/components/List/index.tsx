@@ -4,7 +4,7 @@ import Loading from "components/Loading";
 
 import List from "./List";
 
-function index() {
+export default function index() {
   return (
     <>
       <Suspense fallback={<Loading message="로딩 중" />}>
@@ -13,5 +13,3 @@ function index() {
     </>
   );
 }
-
-export default index;

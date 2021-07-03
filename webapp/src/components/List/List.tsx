@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 
 import { getUser } from "libs/api/user";
 
-function List() {
+export default function List() {
   const { data: user } = useQuery("users", getUser);
 
   console.log(user);
@@ -13,5 +13,3 @@ function List() {
     </>
   );
 }
-
-export default List;

@@ -17,7 +17,7 @@ import { LoadingCard } from "components/Loading";
 
 import ConfirmDelete from "./ConfirmDelete";
 
-function UserCard() {
+export default function UserCard() {
   const { data: userList, isFetching } = useQuery("userList", getUser);
   if (userList === undefined) {
     // TODO: undefined 커스텀 에러를 만들어서 해당 에러의 경우에만 예쁜 에러 페이지를 보여줄 수 있도록 디자인
@@ -89,5 +89,3 @@ function UserCard() {
     </>
   );
 }
-
-export default UserCard;

@@ -1,7 +1,7 @@
 import { Children } from "react";
 import { Flex, Card, CardBody, Skeleton } from "@fluentui/react-northstar";
 
-function LoadingCard() {
+export default function LoadingCard() {
   return (
     <>
       {Children.toArray(
@@ -34,5 +34,3 @@ function LoadingCard() {
     </>
   );
 }
-
-export default LoadingCard;

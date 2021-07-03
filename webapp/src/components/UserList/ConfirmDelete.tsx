@@ -11,7 +11,7 @@ type Props = {
   trigger: JSX.Element;
 };
 
-function ConfirmDelete({ id, trigger }: Props) {
+export default function ConfirmDelete({ id, trigger }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
@@ -52,5 +52,3 @@ function ConfirmDelete({ id, trigger }: Props) {
     </>
   );
 }
-
-export default ConfirmDelete;

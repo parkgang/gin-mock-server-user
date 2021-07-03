@@ -5,7 +5,7 @@ type Props = {
   children: ReactNode;
 };
 
-function AppLayout({ children }: Props) {
+export default function AppLayout({ children }: Props) {
   return (
     <>
       <Flex hAlign="center" style={{ height: "100vh", padding: "0.5rem" }}>
@@ -16,5 +16,3 @@ function AppLayout({ children }: Props) {
     </>
   );
 }
-
-export default AppLayout;

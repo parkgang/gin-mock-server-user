@@ -8,7 +8,7 @@ import { handlerOnError } from "libs/error";
 
 import UserCard from "./UserCard";
 
-function index() {
+export default function index() {
   return (
     <>
       <ErrorBoundary
@@ -22,5 +22,3 @@ function index() {
     </>
   );
 }
-
-export default index;

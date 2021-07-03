@@ -4,7 +4,7 @@ type Props = {
   message: string;
 };
 
-function Spinner({ message }: Props) {
+export default function Spinner({ message }: Props) {
   return (
     <>
       <Flex fill hAlign="center" vAlign="center">
@@ -13,5 +13,3 @@ function Spinner({ message }: Props) {
     </>
   );
 }
-
-export default Spinner;

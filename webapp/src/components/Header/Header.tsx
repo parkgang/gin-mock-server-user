@@ -13,7 +13,7 @@ import {
 
 import { themeState } from "states/fluentui-northstar";
 
-function Header() {
+export default function Header() {
   const setTheme = useSetRecoilState(themeState);
 
   const history = useHistory();
@@ -99,5 +99,3 @@ function Header() {
     </>
   );
 }
-
-export default Header;
