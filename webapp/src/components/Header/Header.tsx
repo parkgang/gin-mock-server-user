@@ -100,6 +100,9 @@ export default function Header() {
               },
             },
           ]}
+          style={{
+            width: "12rem",
+          }}
         />
       </Flex>
     </>
