@@ -11,7 +11,7 @@ import {
   EditIcon,
 } from "@fluentui/react-northstar";
 
-import { GetUser } from "libs/api/user";
+import { GetUser, PutUser } from "libs/api/user";
 
 import ConfirmDelete from "./ConfirmDelete";
 
@@ -75,6 +75,7 @@ export default function UserCard() {
                             content={<EditIcon />}
                           />
                         }
+                        onSubmit={PutUser}
                       />
                     </Flex>
                   </Flex>

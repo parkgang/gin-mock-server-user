@@ -5,7 +5,7 @@ import { Button, Form, FormInput, Flex } from "@fluentui/react-northstar";
 
 import { ConfirmDialog } from "components/Dialog";
 
-import { PutUser } from "libs/api/user";
+import { UserFormApi } from "libs/api/user";
 
 import { WrapError } from "libs/error";
 
@@ -19,9 +19,10 @@ type Props = {
   id: number;
   defaultValue: UserDTO;
   trigger: JSX.Element;
+  onSubmit: UserFormApi;
 };
 
-export default function UserForm({ id, defaultValue, trigger }: Props) {
+export default function UserForm({ id, defaultValue, trigger, onSubmit }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleError = useErrorHandler();
@@ -36,7 +37,7 @@ export default function UserForm({ id, defaultValue, trigger }: Props) {
       const target = e.target as typeof e.target & TUserFormTarget;
       const name = target.name.value;
       const arg = target.arg.value;
-      await PutUser(id, {
+      await onSubmit(id, {
         name: name,
         arg: parseInt(arg),
       });

@@ -2,6 +2,10 @@ import { User, UserDTO } from "types/user";
 
 import client from "./client";
 
+export interface UserFormApi {
+  (id: number, user: UserDTO): Promise<void>;
+}
+
 export async function GetUser() {
   const { data } = await client.get<User[]>(`/users`);
   return data;
