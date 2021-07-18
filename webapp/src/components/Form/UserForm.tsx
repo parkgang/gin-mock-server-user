@@ -1,11 +1,19 @@
-import { useState, cloneElement } from "react";
+import { useState, cloneElement, SyntheticEvent } from "react";
 import { useQueryClient } from "react-query";
 import { useErrorHandler } from "react-error-boundary";
 import { Button, Form, FormInput, Flex } from "@fluentui/react-northstar";
 
 import { ConfirmDialog } from "components/Dialog";
 
+import { PutUser } from "libs/api/user";
+
 import { WrapError } from "libs/error";
+
+import { TUserForm } from "types/user";
+
+type TUserFormTarget = {
+  [K in keyof TUserForm]: { value: string };
+};
 
 type Props = {
   id: number;
@@ -21,9 +29,16 @@ export default function UserForm({ id, trigger }: Props) {
   function handlerTrigger() {
     setIsOpen(true);
   }
-  async function handlerCreate() {
+  async function handlerSubmit(e: SyntheticEvent) {
     try {
-      alert("Form submitted");
+      e.preventDefault();
+      const target = e.target as typeof e.target & TUserFormTarget;
+      const name = target.name.value;
+      const arg = target.arg.value;
+      await PutUser(id, {
+        name: name,
+        arg: parseInt(arg),
+      });
       queryClient.invalidateQueries("userList");
       setIsOpen(false);
     } catch (error) {
@@ -44,7 +59,7 @@ export default function UserForm({ id, trigger }: Props) {
         isOpen={isOpen}
         content={
           <>
-            <Form onSubmit={handlerCreate}>
+            <Form onSubmit={handlerSubmit}>
               <FormInput label="이름" name="name" required type="text" fluid />
               <FormInput label="나이" name="arg" required type="number" fluid />
               <Flex gap="gap.small" hAlign="center">
