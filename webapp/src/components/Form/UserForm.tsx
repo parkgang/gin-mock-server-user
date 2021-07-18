@@ -6,12 +6,11 @@ import { Button, Form, FormInput, Flex } from "@fluentui/react-northstar";
 import { ConfirmDialog } from "components/Dialog";
 
 import { UserFormApi } from "libs/api/user";
-
 import { WrapError } from "libs/error";
 
 import { UserDTO } from "types/user";
 
-type UserFormTarget = {
+type UserFormValue = {
   [K in keyof UserDTO]: { value: string };
 };
 
@@ -30,16 +29,19 @@ export default function UserForm({
 }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const handleError = useErrorHandler();
+  const handlerError = useErrorHandler();
   const queryClient = useQueryClient();
 
   function handlerTrigger() {
     setIsOpen(true);
   }
+  function handlerCancel() {
+    setIsOpen(false);
+  }
   async function handlerSubmit(e: SyntheticEvent) {
     try {
       e.preventDefault();
-      const target = e.target as typeof e.target & UserFormTarget;
+      const target = e.target as typeof e.target & UserFormValue;
       const name = target.name.value;
       const arg = target.arg.value;
       await onSubmit(
@@ -53,11 +55,8 @@ export default function UserForm({
       setIsOpen(false);
     } catch (error) {
       WrapError(error, `handlerDelete 에러`);
-      handleError(error);
+      handlerError(error);
     }
-  }
-  function handlerCancel() {
-    setIsOpen(false);
   }
 
   return (
