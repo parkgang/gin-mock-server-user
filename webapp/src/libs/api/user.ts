@@ -2,8 +2,10 @@ import { User, UserDTO } from "types/user";
 
 import client from "./client";
 
-export interface UserFormApi {
-  (id: number, user: UserDTO): Promise<void>;
+export type UserFormApi = typeof PutUser | typeof PostUser;
+
+export async function PostUser(user: UserDTO) {
+  await client.post(`/users`, user);
 }
 
 export async function GetUser() {
@@ -11,7 +13,7 @@ export async function GetUser() {
   return data;
 }
 
-export async function PutUser(id: number, user: UserDTO) {
+export async function PutUser(user: UserDTO, id: number) {
   await client.put(`/users/${id}`, user);
 }
 

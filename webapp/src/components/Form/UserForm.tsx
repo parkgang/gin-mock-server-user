@@ -16,13 +16,18 @@ type TUserFormTarget = {
 };
 
 type Props = {
-  id: number;
-  defaultValue: UserDTO;
+  id?: number;
+  defaultValue?: UserDTO;
   trigger: JSX.Element;
   onSubmit: UserFormApi;
 };
 
-export default function UserForm({ id, defaultValue, trigger, onSubmit }: Props) {
+export default function UserForm({
+  id,
+  defaultValue = { name: "", arg: 0 },
+  trigger,
+  onSubmit,
+}: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleError = useErrorHandler();
@@ -37,10 +42,13 @@ export default function UserForm({ id, defaultValue, trigger, onSubmit }: Props)
       const target = e.target as typeof e.target & TUserFormTarget;
       const name = target.name.value;
       const arg = target.arg.value;
-      await onSubmit(id, {
-        name: name,
-        arg: parseInt(arg),
-      });
+      await onSubmit(
+        {
+          name: name,
+          arg: parseInt(arg),
+        },
+        id as number
+      );
       queryClient.invalidateQueries("userList");
       setIsOpen(false);
     } catch (error) {
