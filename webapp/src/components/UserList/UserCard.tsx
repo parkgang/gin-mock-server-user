@@ -15,7 +15,7 @@ import { GetUser, PutUser } from "libs/api/user";
 
 import ConfirmDelete from "./ConfirmDelete";
 
-import UserForm from "../Form/UserForm";
+import { UserForm } from "components/Form";
 
 export default function UserCard() {
   const { data: userList } = useQuery("userList", GetUser);
