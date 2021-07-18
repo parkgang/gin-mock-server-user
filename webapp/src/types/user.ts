@@ -1,7 +1,7 @@
-export type TUser = {
+export type User = {
   id: number;
   name: string;
   arg: number;
 };
 
-export type TUserForm = Omit<TUser, "id">;
+export type UserDTO = Omit<User, "id">;

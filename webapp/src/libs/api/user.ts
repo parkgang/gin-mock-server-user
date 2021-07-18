@@ -1,13 +1,13 @@
-import { TUser, TUserForm } from "types/user";
+import { User, UserDTO } from "types/user";
 
 import client from "./client";
 
 export async function getUser() {
-  const { data } = await client.get<TUser[]>(`/users`);
+  const { data } = await client.get<User[]>(`/users`);
   return data;
 }
 
-export async function PutUser(id: number, user: TUserForm) {
+export async function PutUser(id: number, user: UserDTO) {
   await client.put(`/users/${id}`, user);
 }
 

@@ -9,10 +9,10 @@ import { PutUser } from "libs/api/user";
 
 import { WrapError } from "libs/error";
 
-import { TUserForm } from "types/user";
+import { UserDTO } from "types/user";
 
 type TUserFormTarget = {
-  [K in keyof TUserForm]: { value: string };
+  [K in keyof UserDTO]: { value: string };
 };
 
 type Props = {
