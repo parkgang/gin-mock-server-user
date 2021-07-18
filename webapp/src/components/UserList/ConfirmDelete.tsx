@@ -22,6 +22,9 @@ export default function ConfirmDelete({ id, trigger }: Props) {
   function handlerTrigger() {
     setIsOpen(true);
   }
+  function handlerCancel() {
+    setIsOpen(false);
+  }
   async function handlerDelete() {
     try {
       await DeleteUser(id);
@@ -31,9 +34,6 @@ export default function ConfirmDelete({ id, trigger }: Props) {
       WrapError(error, `handlerDelete 에러`);
       handleError(error);
     }
-  }
-  function handlerCancel() {
-    setIsOpen(false);
   }
 
   return (

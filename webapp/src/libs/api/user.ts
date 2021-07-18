@@ -2,7 +2,7 @@ import { User, UserDTO } from "types/user";
 
 import client from "./client";
 
-export type UserFormApi = typeof PutUser | typeof PostUser;
+export type UserFormApi = typeof PostUser | typeof PutUser;
 
 export async function PostUser(user: UserDTO) {
   await client.post(`/users`, user);
