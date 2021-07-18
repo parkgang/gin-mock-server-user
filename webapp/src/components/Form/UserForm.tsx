@@ -11,7 +11,7 @@ import { WrapError } from "libs/error";
 
 import { UserDTO } from "types/user";
 
-type TUserFormTarget = {
+type UserFormTarget = {
   [K in keyof UserDTO]: { value: string };
 };
 
@@ -39,7 +39,7 @@ export default function UserForm({
   async function handlerSubmit(e: SyntheticEvent) {
     try {
       e.preventDefault();
-      const target = e.target as typeof e.target & TUserFormTarget;
+      const target = e.target as typeof e.target & UserFormTarget;
       const name = target.name.value;
       const arg = target.arg.value;
       await onSubmit(
