@@ -63,6 +63,7 @@ export default function UserCard() {
                       />
                       <UserForm
                         id={x.id}
+                        defaultValue={x}
                         trigger={
                           <Button
                             primary

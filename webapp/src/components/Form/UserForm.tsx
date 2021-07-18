@@ -17,10 +17,11 @@ type TUserFormTarget = {
 
 type Props = {
   id: number;
+  defaultValue: UserDTO;
   trigger: JSX.Element;
 };
 
-export default function UserForm({ id, trigger }: Props) {
+export default function UserForm({ id, defaultValue, trigger }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleError = useErrorHandler();
@@ -60,8 +61,22 @@ export default function UserForm({ id, trigger }: Props) {
         content={
           <>
             <Form onSubmit={handlerSubmit}>
-              <FormInput label="이름" name="name" required type="text" fluid />
-              <FormInput label="나이" name="arg" required type="number" fluid />
+              <FormInput
+                required
+                fluid
+                label="이름"
+                name="name"
+                type="text"
+                defaultValue={defaultValue.name}
+              />
+              <FormInput
+                required
+                fluid
+                label="나이"
+                name="arg"
+                type="number"
+                defaultValue={defaultValue.arg.toString()}
+              />
               <Flex gap="gap.small" hAlign="center">
                 <Button content="생성" primary />
                 <Button content="취소" onClick={handlerCancel} />
