@@ -11,14 +11,14 @@ import {
   EditIcon,
 } from "@fluentui/react-northstar";
 
-import { getUser } from "libs/api/user";
+import { GetUser } from "libs/api/user";
 
 import ConfirmDelete from "./ConfirmDelete";
 
 import UserForm from "../Form/UserForm";
 
 export default function UserCard() {
-  const { data: userList } = useQuery("userList", getUser);
+  const { data: userList } = useQuery("userList", GetUser);
   if (userList === undefined) {
     // TODO: undefined 커스텀 에러를 만들어서 해당 에러의 경우에만 예쁜 에러 페이지를 보여줄 수 있도록 디자인
     throw new Error("userList 값이 존재하지 않습니다.");

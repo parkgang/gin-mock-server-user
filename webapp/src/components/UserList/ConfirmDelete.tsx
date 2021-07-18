@@ -5,7 +5,7 @@ import { Flex, Button, Header } from "@fluentui/react-northstar";
 
 import { ConfirmDialog } from "components/Dialog";
 
-import { deleteUser } from "libs/api/user";
+import { DeleteUser } from "libs/api/user";
 import { WrapError } from "libs/error";
 
 type Props = {
@@ -24,7 +24,7 @@ export default function ConfirmDelete({ id, trigger }: Props) {
   }
   async function handlerDelete() {
     try {
-      await deleteUser(id);
+      await DeleteUser(id);
       queryClient.invalidateQueries("userList");
       setIsOpen(false);
     } catch (error) {
