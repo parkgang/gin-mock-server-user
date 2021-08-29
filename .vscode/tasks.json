@@ -36,6 +36,18 @@
       "options": {
         "cwd": "${workspaceFolder}/server/docker"
       }
+    },
+    {
+      "label": "swag docs update",
+      "type": "shell",
+      "command": "swag",
+      "args": ["i"],
+      "options": {
+        "cwd": "${workspaceFolder}/server",
+        "env": {
+          "PATH": "${env:GOPATH}/bin:${env:PATH}"
+        }
+      }
     }
   ]
 }

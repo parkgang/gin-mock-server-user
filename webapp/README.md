@@ -19,12 +19,16 @@
 npm i -g pm2
 ```
 
-# CRA
+## Custom
+
+1. [절대경로 설정](https://okky.tistory.com/340)
+
+# 이외
+
+## template
+
+> CRA
 
 ```shell
 npx create-react-app webapp --template typescript
 ```
-
-## Custom
-
-1. [절대경로 설정](https://okky.tistory.com/340)
