@@ -54,7 +54,9 @@ export default function UserForm({
       queryClient.invalidateQueries("userList");
       setIsOpen(false);
     } catch (error) {
-      WrapError(error, `handlerDelete 에러`);
+      if (error instanceof Error) {
+        WrapError(error, `handlerDelete 에러`);
+      }
       handlerError(error);
     }
   }

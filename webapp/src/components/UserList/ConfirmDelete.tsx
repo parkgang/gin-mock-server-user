@@ -31,7 +31,9 @@ export default function ConfirmDelete({ id, trigger }: Props) {
       queryClient.invalidateQueries("userList");
       setIsOpen(false);
     } catch (error) {
-      WrapError(error, `handlerDelete 에러`);
+      if (error instanceof Error) {
+        WrapError(error, `handlerDelete 에러`);
+      }
       handleError(error);
     }
   }
