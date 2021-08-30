@@ -7,7 +7,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
-	_ "github.com/parkgang/modern-board/config"
+	_ "github.com/parkgang/modern-board/configs"
 	"github.com/parkgang/modern-board/docs"
 	_ "github.com/parkgang/modern-board/mysql"
 	apiRouter "github.com/parkgang/modern-board/router"

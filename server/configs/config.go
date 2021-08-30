@@ -1,4 +1,4 @@
-package config
+package configs
 
 import (
 	"os"
@@ -15,7 +15,7 @@ const (
 func init() {
 	viper.AutomaticEnv()
 	// 절대 경로를 기준으로 작성해야 합니다.
-	viper.AddConfigPath("./config")
+	viper.AddConfigPath("./configs")
 
 	switch os.Getenv("GO_ENV") {
 	case "":
