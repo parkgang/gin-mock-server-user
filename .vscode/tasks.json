@@ -20,21 +20,21 @@
       }
     },
     {
-      "label": "mysql dev server start",
+      "label": "container up",
       "type": "shell",
       "command": "docker-compose",
       "args": ["up", "-d"],
       "options": {
-        "cwd": "${workspaceFolder}/server/docker"
+        "cwd": "${workspaceFolder}"
       }
     },
     {
-      "label": "mysql dev server stop",
+      "label": "container stop",
       "type": "shell",
       "command": "docker-compose",
       "args": ["stop"],
       "options": {
-        "cwd": "${workspaceFolder}/server/docker"
+        "cwd": "${workspaceFolder}"
       }
     },
     {
