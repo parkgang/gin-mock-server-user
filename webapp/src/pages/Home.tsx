@@ -13,7 +13,10 @@ export default function Home() {
     <>
       <ErrorBoundary
         fallbackRender={({ error }) => (
-          <ErrorFallback title="홈 페이지에서 문제가 발생했어요!" error={error} />
+          <ErrorFallback
+            title="홈 페이지에서 문제가 발생했어요!"
+            error={error}
+          />
         )}
         onError={handlerOnError}
       >

@@ -27,7 +27,13 @@ export default function ErrorFallback({
 
   return (
     <>
-      <Flex fill column vAlign="center" gap="gap.medium" style={{ padding: "5rem" }}>
+      <Flex
+        fill
+        column
+        vAlign="center"
+        gap="gap.medium"
+        style={{ padding: "5rem" }}
+      >
         <ErrorIcon size="largest" />
         <Text size="larger">앗, 이런!</Text>
         <Text error>{title}</Text>

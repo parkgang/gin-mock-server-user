@@ -1,4 +1,10 @@
-import { Flex, Input, SearchIcon, Button, ParticipantAddIcon } from "@fluentui/react-northstar";
+import {
+  Flex,
+  Input,
+  SearchIcon,
+  Button,
+  ParticipantAddIcon,
+} from "@fluentui/react-northstar";
 
 import { UserForm } from "components/Form";
 
