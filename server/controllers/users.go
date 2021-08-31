@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/parkgang/modern-board/common"
+	"github.com/parkgang/modern-board/libs"
 	"github.com/parkgang/modern-board/model"
 	"github.com/parkgang/modern-board/mysql"
 )
@@ -72,7 +72,7 @@ func GetAllUser(c *gin.Context) {
 func GetUser(c *gin.Context) {
 	paramUserId := c.Param("id")
 
-	userId, err := common.ConvertStringToUint(paramUserId)
+	userId, err := libs.ConvertStringToUint(paramUserId)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
@@ -110,7 +110,7 @@ func PutUser(c *gin.Context) {
 
 	paramUserId := c.Param("id")
 
-	userId, err := common.ConvertStringToUint(paramUserId)
+	userId, err := libs.ConvertStringToUint(paramUserId)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
@@ -174,7 +174,7 @@ func DeleteAllUser(c *gin.Context) {
 func DeleteUser(c *gin.Context) {
 	paramUserId := c.Param("id")
 
-	userId, err := common.ConvertStringToUint(paramUserId)
+	userId, err := libs.ConvertStringToUint(paramUserId)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
