@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/parkgang/modern-board/libs"
-	"github.com/parkgang/modern-board/model"
+	"github.com/parkgang/modern-board/models"
 	"github.com/parkgang/modern-board/mysql"
 )
 
@@ -14,12 +14,12 @@ import (
 // @Tags User
 // @Accept json
 // @Produce json
-// @Param data body model.User true "사용자 메타데이터"
+// @Param data body models.User true "사용자 메타데이터"
 // @Success 200
-// @Failure 500 {object} model.ErrResponse
+// @Failure 500 {object} models.ErrResponse
 // @Router /users [post]
 func PostUser(c *gin.Context) {
-	user := model.User{}
+	user := models.User{}
 
 	err := c.BindJSON(&user)
 	if err != nil {
@@ -43,11 +43,11 @@ func PostUser(c *gin.Context) {
 // @Tags User
 // @Accept json
 // @Produce json
-// @Success 200 {object} []model.User
-// @Failure 500 {object} model.ErrResponse
+// @Success 200 {object} []models.User
+// @Failure 500 {object} models.ErrResponse
 // @Router /users [get]
 func GetAllUser(c *gin.Context) {
-	users := []model.User{}
+	users := []models.User{}
 
 	result := mysql.Client.Find(&users)
 	if result.Error != nil {
@@ -66,8 +66,8 @@ func GetAllUser(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "사용자 id"
-// @Success 200 {object} model.User
-// @Failure 500 {object} model.ErrResponse
+// @Success 200 {object} models.User
+// @Failure 500 {object} models.ErrResponse
 // @Router /users/{id} [get]
 func GetUser(c *gin.Context) {
 	paramUserId := c.Param("id")
@@ -80,7 +80,7 @@ func GetUser(c *gin.Context) {
 		return
 	}
 
-	users := model.User{
+	users := models.User{
 		Id: userId,
 	}
 
@@ -101,12 +101,12 @@ func GetUser(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "사용자 id"
-// @Param data body model.User true "사용자 메타데이터"
+// @Param data body models.User true "사용자 메타데이터"
 // @Success 200
-// @Failure 500 {object} model.ErrResponse
+// @Failure 500 {object} models.ErrResponse
 // @Router /users/{id} [put]
 func PutUser(c *gin.Context) {
-	user := model.User{}
+	user := models.User{}
 
 	paramUserId := c.Param("id")
 
@@ -126,7 +126,7 @@ func PutUser(c *gin.Context) {
 		return
 	}
 
-	result := mysql.Client.First(&model.User{}, userId)
+	result := mysql.Client.First(&models.User{}, userId)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": result.Error.Error(),
@@ -150,10 +150,10 @@ func PutUser(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Success 200
-// @Failure 500 {object} model.ErrResponse
+// @Failure 500 {object} models.ErrResponse
 // @Router /users [delete]
 func DeleteAllUser(c *gin.Context) {
-	result := mysql.Client.Where("1 = 1").Delete(&model.User{})
+	result := mysql.Client.Where("1 = 1").Delete(&models.User{})
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": result.Error.Error(),
@@ -169,7 +169,7 @@ func DeleteAllUser(c *gin.Context) {
 // @Produce json
 // @Param id path int true "사용자 id"
 // @Success 200
-// @Failure 500 {object} model.ErrResponse
+// @Failure 500 {object} models.ErrResponse
 // @Router /users/{id} [delete]
 func DeleteUser(c *gin.Context) {
 	paramUserId := c.Param("id")
@@ -182,7 +182,7 @@ func DeleteUser(c *gin.Context) {
 		return
 	}
 
-	result := mysql.Client.First(&model.User{}, userId)
+	result := mysql.Client.First(&models.User{}, userId)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": result.Error.Error(),
@@ -190,7 +190,7 @@ func DeleteUser(c *gin.Context) {
 		return
 	}
 
-	result = mysql.Client.Delete(&model.User{}, userId)
+	result = mysql.Client.Delete(&models.User{}, userId)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": result.Error.Error(),

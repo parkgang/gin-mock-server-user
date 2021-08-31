@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/parkgang/modern-board/model"
+	"github.com/parkgang/modern-board/models"
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -30,7 +30,7 @@ func init() {
 	}
 
 	log.Println("mysql 마이그레이션 중...")
-	err = db.AutoMigrate(&model.User{})
+	err = db.AutoMigrate(&models.User{})
 	if err != nil {
 		log.Panic("DB 마이그레이션에 실패하였습니다.\n\t" + err.Error())
 	}

@@ -37,14 +37,14 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/model.User"
+                                "$ref": "#/definitions/models.User"
                             }
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/model.ErrResponse"
+                            "$ref": "#/definitions/models.ErrResponse"
                         }
                     }
                 }
@@ -68,7 +68,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.User"
+                            "$ref": "#/definitions/models.User"
                         }
                     }
                 ],
@@ -79,7 +79,7 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/model.ErrResponse"
+                            "$ref": "#/definitions/models.ErrResponse"
                         }
                     }
                 }
@@ -103,7 +103,7 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/model.ErrResponse"
+                            "$ref": "#/definitions/models.ErrResponse"
                         }
                     }
                 }
@@ -135,13 +135,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.User"
+                            "$ref": "#/definitions/models.User"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/model.ErrResponse"
+                            "$ref": "#/definitions/models.ErrResponse"
                         }
                     }
                 }
@@ -172,7 +172,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.User"
+                            "$ref": "#/definitions/models.User"
                         }
                     }
                 ],
@@ -183,7 +183,7 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/model.ErrResponse"
+                            "$ref": "#/definitions/models.ErrResponse"
                         }
                     }
                 }
@@ -216,7 +216,7 @@
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/model.ErrResponse"
+                            "$ref": "#/definitions/models.ErrResponse"
                         }
                     }
                 }
@@ -224,7 +224,7 @@
         }
     },
     "definitions": {
-        "model.ErrResponse": {
+        "models.ErrResponse": {
             "type": "object",
             "properties": {
                 "message": {
@@ -232,7 +232,7 @@
                 }
             }
         },
-        "model.User": {
+        "models.User": {
             "type": "object",
             "required": [
                 "arg",

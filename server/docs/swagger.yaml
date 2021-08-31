@@ -1,10 +1,10 @@
 definitions:
-  model.ErrResponse:
+  models.ErrResponse:
     properties:
       message:
         type: string
     type: object
-  model.User:
+  models.User:
     properties:
       arg:
         example: 99
@@ -41,7 +41,7 @@ paths:
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.ErrResponse'
+            $ref: '#/definitions/models.ErrResponse'
       summary: 전체 사용자 삭제
       tags:
       - User
@@ -56,12 +56,12 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/model.User'
+              $ref: '#/definitions/models.User'
             type: array
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.ErrResponse'
+            $ref: '#/definitions/models.ErrResponse'
       summary: 전체 사용자 조회
       tags:
       - User
@@ -75,7 +75,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/model.User'
+          $ref: '#/definitions/models.User'
       produces:
       - application/json
       responses:
@@ -84,7 +84,7 @@ paths:
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.ErrResponse'
+            $ref: '#/definitions/models.ErrResponse'
       summary: 사용자 생성
       tags:
       - User
@@ -107,7 +107,7 @@ paths:
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.ErrResponse'
+            $ref: '#/definitions/models.ErrResponse'
       summary: 사용자 삭제
       tags:
       - User
@@ -127,11 +127,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.User'
+            $ref: '#/definitions/models.User'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.ErrResponse'
+            $ref: '#/definitions/models.ErrResponse'
       summary: 사용자 조회
       tags:
       - User
@@ -150,7 +150,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/model.User'
+          $ref: '#/definitions/models.User'
       produces:
       - application/json
       responses:
@@ -159,7 +159,7 @@ paths:
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.ErrResponse'
+            $ref: '#/definitions/models.ErrResponse'
       summary: 사용자 수정
       tags:
       - User
