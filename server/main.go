@@ -10,7 +10,7 @@ import (
 	_ "github.com/parkgang/modern-board/configs"
 	"github.com/parkgang/modern-board/docs"
 	_ "github.com/parkgang/modern-board/mysql"
-	apiRouter "github.com/parkgang/modern-board/router"
+	apiRouter "github.com/parkgang/modern-board/routers"
 	"github.com/spf13/viper"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
