@@ -19,20 +19,20 @@ export default function ConfirmDelete({ id, trigger }: Props) {
   const handleError = useErrorHandler();
   const queryClient = useQueryClient();
 
-  function handlerTrigger() {
+  function handleTrigger() {
     setIsOpen(true);
   }
-  function handlerCancel() {
+  function handleCancel() {
     setIsOpen(false);
   }
-  async function handlerDelete() {
+  async function handleDelete() {
     try {
       await DeleteUser(id);
       queryClient.invalidateQueries("userList");
       setIsOpen(false);
     } catch (error) {
       if (error instanceof Error) {
-        WrapError(error, `handlerDelete 에러`);
+        WrapError(error, `handleDelete 에러`);
       }
       handleError(error);
     }
@@ -41,7 +41,7 @@ export default function ConfirmDelete({ id, trigger }: Props) {
   return (
     <>
       {cloneElement(trigger, {
-        onClick: handlerTrigger,
+        onClick: handleTrigger,
       })}
       <ConfirmDialog
         isOpen={isOpen}
@@ -53,8 +53,8 @@ export default function ConfirmDelete({ id, trigger }: Props) {
               style={{ marginTop: "0.5rem", marginBottom: "1.5rem" }}
             />
             <Flex gap="gap.small">
-              <Button content="삭제" primary onClick={handlerDelete} />
-              <Button content="취소" onClick={handlerCancel} />
+              <Button content="삭제" primary onClick={handleDelete} />
+              <Button content="취소" onClick={handleCancel} />
             </Flex>
           </>
         }

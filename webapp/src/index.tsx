@@ -4,12 +4,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { RecoilRoot } from "recoil";
 
 import reportWebVitals from "./reportWebVitals";
-
 import App from "./App";
-
 import { version } from "../package.json";
-
-import "./index.css";
 
 const queryClient = new QueryClient({
   defaultOptions: {

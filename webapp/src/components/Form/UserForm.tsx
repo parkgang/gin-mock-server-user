@@ -29,16 +29,16 @@ export default function UserForm({
 }: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const handlerError = useErrorHandler();
+  const handleError = useErrorHandler();
   const queryClient = useQueryClient();
 
-  function handlerTrigger() {
+  function handleTrigger() {
     setIsOpen(true);
   }
-  function handlerCancel() {
+  function handleCancel() {
     setIsOpen(false);
   }
-  async function handlerSubmit(e: SyntheticEvent) {
+  async function handleSubmit(e: SyntheticEvent) {
     try {
       e.preventDefault();
       const target = e.target as typeof e.target & UserFormValue;
@@ -55,22 +55,22 @@ export default function UserForm({
       setIsOpen(false);
     } catch (error) {
       if (error instanceof Error) {
-        WrapError(error, `handlerDelete 에러`);
+        WrapError(error, `handleSubmit 에러`);
       }
-      handlerError(error);
+      handleError(error);
     }
   }
 
   return (
     <>
       {cloneElement(trigger, {
-        onClick: handlerTrigger,
+        onClick: handleTrigger,
       })}
       <ConfirmDialog
         isOpen={isOpen}
         content={
           <>
-            <Form onSubmit={handlerSubmit}>
+            <Form onSubmit={handleSubmit}>
               <FormInput
                 required
                 fluid
@@ -89,7 +89,7 @@ export default function UserForm({
               />
               <Flex gap="gap.small" hAlign="center">
                 <Button content="생성" primary />
-                <Button content="취소" onClick={handlerCancel} />
+                <Button content="취소" onClick={handleCancel} />
               </Flex>
             </Form>
           </>
