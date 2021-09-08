@@ -1,5 +1,6 @@
-import { User, UserDTO } from "types/user";
+import axios from "axios";
 
+import { User, UserDTO } from "types/user";
 import client from "./client";
 
 export type UserFormApi = typeof PostUser | typeof PutUser;
@@ -9,8 +10,17 @@ export async function PostUser(user: UserDTO) {
 }
 
 export async function GetUser() {
-  const { data } = await client.get<User[]>(`/users`);
-  return data;
+  try {
+    const { data } = await client.get<User[]>(`/users`);
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      switch (error.response?.status) {
+        case 404:
+          return null;
+      }
+    }
+  }
 }
 
 export async function PutUser(user: UserDTO, id: number) {

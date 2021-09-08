@@ -4,6 +4,12 @@ definitions:
       message:
         type: string
     type: object
+  models.Pong:
+    properties:
+      message:
+        example: pong
+        type: string
+    type: object
   models.User:
     properties:
       arg:
@@ -26,7 +32,9 @@ paths:
       - application/json
       responses:
         "200":
-          description: ""
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Pong'
       summary: Server Health Check
   /users:
     delete:
@@ -36,7 +44,7 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
+        "204":
           description: ""
         "500":
           description: Internal Server Error
@@ -58,6 +66,8 @@ paths:
             items:
               $ref: '#/definitions/models.User'
             type: array
+        "404":
+          description: ""
         "500":
           description: Internal Server Error
           schema:
@@ -79,8 +89,14 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
-          description: ""
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrResponse'
         "500":
           description: Internal Server Error
           schema:
@@ -102,7 +118,13 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
+        "204":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrResponse'
+        "404":
           description: ""
         "500":
           description: Internal Server Error
@@ -128,6 +150,12 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrResponse'
+        "404":
+          description: ""
         "500":
           description: Internal Server Error
           schema:
@@ -154,7 +182,15 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrResponse'
+        "404":
           description: ""
         "500":
           description: Internal Server Error

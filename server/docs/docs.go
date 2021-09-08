@@ -33,7 +33,10 @@ var doc = `{
                 "summary": "Server Health Check",
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Pong"
+                        }
                     }
                 }
             }
@@ -60,6 +63,9 @@ var doc = `{
                                 "$ref": "#/definitions/models.User"
                             }
                         }
+                    },
+                    "404": {
+                        "description": ""
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -93,8 +99,17 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -117,7 +132,7 @@ var doc = `{
                 ],
                 "summary": "전체 사용자 삭제",
                 "responses": {
-                    "200": {
+                    "204": {
                         "description": ""
                     },
                     "500": {
@@ -158,6 +173,15 @@ var doc = `{
                             "$ref": "#/definitions/models.User"
                         }
                     },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
@@ -197,7 +221,19 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
+                    },
+                    "404": {
                         "description": ""
                     },
                     "500": {
@@ -230,7 +266,16 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
+                    "204": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
+                    },
+                    "404": {
                         "description": ""
                     },
                     "500": {
@@ -249,6 +294,15 @@ var doc = `{
             "properties": {
                 "message": {
                     "type": "string"
+                }
+            }
+        },
+        "models.Pong": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "pong"
                 }
             }
         },
