@@ -19,6 +19,7 @@ import (
 // @Produce json
 // @Param data body models.User true "사용자 메타데이터"
 // @Success 201 {object} models.User
+// @Header 201 {string} Location "/users/1"
 // @Failure 400 {object} models.ErrResponse
 // @Failure 500 {object} models.ErrResponse
 // @Router /users [post]
@@ -40,7 +41,7 @@ func PostUser(c *gin.Context) {
 		return
 	}
 
-	c.Header("Content-Location", fmt.Sprintf("/users/%d", user.Id))
+	c.Header("Location", fmt.Sprintf("/users/%d", user.Id))
 	c.JSON(http.StatusCreated, user)
 }
 
@@ -119,6 +120,7 @@ func GetUser(c *gin.Context) {
 // @Param id path int true "사용자 id"
 // @Param data body models.User true "사용자 메타데이터"
 // @Success 201 {object} models.User
+// @Header 201 {string} Location "/users/1"
 // @Failure 400 {object} models.ErrResponse
 // @Failure 404
 // @Failure 500 {object} models.ErrResponse
@@ -163,7 +165,7 @@ func PutUser(c *gin.Context) {
 		return
 	}
 
-	c.Header("Content-Location", fmt.Sprintf("/users/%d", user.Id))
+	c.Header("Location", fmt.Sprintf("/users/%d", user.Id))
 	c.JSON(http.StatusCreated, user)
 }
 

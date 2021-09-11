@@ -103,6 +103,12 @@ var doc = `{
                         "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/models.User"
+                        },
+                        "headers": {
+                            "Location": {
+                                "type": "string",
+                                "description": "/users/1"
+                            }
                         }
                     },
                     "400": {
@@ -225,6 +231,12 @@ var doc = `{
                         "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/models.User"
+                        },
+                        "headers": {
+                            "Location": {
+                                "type": "string",
+                                "description": "/users/1"
+                            }
                         }
                     },
                     "400": {

@@ -91,6 +91,10 @@ paths:
       responses:
         "201":
           description: Created
+          headers:
+            Location:
+              description: /users/1
+              type: string
           schema:
             $ref: '#/definitions/models.User'
         "400":
@@ -184,6 +188,10 @@ paths:
       responses:
         "201":
           description: Created
+          headers:
+            Location:
+              description: /users/1
+              type: string
           schema:
             $ref: '#/definitions/models.User'
         "400":
