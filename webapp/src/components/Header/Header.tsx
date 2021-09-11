@@ -1,4 +1,4 @@
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { useHistory } from "react-router-dom";
 import {
   teamsTheme,
@@ -9,97 +9,117 @@ import {
   Flex,
   Dropdown,
   Menu,
+  ThemePrepared,
 } from "@fluentui/react-northstar";
 
 import { themeState } from "states/fluentui-northstar";
+import { SetLocalStorageTheme } from "libs/local-storage";
+import {
+  FluentuiNorthstarThemeList,
+  FluentuiNorthstarThemeToString,
+} from "types/fluentui-northstar";
 
 export default function Header() {
-  const setTheme = useSetRecoilState(themeState);
+  const [theme, setTheme] = useRecoilState(themeState);
 
   const history = useHistory();
+
+  const menuItems = [
+    {
+      key: "/",
+      content: "Home",
+      onClick() {
+        history.push("/");
+      },
+      styles: {
+        padding: "0.6rem",
+      },
+    },
+    {
+      key: "/about",
+      content: "About",
+      onClick() {
+        history.push("/about");
+      },
+      styles: {
+        padding: "0.6rem",
+      },
+    },
+    {
+      key: "/users",
+      content: "Users",
+      onClick() {
+        history.push("/users");
+      },
+      styles: {
+        padding: "0.6rem",
+      },
+    },
+  ];
+  const menuDefaultIndex = menuItems.findIndex(
+    (x) => x.key === history.location.pathname
+  );
+  const dropdownItems = [
+    {
+      key: FluentuiNorthstarThemeList.teamsTheme,
+      header: "Teams",
+      onClick() {
+        handleTheme(teamsTheme);
+      },
+    },
+    {
+      key: FluentuiNorthstarThemeList.teamsDarkTheme,
+      header: "Teams Dark",
+      onClick() {
+        handleTheme(teamsDarkTheme);
+      },
+    },
+    {
+      key: FluentuiNorthstarThemeList.teamsHighContrastTheme,
+      header: "Teams High Contrast",
+      onClick() {
+        handleTheme(teamsHighContrastTheme);
+      },
+    },
+    {
+      key: FluentuiNorthstarThemeList.teamsV2Theme,
+      header: "Teams V2",
+      onClick() {
+        handleTheme(teamsV2Theme);
+      },
+    },
+    {
+      key: FluentuiNorthstarThemeList.teamsDarkV2Theme,
+      header: "Teams Dark V2",
+      onClick() {
+        handleTheme(teamsDarkV2Theme);
+      },
+    },
+  ];
+  const dropdownDefaultValue = dropdownItems.find(
+    (x) => x.key === FluentuiNorthstarThemeToString(theme)
+  );
+
+  function handleTheme(theme: ThemePrepared) {
+    SetLocalStorageTheme(theme);
+    setTheme(theme);
+  }
 
   return (
     <>
       <Flex gap="gap.small" space="between" vAlign="center">
         <Menu
-          defaultActiveIndex={0}
+          defaultActiveIndex={menuDefaultIndex}
+          items={menuItems}
           style={{
             height: "2.3rem",
           }}
-          items={[
-            {
-              key: "Home",
-              content: "Home",
-              onClick() {
-                history.push("/");
-              },
-              styles: {
-                padding: "0.6rem",
-              },
-            },
-            {
-              key: "About",
-              content: "About",
-              onClick() {
-                history.push("/about");
-              },
-              styles: {
-                padding: "0.6rem",
-              },
-            },
-            {
-              key: "Users",
-              content: "Users",
-              onClick() {
-                history.push("/users");
-              },
-              styles: {
-                padding: "0.6rem",
-              },
-            },
-          ]}
         />
         <Dropdown
           checkable
           fluid
-          defaultValue={["Teams"]}
-          items={[
-            {
-              key: "Teams",
-              header: "Teams",
-              onClick() {
-                setTheme(teamsTheme);
-              },
-            },
-            {
-              key: "Teams Dark",
-              header: "Teams Dark",
-              onClick() {
-                setTheme(teamsDarkTheme);
-              },
-            },
-            {
-              key: "Teams High Contrast",
-              header: "Teams High Contrast",
-              onClick() {
-                setTheme(teamsHighContrastTheme);
-              },
-            },
-            {
-              key: "Teams V2",
-              header: "Teams V2",
-              onClick() {
-                setTheme(teamsV2Theme);
-              },
-            },
-            {
-              key: "Teams Dark V2",
-              header: "Teams Dark V2",
-              onClick() {
-                setTheme(teamsDarkV2Theme);
-              },
-            },
-          ]}
+          defaultValue={dropdownDefaultValue}
+          items={dropdownItems}
           style={{
             width: "12rem",
           }}

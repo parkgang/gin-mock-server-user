@@ -1,11 +1,10 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { RecoilRoot } from "recoil";
 
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
-import { version } from "../package.json";
+import { name, version } from "../package.json";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,16 +15,14 @@ const queryClient = new QueryClient({
   },
 });
 
-console.log(`version: ${version}`);
+console.log(`${name}@${version}`);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
-    </RecoilRoot>
-  </React.StrictMode>,
+  <RecoilRoot>
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
+  </RecoilRoot>,
   document.getElementById("root")
 );
 
