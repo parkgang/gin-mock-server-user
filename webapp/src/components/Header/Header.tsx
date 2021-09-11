@@ -12,44 +12,47 @@ import {
   ThemePrepared,
 } from "@fluentui/react-northstar";
 
-import { themeState } from "states/fluentui-northstar";
+import { FluentuiNorthstarThemeState } from "states/fluentui-northstar";
 import { SetLocalStorageTheme } from "libs/local-storage";
 import {
   FluentuiNorthstarThemeList,
   FluentuiNorthstarThemeToString,
 } from "types/fluentui-northstar";
+import { AboutPath, UsersPath, HomePath } from "App";
 
 export default function Header() {
-  const [theme, setTheme] = useRecoilState(themeState);
+  const [fluentuiNorthstarTheme, setFluentuiNorthstarTheme] = useRecoilState(
+    FluentuiNorthstarThemeState
+  );
 
   const history = useHistory();
 
   const menuItems = [
     {
-      key: "/",
+      key: HomePath,
       content: "Home",
       onClick() {
-        history.push("/");
+        history.push(HomePath);
       },
       styles: {
         padding: "0.6rem",
       },
     },
     {
-      key: "/about",
+      key: AboutPath,
       content: "About",
       onClick() {
-        history.push("/about");
+        history.push(AboutPath);
       },
       styles: {
         padding: "0.6rem",
       },
     },
     {
-      key: "/users",
+      key: UsersPath,
       content: "Users",
       onClick() {
-        history.push("/users");
+        history.push(UsersPath);
       },
       styles: {
         padding: "0.6rem",
@@ -97,12 +100,12 @@ export default function Header() {
     },
   ];
   const dropdownDefaultValue = dropdownItems.find(
-    (x) => x.key === FluentuiNorthstarThemeToString(theme)
+    (x) => x.key === FluentuiNorthstarThemeToString(fluentuiNorthstarTheme)
   );
 
   function handleTheme(theme: ThemePrepared) {
     SetLocalStorageTheme(theme);
-    setTheme(theme);
+    setFluentuiNorthstarTheme(theme);
   }
 
   return (

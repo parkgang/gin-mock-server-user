@@ -1,5 +1,7 @@
 import axios from "axios";
-import { Flex, Text, Segment, ErrorIcon } from "@fluentui/react-northstar";
+import { CommunicationOptions } from "@fluentui/react-teams";
+
+import { Communication } from "components/ReactTeams";
 
 type Props = {
   title?: string;
@@ -11,7 +13,7 @@ type Props = {
  * 각 에러 instance에 맞는 적절한 컴포넌트를 바인딩 해줍니다.
  */
 export default function ErrorFallback({
-  title = "페이지를 표시하는 도중 문제가 발생했습니다.",
+  title = "문제가 발생했습니다.",
   error,
 }: Props) {
   // TODO: error instance에 맞게 컴포넌트 바인딩
@@ -25,22 +27,31 @@ export default function ErrorFallback({
     // TODO: 서버 에러의 http statue에 맞게 핸들링 하도록 추가하기
   }
 
+  function handleInteraction(target: string) {
+    switch (target) {
+      case "refresh":
+        // window.location.reload(); 으로 새로고침 시도 시 에러가 발생한 url 그래도 새로고침되어 계속 에러가 발생한 queryString으로 돌아오므로 queryString을 제거하여 새로고침 하도록 합니다.
+        window.location.href = window.location.href.split("?")[0];
+        break;
+    }
+  }
+
   return (
     <>
-      <Flex
-        fill
-        column
-        vAlign="center"
-        gap="gap.medium"
-        style={{ padding: "5rem" }}
-      >
-        <ErrorIcon size="largest" />
-        <Text size="larger">앗, 이런!</Text>
-        <Text error>{title}</Text>
-        <Segment color="red">
-          <Text temporary>{error.message}</Text>
-        </Segment>
-      </Flex>
+      <Communication
+        option={CommunicationOptions.Error}
+        fields={{
+          title: `앗, 이런! ${title}`,
+          desc: error.message,
+          actions: {
+            primary: {
+              label: "새로고침",
+              target: "refresh",
+            },
+          },
+        }}
+        onInteraction={({ target }) => handleInteraction(target)}
+      />
     </>
   );
 }

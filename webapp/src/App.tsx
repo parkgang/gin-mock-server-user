@@ -1,33 +1,49 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
 import { useRecoilValue } from "recoil";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { ErrorBoundary } from "react-error-boundary";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Provider as FluentuiNorthstarProvider } from "@fluentui/react-northstar";
 
-import About from "pages/About";
-import Home from "pages/Home";
-import Users from "pages/Users";
-import NotFound from "pages/NotFound";
-
-import { themeState } from "states/fluentui-northstar";
+import { FluentuiNorthstarThemeState } from "states/fluentui-northstar";
 
 import AppLayout from "components/AppLayout";
 import Header from "components/Header";
+import ErrorFallback from "components/ErrorFallback";
+import Spinner from "components/Loading";
+import { handlerOnError } from "libs/error";
+
+const About = lazy(() => import("pages/About"));
+const Users = lazy(() => import("pages/Users"));
+const Home = lazy(() => import("pages/Home"));
+const NotFound = lazy(() => import("pages/NotFound"));
+
+export const AboutPath = "/about";
+export const UsersPath = "/users";
+export const HomePath = "/";
 
 export default function App() {
-  const theme = useRecoilValue(themeState);
+  const theme = useRecoilValue(FluentuiNorthstarThemeState);
 
   return (
     <FluentuiNorthstarProvider theme={theme}>
       <AppLayout>
-        <Router>
-          <Header />
-          <Switch>
-            <Route exact path="/about" component={About} />
-            <Route exact path="/users" component={Users} />
-            <Route exact path="/" component={Home} />
-            <Route component={NotFound} />
-          </Switch>
-        </Router>
+        <ErrorBoundary
+          fallbackRender={({ error }) => <ErrorFallback error={error} />}
+          onError={handlerOnError}
+        >
+          <Suspense fallback={<Spinner message="페이지 불러오는 중..." />}>
+            <Router>
+              <Header />
+              <Switch>
+                <Route exact path={AboutPath} component={About} />
+                <Route exact path={UsersPath} component={Users} />
+                <Route exact path={HomePath} component={Home} />
+                <Route component={NotFound} />
+              </Switch>
+            </Router>
+          </Suspense>
+        </ErrorBoundary>
       </AppLayout>
       <ReactQueryDevtools initialIsOpen={false} />
     </FluentuiNorthstarProvider>

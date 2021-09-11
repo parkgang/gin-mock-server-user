@@ -3,7 +3,7 @@ import { ThemePrepared } from "@fluentui/react-northstar";
 
 import { GetLocalStorageTheme } from "libs/local-storage";
 
-export const themeState = atom<ThemePrepared>({
-  key: "themeState",
+export const FluentuiNorthstarThemeState = atom<ThemePrepared>({
+  key: "FluentuiNorthstarThemeState",
   default: GetLocalStorageTheme(),
 });
