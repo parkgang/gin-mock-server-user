@@ -6,7 +6,7 @@ import { Button, Form, FormInput, Flex } from "@fluentui/react-northstar";
 import { ConfirmDialog } from "components/Dialog";
 
 import { UserFormApi } from "libs/api/user";
-import { WrapError } from "libs/error";
+import { nestedError } from "libs/error";
 
 import { UserDTO } from "types/user";
 
@@ -55,7 +55,7 @@ export default function UserForm({
       setIsOpen(false);
     } catch (error) {
       if (error instanceof Error) {
-        WrapError(error, `handleSubmit 에러`);
+        nestedError(`handleSubmit 에러`, error);
       }
       handleError(error);
     }

@@ -6,7 +6,7 @@ import { Flex, Button, Header } from "@fluentui/react-northstar";
 import { ConfirmDialog } from "components/Dialog";
 
 import { DeleteUser } from "libs/api/user";
-import { WrapError } from "libs/error";
+import { nestedError } from "libs/error";
 
 type Props = {
   id: number;
@@ -32,7 +32,7 @@ export default function ConfirmDelete({ id, trigger }: Props) {
       setIsOpen(false);
     } catch (error) {
       if (error instanceof Error) {
-        WrapError(error, `handleDelete 에러`);
+        nestedError(`handleDelete 에러`, error);
       }
       handleError(error);
     }
