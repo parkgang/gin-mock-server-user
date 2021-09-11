@@ -16,15 +16,15 @@ export default function ErrorFallback({
   title = "문제가 발생했어요.",
   error,
 }: Props) {
-  // TODO: error instance에 맞게 컴포넌트 바인딩
   // handleError(); 등 을 통해 error를 any 타입으로 던지는 경우 Error interface 를 충족하지 못하여 문제가 발생합니다.
   // 모든 에러를 처리하는 Component으로 디자인 되었으므로 방어적으로 처리합니다.
   if (typeof error === "string") {
     // 다른 에러 컴포넌트와 interface를 맞추기 위해 Error 객체로 boxing 합니다.
     error = new Error(error);
-  }
-  if (axios.isAxiosError(error)) {
-    // TODO: 서버 에러의 http statue에 맞게 핸들링 하도록 추가하기
+  } else if (axios.isAxiosError(error)) {
+    // 서버 에러의 http statue에 맞게 핸들링 하도록 합니다.
+    // Server Side에서 에러시 항상 message property으로 response 해주기 때문에 해당 내용을 에러화면에 보여주도록 합니다. 만약 없다면 js 기본 메시지 입니다.
+    error.message = error.response?.data.message ?? error.message;
   }
 
   function handleInteraction(target: string) {
