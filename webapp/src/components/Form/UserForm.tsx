@@ -88,7 +88,7 @@ export default function UserForm({
                 defaultValue={defaultValue.arg.toString()}
               />
               <Flex gap="gap.small" hAlign="center">
-                <Button content="생성" primary />
+                <Button content={id ? "수정" : "생성"} primary />
                 <Button content="취소" onClick={handleCancel} />
               </Flex>
             </Form>

@@ -22,7 +22,7 @@ export default function Home() {
         )}
         onError={handlerOnError}
       >
-        <Flex column gap="gap.small">
+        <Flex column gap="gap.small" style={{ overflowY: "scroll" }}>
           <Header value={name} onChange={onChangeKeyword} />
           <Suspense fallback={<LoadingCard />}>
             <UserCard searchKeyword={name} />
