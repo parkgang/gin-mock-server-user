@@ -1,5 +1,4 @@
 import { Children } from "react";
-import { useQuery } from "react-query";
 import {
   Flex,
   Card,
@@ -12,19 +11,20 @@ import {
 } from "@fluentui/react-northstar";
 import { CommunicationOptions } from "@fluentui/react-teams";
 
-import { GetUser, PutUser } from "libs/api/user";
+import { PutUser } from "libs/api/user";
 import { Communication } from "components/ReactTeams";
 import ConfirmDelete from "components/UserList/ConfirmDelete";
 import { UserForm } from "components/Form";
+import useUserListQuery from "hooks/query/useUserListQuery";
 
-export default function UserCard() {
-  const { data: userList } = useQuery("userList", GetUser);
-  if (userList === undefined) {
-    // TODO: undefined 커스텀 에러를 만들어서 해당 에러의 경우에만 예쁜 에러 페이지를 보여줄 수 있도록 디자인
-    throw new Error("userList 값이 존재하지 않습니다.");
-  }
+type Props = {
+  searchKeyword: string;
+};
 
-  if (userList === null) {
+export default function UserCard({ searchKeyword = "" }: Props) {
+  const userLists = useUserListQuery();
+
+  if (userLists === null) {
     return (
       <>
         <Communication
@@ -38,11 +38,29 @@ export default function UserCard() {
     );
   }
 
+  const resultItems = userLists.filter(
+    (x) => x.name.toLowerCase().indexOf(searchKeyword.toLowerCase()) !== -1
+  );
+
+  if (resultItems.length === 0) {
+    return (
+      <>
+        <Communication
+          option={CommunicationOptions.Empty}
+          fields={{
+            title: `검색된 사용자가 없습니다.`,
+            desc: ``,
+          }}
+        />
+      </>
+    );
+  }
+
   return (
     <>
       <Flex column gap="gap.smaller" style={{ overflowY: "scroll" }}>
         {Children.toArray(
-          userList.map((x) => (
+          resultItems.map((x) => (
             <Card fluid style={{ padding: "0.5em" }}>
               <CardBody style={{ marginBottom: "0" }}>
                 <Flex column gap="gap.small" vAlign="center">

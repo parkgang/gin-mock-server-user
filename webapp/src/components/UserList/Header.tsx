@@ -7,14 +7,14 @@ import {
 } from "@fluentui/react-northstar";
 
 import { UserForm } from "components/Form";
-
-import useKeyword from "hooks/useKeyword";
-
 import { PostUser } from "libs/api/user";
 
-export default function Header() {
-  const [name, , onChangeKeyword] = useKeyword("");
+type Props = {
+  value: string;
+  onChange(e: any): void;
+};
 
+export default function Header({ value, onChange }: Props) {
   return (
     <>
       <Flex gap="gap.small" space="between">
@@ -23,8 +23,8 @@ export default function Header() {
           fluid
           clearable
           placeholder="이름으로 검색..."
-          value={name}
-          onChange={onChangeKeyword}
+          value={value}
+          onChange={onChange}
         />
         <UserForm
           trigger={

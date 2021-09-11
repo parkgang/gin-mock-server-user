@@ -6,8 +6,11 @@ import { LoadingCard } from "components/Loading";
 import { UserCard, Header } from "components/UserList";
 import ErrorFallback from "components/ErrorFallback";
 import { handlerOnError } from "libs/error";
+import useKeyword from "hooks/useKeyword";
 
 export default function Home() {
+  const [name, , onChangeKeyword] = useKeyword("");
+
   return (
     <>
       <ErrorBoundary
@@ -20,9 +23,9 @@ export default function Home() {
         onError={handlerOnError}
       >
         <Flex column gap="gap.small">
-          <Header />
+          <Header value={name} onChange={onChangeKeyword} />
           <Suspense fallback={<LoadingCard />}>
-            <UserCard />
+            <UserCard searchKeyword={name} />
           </Suspense>
         </Flex>
       </ErrorBoundary>
