@@ -13,7 +13,7 @@ type Props = {
  * 각 에러 instance에 맞는 적절한 컴포넌트를 바인딩 해줍니다.
  */
 export default function ErrorFallback({
-  title = "문제가 발생했습니다.",
+  title = "문제가 발생했어요.",
   error,
 }: Props) {
   // TODO: error instance에 맞게 컴포넌트 바인딩

@@ -26,26 +26,28 @@ export default function App() {
   const theme = useRecoilValue(FluentuiNorthstarThemeState);
 
   return (
-    <FluentuiNorthstarProvider theme={theme}>
-      <AppLayout>
-        <ErrorBoundary
-          fallbackRender={({ error }) => <ErrorFallback error={error} />}
-          onError={handlerOnError}
-        >
-          <Suspense fallback={<Spinner message="페이지 불러오는 중..." />}>
-            <Router>
-              <Header />
-              <Switch>
-                <Route exact path={AboutPath} component={About} />
-                <Route exact path={UsersPath} component={Users} />
-                <Route exact path={HomePath} component={Home} />
-                <Route component={NotFound} />
-              </Switch>
-            </Router>
-          </Suspense>
-        </ErrorBoundary>
-      </AppLayout>
+    <>
+      <FluentuiNorthstarProvider theme={theme}>
+        <AppLayout>
+          <ErrorBoundary
+            fallbackRender={({ error }) => <ErrorFallback error={error} />}
+            onError={handlerOnError}
+          >
+            <Suspense fallback={<Spinner message="페이지 불러오는 중..." />}>
+              <Router>
+                <Header />
+                <Switch>
+                  <Route exact path={AboutPath} component={About} />
+                  <Route exact path={UsersPath} component={Users} />
+                  <Route exact path={HomePath} component={Home} />
+                  <Route component={NotFound} />
+                </Switch>
+              </Router>
+            </Suspense>
+          </ErrorBoundary>
+        </AppLayout>
+      </FluentuiNorthstarProvider>
       <ReactQueryDevtools initialIsOpen={false} />
-    </FluentuiNorthstarProvider>
+    </>
   );
 }

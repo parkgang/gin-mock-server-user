@@ -24,15 +24,6 @@ export default function UserCard() {
     throw new Error("userList 값이 존재하지 않습니다.");
   }
 
-  function handleInteraction(target: string) {
-    switch (target) {
-      case "refresh":
-        // window.location.reload(); 으로 새로고침 시도 시 에러가 발생한 url 그래도 새로고침되어 계속 에러가 발생한 queryString으로 돌아오므로 queryString을 제거하여 새로고침 하도록 합니다.
-        window.location.href = window.location.href.split("?")[0];
-        break;
-    }
-  }
-
   if (userList === null) {
     return (
       <>
@@ -41,14 +32,7 @@ export default function UserCard() {
           fields={{
             title: `아직 사용자가 없습니다.`,
             desc: `사용자 할당되면 여기에서 찾을 수 있습니다. 그때까지 쉬는 시간을 즐기십시오.`,
-            actions: {
-              primary: {
-                label: "새로고침",
-                target: "refresh",
-              },
-            },
           }}
-          onInteraction={({ target }) => handleInteraction(target)}
         />
       </>
     );
