@@ -2,18 +2,18 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/parkgang/modern-board/controllers"
+	"github.com/parkgang/modern-board/handlers"
 )
 
 func Use(api *gin.RouterGroup) {
-	api.GET("/ping", controllers.Ping)
+	api.GET("/ping", handlers.Ping)
 	users := api.Group("/users")
 	{
-		users.POST("", controllers.PostUser)
-		users.GET("", controllers.GetAllUser)
-		users.GET("/:id", controllers.GetUser)
-		users.PUT("/:id", controllers.PutUser)
-		users.DELETE("", controllers.DeleteAllUser)
-		users.DELETE("/:id", controllers.DeleteUser)
+		users.POST("", handlers.PostUser)
+		users.GET("", handlers.GetAllUser)
+		users.GET("/:id", handlers.GetUser)
+		users.PUT("/:id", handlers.PutUser)
+		users.DELETE("", handlers.DeleteAllUser)
+		users.DELETE("/:id", handlers.DeleteUser)
 	}
 }
