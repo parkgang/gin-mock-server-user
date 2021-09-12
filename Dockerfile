@@ -1,38 +1,47 @@
-FROM node:14.16.1 AS cra-builder
-WORKDIR /var/webapp
-COPY webapp .
-RUN npm i
-RUN npm run build
-WORKDIR /dist
-RUN cp -r /var/webapp/build .
+FROM node:14.16.1 AS node-builder
 
-# [해당 문서를 참고하였습니다](https://thesorauniverse.com/posts/kr/golang/making-golang-docker-img-best-practices/)
-FROM golang:1.16.3 AS go-builder
-
-ENV GO111MODULE=on \
-    CGO_ENABLED=0 \
-    GOOS=linux \
-    GOARCH=amd64
+ARG CHECKOUT_PATH=webapp
 
 WORKDIR /build
-
-COPY server .
-
-RUN go mod download
-
-RUN go build -o main .
+COPY ./${CHECKOUT_PATH}/package*.json ./
+RUN npm ci --only=production
+COPY ./${CHECKOUT_PATH} ./
+RUN npm run build
 
 WORKDIR /dist
+RUN cp -r /build/build ./
 
-RUN cp /build/main .
-RUN cp /build/configs/config.prod.json .
+FROM golang:1.16.3 AS golang-builder
+
+ARG CHECKOUT_PATH=server
+
+ENV GO111MODULE=on
+ENV CGO_ENABLED=0
+ENV GOOS=linux
+ENV GOARCH=amd64
+
+WORKDIR /build
+COPY ./${CHECKOUT_PATH}/go.mod ./
+COPY ./${CHECKOUT_PATH}/go.sum ./
+RUN go mod download
+COPY ./${CHECKOUT_PATH} ./
+RUN go build -o main ./
+
+WORKDIR /dist
+RUN cp /build/main ./
+RUN cp /build/configs/config.prod.json ./
 
 FROM scratch
 
-COPY --from=cra-builder /dist/build ./webapp/build
-COPY --from=go-builder /dist/main .
-COPY --from=go-builder /dist/config.prod.json ./configs/config.prod.json
-
 ENV GO_ENV=production
 
-ENTRYPOINT ["/main"]
+WORKDIR /webapp
+COPY --from=node-builder /dist/build ./build
+
+WORKDIR /server
+COPY --from=golang-builder /dist/main ./
+COPY --from=golang-builder /dist/config.prod.json ./configs/config.prod.json
+
+EXPOSE 8080
+
+ENTRYPOINT ["/server/main"]
