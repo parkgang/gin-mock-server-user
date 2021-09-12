@@ -6,16 +6,17 @@
 1. viper
 1. swag
 
-## swag 확인 및 업데이트 방법
+## swagger 확인 및 업데이트 방법
 
 1. [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html) 에서 swagger 문서를 확인하실 수 있습니다.
+1. swagger 업데이트 명령어가 vscode `tasks.json` 에 정의되어 있음으로 편하게 task로 실행하세요! 😎
 
-> vscode `tasks.json` 에 정의되어 있음으로 편하게 task으로 실행하세요! 😎
-
-```shell
-export PATH=$(go env GOPATH)/bin:$PATH
-swag i
-```
+> 직접 명령어로 수행 하시려면 아래의 명령어를 사용하세요.
+>
+> ```shell
+> export PATH=$(go env GOPATH)/bin:$PATH
+> swag i
+> ```
 
 ## 환경 변수
 
