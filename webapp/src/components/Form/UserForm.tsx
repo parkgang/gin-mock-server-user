@@ -4,10 +4,8 @@ import { useErrorHandler } from "react-error-boundary";
 import { Button, Form, FormInput, Flex } from "@fluentui/react-northstar";
 
 import { ConfirmDialog } from "components/Dialog";
-
 import { UserFormApi } from "libs/api/user";
 import { nestedError } from "libs/error";
-
 import { UserDTO } from "types/user";
 
 type UserFormValue = {

@@ -1,35 +1,15 @@
-import {
-  teamsTheme,
-  teamsDarkTheme,
-  teamsHighContrastTheme,
-  teamsV2Theme,
-  teamsDarkV2Theme,
-  ThemePrepared,
-} from "@fluentui/react-northstar";
+import { ThemePrepared } from "@fluentui/react-northstar";
 
 import { name } from "../../package.json";
 import {
-  FluentuiNorthstarThemeList,
   FluentuiNorthstarThemeToString,
+  StringToFluentuiNorthstarTheme,
 } from "types/fluentui-northstar";
 
 const themeKey = `${name}-theme`;
 
 export function GetLocalStorageTheme() {
-  switch (localStorage.getItem(themeKey)) {
-    case FluentuiNorthstarThemeList.teamsTheme:
-      return teamsTheme;
-    case FluentuiNorthstarThemeList.teamsDarkTheme:
-      return teamsDarkTheme;
-    case FluentuiNorthstarThemeList.teamsHighContrastTheme:
-      return teamsHighContrastTheme;
-    case FluentuiNorthstarThemeList.teamsV2Theme:
-      return teamsV2Theme;
-    case FluentuiNorthstarThemeList.teamsDarkV2Theme:
-      return teamsDarkV2Theme;
-    default:
-      return teamsTheme;
-  }
+  return StringToFluentuiNorthstarTheme(localStorage.getItem(themeKey));
 }
 
 export function SetLocalStorageTheme(theme: ThemePrepared) {

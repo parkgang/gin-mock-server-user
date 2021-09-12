@@ -36,3 +36,23 @@ export function FluentuiNorthstarThemeToString(theme: ThemePrepared) {
     throw new Error("App에서 지정되지 않은 Theme가 들어왔습니다.");
   }
 }
+
+/**
+ * Fluentui Northstar 테마 문자열에 맞는 테마변수로 변환해줍니다. 기본 값은 teamsTheme 입니다.
+ */
+export function StringToFluentuiNorthstarTheme(themeString: string | null) {
+  switch (themeString) {
+    case FluentuiNorthstarThemeList.teamsTheme:
+      return teamsTheme;
+    case FluentuiNorthstarThemeList.teamsDarkTheme:
+      return teamsDarkTheme;
+    case FluentuiNorthstarThemeList.teamsHighContrastTheme:
+      return teamsHighContrastTheme;
+    case FluentuiNorthstarThemeList.teamsV2Theme:
+      return teamsV2Theme;
+    case FluentuiNorthstarThemeList.teamsDarkV2Theme:
+      return teamsDarkV2Theme;
+    default:
+      return teamsTheme;
+  }
+}

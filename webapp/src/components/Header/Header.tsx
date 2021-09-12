@@ -13,7 +13,6 @@ import {
 } from "@fluentui/react-northstar";
 
 import { FluentuiNorthstarThemeState } from "states/fluentui-northstar";
-import { SetLocalStorageTheme } from "libs/local-storage";
 import {
   FluentuiNorthstarThemeList,
   FluentuiNorthstarThemeToString,
@@ -104,7 +103,6 @@ export default function Header() {
   );
 
   function handleTheme(theme: ThemePrepared) {
-    SetLocalStorageTheme(theme);
     setFluentuiNorthstarTheme(theme);
   }
 

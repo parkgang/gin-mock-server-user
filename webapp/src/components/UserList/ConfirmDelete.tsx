@@ -4,7 +4,6 @@ import { useErrorHandler } from "react-error-boundary";
 import { Flex, Button, Header } from "@fluentui/react-northstar";
 
 import { ConfirmDialog } from "components/Dialog";
-
 import { DeleteUser } from "libs/api/user";
 import { nestedError } from "libs/error";
 
