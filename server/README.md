@@ -2,7 +2,7 @@
 
 1. go1.16.3 darwin/amd64
 1. gin
-1. gorm
+1. gorm (mysql)
 1. viper
 1. swag
 
