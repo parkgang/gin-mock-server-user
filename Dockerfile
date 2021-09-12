@@ -33,6 +33,9 @@ RUN cp /build/configs/config.prod.json ./
 
 FROM scratch
 
+LABEL author="parkgang[Kyungeun Park]<ruddms936@naver.com>"
+LABEL version="0.1.0"
+
 ENV GO_ENV=production
 
 WORKDIR /webapp
