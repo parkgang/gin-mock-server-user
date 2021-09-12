@@ -1,10 +1,14 @@
-@URL = http://localhost:8080/api
+@HOST = http://localhost:8080
+@API_END_POINT = {{HOST}}/api
+
+### SPA Files
+GET {{HOST}}
 
 ### Server Health Check
-GET {{URL}}/ping
+GET {{API_END_POINT}}/ping
 
 ### 사용자 생성
-POST {{URL}}/users
+POST {{API_END_POINT}}/users
 
 {
     "name": "kyungeun",
@@ -12,13 +16,13 @@ POST {{URL}}/users
 }
 
 ### 전체 사용자 조회
-GET {{URL}}/users
+GET {{API_END_POINT}}/users
 
 ### 사용자 조회
-GET {{URL}}/users/1
+GET {{API_END_POINT}}/users/1
 
 ### 사용자 수정
-PUT {{URL}}/users/1
+PUT {{API_END_POINT}}/users/1
 
 {
     "name": "이름 변경",
@@ -26,7 +30,7 @@ PUT {{URL}}/users/1
 }
 
 ### 전체 사용자 삭제
-DELETE  {{URL}}/users
+DELETE  {{API_END_POINT}}/users
 
 ### 사용자 삭제
-DELETE  {{URL}}/users/1
+DELETE  {{API_END_POINT}}/users/1

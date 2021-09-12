@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/parkgang/modern-board/configs"
 	"github.com/parkgang/modern-board/docs"
+	"github.com/parkgang/modern-board/middlewares"
 	_ "github.com/parkgang/modern-board/mysql"
 	apiRouter "github.com/parkgang/modern-board/routers"
 	"github.com/spf13/viper"
@@ -37,8 +38,9 @@ func main() {
 	// SPA
 	{
 		const spaPath string = "../webapp/build"
+		// 정적파일 응답에 헤더 추가 ("/" 경로에 헤더를 추가하기 위해서는 정적파일 서빙 미들웨어보다 위에 선언되어야 합니다)
+		router.Use(middlewares.SpaResponseHeaders())
 		// 정적파일 서빙
-		// TODO: 캐쉬 헤더 추가해야함
 		router.Use(static.Serve("/", static.LocalFile(spaPath, true)))
 		// [CSR Router를 위함](https://github.com/gin-gonic/contrib/issues/90#issuecomment-286924994)
 		router.NoRoute(func(c *gin.Context) {
