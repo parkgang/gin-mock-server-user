@@ -1,0 +1,15 @@
+# .git 과 .cache 폴더를 무시 
+.git 
+.cache 
+
+# 모든 마크다운 파일들 (md) 파일들을 무시, 
+# 모든 README*.md 파일 무시 
+*.md
+!README.md
+
+#
+node_modules
+*.log
+
+#
+webapp/build
