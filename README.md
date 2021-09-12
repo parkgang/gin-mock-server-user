@@ -18,15 +18,17 @@
 
 > Bulletins created using modern stacks
 
-설명 작성 예정
+1. 일반적인 기능을 가지고 있는 게시판 **웹 앱**이지만 나름대로 현대적인 기술을 사용하여 재해석한 프로젝트입니다.
+1. 룩앤필은 [Microsoft Teams](https://www.microsoft.com/ko-kr/microsoft-teams/group-chat-software) 를 따라갑니다.
+1. 프로젝트에 사용된 기술은 각 제품의 [webapp (react)](./webapp), [server (gin)](./server) 를 참고해주세요.
 
-# Common tool
+## Common tool
 
 1. vscode
 1. datagrip
 1. docker
 
-# Start
+## Quick start
 
 `vscode` 에서 실행 및 디버그로 바로 실행하세요!  
 server, client side 모두 vscode 디버깅 사용 시 자동으로 실행하고 중지하도록 구성되어 있습니다! 😎
@@ -38,3 +40,12 @@ server, client side 모두 vscode 디버깅 사용 시 자동으로 실행하고
 > ```shell
 > docker-compose up -d
 > ```
+
+## Prod deployment
+
+prod으로 쉽게 배포할 수 있도록 `Dockerfile` 파일이 모두 작성되어 있으니 개발 프로세스에 맞춰서 `CI/CD` pipeline으로 태우거나 혹은 아래의 cli로 배포의 재미를 느껴보세요!
+
+```shell
+docker build -t parkgang/modern-board:0.1.0 .
+docker run --name modern-board-prod -p 22000:8080 -d parkgang/modern-board:0.1.0
+```
