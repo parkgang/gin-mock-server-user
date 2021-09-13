@@ -13,5 +13,9 @@
 
   "[go]": {
     "editor.defaultFormatter": "golang.go"
+  },
+  // [handler에 중단점을 찍을 때마다 디버깅이 중지되어서 일단은 레거시 디버깅 사용](https://stackoverflow.com/questions/69156581/does-the-execution-have-to-keep-stopping-to-set-a-breakpoint)
+  "go.delveConfig": {
+    "debugAdapter": "legacy"
   }
 }
