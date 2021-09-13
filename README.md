@@ -31,7 +31,7 @@
 ## Quick start
 
 `vscode` 에서 실행 및 디버그로 바로 실행하세요!  
-server, client side 모두 vscode 디버깅 사용 시 자동으로 실행하고 중지하도록 구성되어 있습니다! 😎
+server, client side 모두 vscode 디버깅 사용 시 **자동**으로 실행하고 중지하도록 구성되어 있습니다! 😎
 
 물론, 필요한 의존성과 docker, vscode extension은 미리 설치되어 있어야 합니다! 각 제품의 `README.md` 를 참고하세요.
 
