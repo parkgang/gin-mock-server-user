@@ -11,16 +11,17 @@
       </tr>
     </tbody>
   </table>
-  <h2 align="center">
+  <h1 align="center">
     ✨ modern-board 🤟
-  </h2>
+  </h1>
 </p>
+<div align="center">
 
 > Bulletins created using modern stacks
 
-1. 일반적인 기능을 가지고 있는 게시판 **웹 앱**이지만 나름대로 현대적인 기술을 사용하여 재해석한 프로젝트입니다.
-1. 룩앤필은 [Microsoft Teams](https://www.microsoft.com/ko-kr/microsoft-teams/group-chat-software) 를 따라갑니다.
-1. 프로젝트에 사용 된 기술은 각 제품의 [webapp (react)](./webapp), [server (gin)](./server) 를 참고해주세요.
+일반적인 기능을 가지고 있는 게시판 **웹 앱**이지만 나름대로 현대적인 기술을 사용하여 재해석한 프로젝트입니다. 룩앤필은 [Microsoft Teams](https://www.microsoft.com/ko-kr/microsoft-teams/group-chat-software) 를 따라갑니다. 프로젝트에 사용 된 기술은 각 제품의 [webapp (react)](./webapp), [server (gin)](./server) 를 참고해주세요.
+
+</div>
 
 ## Common tool
 
