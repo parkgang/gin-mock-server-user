@@ -15,7 +15,7 @@ import {
 import { FluentuiNorthstarThemeState } from "states/fluentui-northstar";
 import {
   FluentuiNorthstarThemeList,
-  FluentuiNorthstarThemeToString,
+  getFluentuiNorthstarThemeToString,
 } from "types/fluentui-northstar";
 import { AboutPath, UsersPath, HomePath } from "App";
 
@@ -99,7 +99,7 @@ export default function Header() {
     },
   ];
   const dropdownDefaultValue = dropdownItems.find(
-    (x) => x.key === FluentuiNorthstarThemeToString(fluentuiNorthstarTheme)
+    (x) => x.key === getFluentuiNorthstarThemeToString(fluentuiNorthstarTheme)
   );
 
   function handleTheme(theme: ThemePrepared) {

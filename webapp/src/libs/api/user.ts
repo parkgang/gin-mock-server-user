@@ -3,13 +3,13 @@ import axios from "axios";
 import { User, UserDTO } from "types/user";
 import client from "libs/api/client";
 
-export type UserFormApi = typeof PostUser | typeof PutUser;
+export type UserFormApi = typeof postUser | typeof putUser;
 
-export async function PostUser(user: UserDTO) {
+export async function postUser(user: UserDTO) {
   await client.post(`/users`, user);
 }
 
-export async function GetUser() {
+export async function getUser() {
   try {
     const { data } = await client.get<User[]>(`/users`);
     return data;
@@ -23,10 +23,10 @@ export async function GetUser() {
   }
 }
 
-export async function PutUser(user: UserDTO, id: number) {
+export async function putUser(user: UserDTO, id: number) {
   await client.put(`/users/${id}`, user);
 }
 
-export async function DeleteUser(id: number) {
+export async function deleteUser(id: number) {
   await client.delete(`/users/${id}`);
 }

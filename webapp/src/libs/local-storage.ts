@@ -2,16 +2,16 @@ import { ThemePrepared } from "@fluentui/react-northstar";
 
 import { name } from "../../package.json";
 import {
-  FluentuiNorthstarThemeToString,
-  StringToFluentuiNorthstarTheme,
+  getFluentuiNorthstarThemeToString,
+  getStringToFluentuiNorthstarTheme,
 } from "types/fluentui-northstar";
 
 const themeKey = `${name}-theme`;
 
-export function GetLocalStorageTheme() {
-  return StringToFluentuiNorthstarTheme(localStorage.getItem(themeKey));
+export function getLocalStorageTheme() {
+  return getStringToFluentuiNorthstarTheme(localStorage.getItem(themeKey));
 }
 
-export function SetLocalStorageTheme(theme: ThemePrepared) {
-  localStorage.setItem(themeKey, FluentuiNorthstarThemeToString(theme));
+export function setLocalStorageTheme(theme: ThemePrepared) {
+  localStorage.setItem(themeKey, getFluentuiNorthstarThemeToString(theme));
 }

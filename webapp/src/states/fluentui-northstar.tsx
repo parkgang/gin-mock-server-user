@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import { atom, useRecoilValue } from "recoil";
 import { ThemePrepared } from "@fluentui/react-northstar";
 
-import { GetLocalStorageTheme, SetLocalStorageTheme } from "libs/local-storage";
+import { getLocalStorageTheme, setLocalStorageTheme } from "libs/local-storage";
 
 export const FluentuiNorthstarThemeState = atom<ThemePrepared>({
   key: "FluentuiNorthstarThemeState",
-  default: GetLocalStorageTheme(),
+  default: getLocalStorageTheme(),
 });
 
 /**
@@ -18,7 +18,7 @@ export function FluentuiNorthstarThemeEffect() {
   );
 
   useEffect(() => {
-    SetLocalStorageTheme(fluentuiNorthstarThemeState);
+    setLocalStorageTheme(fluentuiNorthstarThemeState);
   }, [fluentuiNorthstarThemeState]);
 
   return <></>;

@@ -11,7 +11,7 @@ import {
 } from "@fluentui/react-northstar";
 import { CommunicationOptions } from "@fluentui/react-teams";
 
-import { PutUser } from "libs/api/user";
+import { putUser } from "libs/api/user";
 import { Communication } from "components/ReactTeams";
 import ConfirmDelete from "components/UserList/ConfirmDelete";
 import { UserForm } from "components/Form";
@@ -99,7 +99,7 @@ export default function UserCard({ searchKeyword = "" }: Props) {
                             content={<EditIcon />}
                           />
                         }
-                        onSubmit={PutUser}
+                        onSubmit={putUser}
                       />
                     </Flex>
                   </Flex>

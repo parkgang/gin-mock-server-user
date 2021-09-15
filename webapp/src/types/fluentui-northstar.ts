@@ -21,7 +21,7 @@ export enum FluentuiNorthstarThemeList {
 /**
  * Fluentui Northstar 테마에 맞는 문자열로 변환해줍니다.
  */
-export function FluentuiNorthstarThemeToString(theme: ThemePrepared) {
+export function getFluentuiNorthstarThemeToString(theme: ThemePrepared) {
   if (theme === teamsTheme) {
     return FluentuiNorthstarThemeList.teamsTheme;
   } else if (theme === teamsDarkTheme) {
@@ -40,10 +40,8 @@ export function FluentuiNorthstarThemeToString(theme: ThemePrepared) {
 /**
  * Fluentui Northstar 테마 문자열에 맞는 테마변수로 변환해줍니다. 기본 값은 teamsTheme 입니다.
  */
-export function StringToFluentuiNorthstarTheme(themeString: string | null) {
+export function getStringToFluentuiNorthstarTheme(themeString: string | null) {
   switch (themeString) {
-    case FluentuiNorthstarThemeList.teamsTheme:
-      return teamsTheme;
     case FluentuiNorthstarThemeList.teamsDarkTheme:
       return teamsDarkTheme;
     case FluentuiNorthstarThemeList.teamsHighContrastTheme:
@@ -52,6 +50,7 @@ export function StringToFluentuiNorthstarTheme(themeString: string | null) {
       return teamsV2Theme;
     case FluentuiNorthstarThemeList.teamsDarkV2Theme:
       return teamsDarkV2Theme;
+    case FluentuiNorthstarThemeList.teamsTheme:
     default:
       return teamsTheme;
   }

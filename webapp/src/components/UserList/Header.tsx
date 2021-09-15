@@ -7,7 +7,7 @@ import {
 } from "@fluentui/react-northstar";
 
 import { UserForm } from "components/Form";
-import { PostUser } from "libs/api/user";
+import { postUser } from "libs/api/user";
 
 type Props = {
   value: string;
@@ -38,7 +38,7 @@ export default function Header({ value, onChange }: Props) {
               content={<ParticipantAddIcon />}
             />
           }
-          onSubmit={PostUser}
+          onSubmit={postUser}
         />
       </Flex>
     </>
