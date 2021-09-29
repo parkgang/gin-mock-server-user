@@ -13,4 +13,5 @@ from users;
 insert into users(name, arg)
 VALUES ('박경은', 99);
 
-delete from users;
+delete
+from users;
