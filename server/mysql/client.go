@@ -15,13 +15,13 @@ var (
 )
 
 func init() {
-	mysqlHost := viper.GetString("database.mysql.host")
-	mysqlPort := viper.GetString("database.mysql.port")
-	mysqlUser := viper.GetString("database.mysql.user")
-	mysqlPass := viper.GetString("database.mysql.pass")
-	mysqlDbname := viper.GetString("database.mysql.dbname")
+	mysqlMasterHost := viper.GetString("MYSQL_MASTER_HOST")
+	mysqlMasterPort := viper.GetString("MYSQL_MASTER_PORT")
+	mysqlMasterUser := viper.GetString("MYSQL_MASTER_USERNAME")
+	mysqlMasterPass := viper.GetString("MYSQL_MASTER_PASSWORD")
+	mysqlMasterDbname := viper.GetString("MYSQL_MASTER_DATABASE")
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", mysqlUser, mysqlPass, mysqlHost, mysqlPort, mysqlDbname)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", mysqlMasterUser, mysqlMasterPass, mysqlMasterHost, mysqlMasterPort, mysqlMasterDbname)
 
 	log.Println("mysql 연결 중...")
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
