@@ -63,6 +63,8 @@ func main() {
 	}
 
 	log.Printf("gin server listening at http://localhost%s\n", port)
-	router.Run(port)
+	if err := router.Run(port); err != nil {
+		log.Fatal(err)
+	}
 	log.Println("gin server close", port)
 }
