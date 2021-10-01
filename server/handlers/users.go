@@ -231,3 +231,33 @@ func DeleteUser(c *gin.Context) {
 
 	c.Status(http.StatusNoContent)
 }
+
+func UserLogin(c *gin.Context) {
+	// TODO: 사용자 로그인 핸들러 구현
+	c.JSON(http.StatusOK, gin.H{
+		"message": "사용자 로그인 핸들러 구현 예정",
+	})
+}
+
+func UserKakaoLoginCallBack(c *gin.Context) {
+	// TODO: Error 코드같은거 들어오면 처리할 수 있도록 디자인
+	code := c.Query("code")
+	libs.GetKakaoToken(code)
+	libs.GetUserInfo()
+	// TODO: 하드 코딩이므로 동적으로 변경될 것을 고려해야합니다.
+	c.Redirect(http.StatusFound, "http://localhost:3000/auth-end")
+}
+
+func UserLogout(c *gin.Context) {
+	// TODO: 사용자 로그아웃 핸들러 구현
+	c.JSON(http.StatusOK, gin.H{
+		"message": "사용자 로그아웃 핸들러 구현 예정",
+	})
+}
+
+func UserTokenRefresh(c *gin.Context) {
+	// TODO: 사용자 토큰 리프레시 핸들러 구현
+	c.JSON(http.StatusOK, gin.H{
+		"message": "사용자 토큰 리프레시 핸들러 구현 예정",
+	})
+}

@@ -34,3 +34,15 @@ DELETE  {{API_END_POINT}}/users
 
 ### 사용자 삭제
 DELETE  {{API_END_POINT}}/users/1
+
+### 사용자 로그인
+POST {{API_END_POINT}}/users/login
+
+### 사용자 카카오 로그인
+GET {{API_END_POINT}}/users/login/kakao
+
+### 사용자 로그아웃
+POST {{API_END_POINT}}/users/logout
+
+### 사용자 토큰 갱신
+POST {{API_END_POINT}}/users/token/refresh

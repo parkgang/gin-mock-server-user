@@ -15,5 +15,10 @@ func Use(api *gin.RouterGroup) {
 		users.PUT("/:id", handlers.PutUser)
 		users.DELETE("", handlers.DeleteAllUser)
 		users.DELETE("/:id", handlers.DeleteUser)
+
+		users.POST("/login", handlers.UserLogin)
+		users.GET("/login/kakao", handlers.UserKakaoLoginCallBack)
+		users.POST("/logout", handlers.UserLogout)
+		users.POST("/token/refresh", handlers.UserTokenRefresh)
 	}
 }
