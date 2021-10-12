@@ -64,7 +64,7 @@ func main() {
 
 	log.Printf("gin server listening at http://localhost%s\n", port)
 	if err := router.Run(port); err != nil {
-		log.Fatal(err)
+		log.Fatal("gin server에서 예상하지 못한 에러가 발생하였습니다.\n\t" + err.Error())
 	}
 	log.Println("gin server close", port)
 }
