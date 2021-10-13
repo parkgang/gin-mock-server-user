@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/url"
 
+	"github.com/parkgang/modern-board/internal/app/models"
 	"github.com/parkgang/modern-board/internal/pkg/httpclient"
-	"github.com/parkgang/modern-board/models"
 	"github.com/spf13/viper"
 )
 

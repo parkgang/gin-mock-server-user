@@ -6,10 +6,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/parkgang/modern-board/internal/app/data/mysql"
+	"github.com/parkgang/modern-board/internal/app/models"
 	"github.com/parkgang/modern-board/internal/pkg/kakao"
 	"github.com/parkgang/modern-board/internal/pkg/util"
-	"github.com/parkgang/modern-board/models"
-	"github.com/parkgang/modern-board/mysql"
 	"gorm.io/gorm"
 )
 

@@ -2,7 +2,7 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/parkgang/modern-board/handlers"
+	"github.com/parkgang/modern-board/internal/app/handlers"
 )
 
 func Use(api *gin.RouterGroup) {
