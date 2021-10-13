@@ -21,4 +21,8 @@ func Use(api *gin.RouterGroup) {
 		users.POST("/logout", handlers.UserLogout)
 		users.POST("/token/refresh", handlers.UserTokenRefresh)
 	}
+	configs := api.Group("/configs")
+	{
+		configs.GET("", handlers.GetConfigs)
+	}
 }

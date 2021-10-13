@@ -1,5 +1,9 @@
-@HOST = http://localhost:8080
-@API_END_POINT = {{HOST}}/api
+@PROTOCOL = http://
+@HOSTNAME = localhost
+@PORT = 8080
+@HOST = {{HOSTNAME}}:{{PORT}}
+@URL = {{PROTOCOL}}{{HOST}}
+@API_END_POINT = {{URL}}/api
 
 ### SPA Files
 GET {{HOST}}
@@ -46,3 +50,6 @@ POST {{API_END_POINT}}/users/logout
 
 ### 사용자 토큰 갱신
 POST {{API_END_POINT}}/users/token/refresh
+
+### configs 조회
+GET {{API_END_POINT}}/configs
