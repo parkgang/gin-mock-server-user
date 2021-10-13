@@ -6,7 +6,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/parkgang/modern-board/libs"
+	"github.com/parkgang/modern-board/internal/pkg/kakao"
+	"github.com/parkgang/modern-board/internal/pkg/util"
 	"github.com/parkgang/modern-board/models"
 	"github.com/parkgang/modern-board/mysql"
 	"gorm.io/gorm"
@@ -85,7 +86,7 @@ func GetAllUser(c *gin.Context) {
 func GetUser(c *gin.Context) {
 	paramUserId := c.Param("id")
 
-	userId, err := libs.ConvertStringToUint(paramUserId)
+	userId, err := util.ConvertStringToUint(paramUserId)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
@@ -130,7 +131,7 @@ func PutUser(c *gin.Context) {
 
 	paramUserId := c.Param("id")
 
-	userId, err := libs.ConvertStringToUint(paramUserId)
+	userId, err := util.ConvertStringToUint(paramUserId)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
@@ -202,7 +203,7 @@ func DeleteAllUser(c *gin.Context) {
 func DeleteUser(c *gin.Context) {
 	paramUserId := c.Param("id")
 
-	userId, err := libs.ConvertStringToUint(paramUserId)
+	userId, err := util.ConvertStringToUint(paramUserId)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
@@ -242,8 +243,8 @@ func UserLogin(c *gin.Context) {
 func UserKakaoLoginCallBack(c *gin.Context) {
 	// TODO: Error 코드같은거 들어오면 처리할 수 있도록 디자인
 	code := c.Query("code")
-	libs.GetKakaoToken(code)
-	libs.GetUserInfo()
+	kakao.GetToken(code)
+	kakao.GetUserInfo()
 	// TODO: 하드 코딩이므로 동적으로 변경될 것을 고려해야합니다.
 	c.Redirect(http.StatusFound, "http://localhost:3000/auth-end")
 }

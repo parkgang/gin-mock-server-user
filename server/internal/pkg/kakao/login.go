@@ -1,4 +1,4 @@
-package libs
+package kakao
 
 import (
 	"encoding/json"
@@ -33,7 +33,7 @@ func GetUserInfo() {
 }
 
 // 카카오 로그인이 완료되어 발급받은 인가 코드로 액세스 토큰과 리프레시 토큰을 발급 받습니다.
-func GetKakaoToken(code string) {
+func GetToken(code string) {
 	restApiKey := viper.GetString("kakao.restApiKey")
 	redirectUri := viper.GetString("kakao.redirectUri")
 
