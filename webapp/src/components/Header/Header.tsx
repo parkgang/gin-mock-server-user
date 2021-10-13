@@ -1,23 +1,22 @@
-import { useRecoilState } from "recoil";
-import { useHistory } from "react-router-dom";
 import {
-  teamsTheme,
-  teamsDarkTheme,
-  teamsHighContrastTheme,
-  teamsV2Theme,
-  teamsDarkV2Theme,
-  Flex,
   Dropdown,
+  Flex,
   Menu,
+  teamsDarkTheme,
+  teamsDarkV2Theme,
+  teamsHighContrastTheme,
+  teamsTheme,
+  teamsV2Theme,
   ThemePrepared,
 } from "@fluentui/react-northstar";
-
+import { AboutPath, HomePath,UsersPath } from "App";
+import { useHistory } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import { FluentuiNorthstarThemeState } from "states/fluentui-northstar";
 import {
   FluentuiNorthstarThemeList,
   getFluentuiNorthstarThemeToString,
 } from "types/fluentui-northstar";
-import { AboutPath, UsersPath, HomePath } from "App";
 
 export default function Header() {
   const [fluentuiNorthstarTheme, setFluentuiNorthstarTheme] = useRecoilState(

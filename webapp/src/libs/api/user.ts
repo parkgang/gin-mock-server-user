@@ -1,7 +1,6 @@
 import axios from "axios";
-
-import { User, UserDTO } from "types/user";
 import client from "libs/api/client";
+import { User, UserDTO } from "types/user";
 
 export type UserFormApi = typeof postUser | typeof putUser;
 

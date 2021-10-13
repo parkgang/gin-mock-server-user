@@ -1,12 +1,11 @@
+import { Flex } from "@fluentui/react-northstar";
+import ErrorFallback from "components/ErrorFallback";
+import { LoadingCard } from "components/Loading";
+import { Header,UserCard } from "components/UserList";
+import useKeyword from "hooks/useKeyword";
+import { handlerOnError } from "libs/error";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { Flex } from "@fluentui/react-northstar";
-
-import { LoadingCard } from "components/Loading";
-import { UserCard, Header } from "components/UserList";
-import ErrorFallback from "components/ErrorFallback";
-import { handlerOnError } from "libs/error";
-import useKeyword from "hooks/useKeyword";
 
 export default function Home() {
   const [name, , onChangeKeyword] = useKeyword("");

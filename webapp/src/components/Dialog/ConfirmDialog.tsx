@@ -1,5 +1,5 @@
-import { useRef, useEffect, ReactNode } from "react";
 import { Dialog, Flex, Ref } from "@fluentui/react-northstar";
+import { ReactNode,useEffect, useRef } from "react";
 
 type Props = {
   isOpen: boolean;

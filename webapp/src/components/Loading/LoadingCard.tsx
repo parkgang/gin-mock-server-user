@@ -1,5 +1,5 @@
+import { Card, CardBody, Flex, Skeleton } from "@fluentui/react-northstar";
 import { Children } from "react";
-import { Flex, Card, CardBody, Skeleton } from "@fluentui/react-northstar";
 
 export default function LoadingCard() {
   return (

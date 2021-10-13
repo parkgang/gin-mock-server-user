@@ -1,5 +1,4 @@
 import { selector } from "recoil";
-
 import { FluentuiNorthstarThemeState } from "states/fluentui-northstar";
 import { getFluentuiNorthstarThemeToString } from "types/fluentui-northstar";
 import { mapWithFluentuiTeamsTheme } from "types/fluentui-teams";

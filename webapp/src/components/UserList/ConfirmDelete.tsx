@@ -1,11 +1,10 @@
-import { useState, cloneElement } from "react";
-import { useQueryClient } from "react-query";
-import { useErrorHandler } from "react-error-boundary";
-import { Flex, Button, Header } from "@fluentui/react-northstar";
-
+import { Button, Flex, Header } from "@fluentui/react-northstar";
 import { ConfirmDialog } from "components/Dialog";
 import { deleteUser } from "libs/api/user";
 import { nestedError } from "libs/error";
+import { cloneElement,useState } from "react";
+import { useErrorHandler } from "react-error-boundary";
+import { useQueryClient } from "react-query";
 
 type Props = {
   id: number;

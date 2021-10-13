@@ -1,6 +1,5 @@
-import axios from "axios";
 import { CommunicationOptions } from "@fluentui/react-teams";
-
+import axios from "axios";
 import { Communication } from "components/ReactTeams";
 
 type Props = {

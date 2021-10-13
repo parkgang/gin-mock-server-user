@@ -1,8 +1,7 @@
-import { useHistory, RouteComponentProps } from "react-router";
 import { CommunicationOptions } from "@fluentui/react-teams";
-
-import { Communication } from "components/ReactTeams";
 import { HomePath } from "App";
+import { Communication } from "components/ReactTeams";
+import { RouteComponentProps,useHistory } from "react-router";
 
 export default function NotFound({ location }: RouteComponentProps) {
   const history = useHistory();

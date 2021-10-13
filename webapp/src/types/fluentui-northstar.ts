@@ -1,9 +1,9 @@
 import {
-  teamsTheme,
   teamsDarkTheme,
-  teamsHighContrastTheme,
-  teamsV2Theme,
   teamsDarkV2Theme,
+  teamsHighContrastTheme,
+  teamsTheme,
+  teamsV2Theme,
   ThemePrepared,
 } from "@fluentui/react-northstar";
 

@@ -1,21 +1,20 @@
-import { Children } from "react";
 import {
-  Flex,
+  Button,
   Card,
   CardBody,
+  EditIcon,
+  Flex,
   Label,
   Text,
-  Button,
   TrashCanIcon,
-  EditIcon,
 } from "@fluentui/react-northstar";
 import { CommunicationOptions } from "@fluentui/react-teams";
-
-import { putUser } from "libs/api/user";
+import { UserForm } from "components/Form";
 import { Communication } from "components/ReactTeams";
 import ConfirmDelete from "components/UserList/ConfirmDelete";
-import { UserForm } from "components/Form";
 import useUserListQuery from "hooks/query/useUserListQuery";
+import { putUser } from "libs/api/user";
+import { Children } from "react";
 
 type Props = {
   searchKeyword: string;

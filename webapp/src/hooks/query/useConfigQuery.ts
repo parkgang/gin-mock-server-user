@@ -1,6 +1,5 @@
-import { useQuery } from "react-query";
-
 import { GetConfig } from "libs/api/config";
+import { useQuery } from "react-query";
 
 const createKey = () => ["config"];
 

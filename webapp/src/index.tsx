@@ -2,9 +2,9 @@ import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { RecoilRoot } from "recoil";
 
-import reportWebVitals from "./reportWebVitals";
-import App from "./App";
 import { name, version } from "../package.json";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
 const queryClient = new QueryClient({
   defaultOptions: {

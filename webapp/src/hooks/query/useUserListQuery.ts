@@ -1,6 +1,5 @@
-import { useQuery } from "react-query";
-
 import { getUser } from "libs/api/user";
+import { useQuery } from "react-query";
 
 const createKey = () => ["userList"];
 

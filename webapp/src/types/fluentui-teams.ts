@@ -1,5 +1,4 @@
 import { themeNames } from "@fluentui/react-teams";
-
 import { FluentuiNorthstarThemeList } from "types/fluentui-northstar";
 
 /**

@@ -1,11 +1,10 @@
 import {
+  Button,
   Flex,
   Input,
-  SearchIcon,
-  Button,
   ParticipantAddIcon,
+  SearchIcon,
 } from "@fluentui/react-northstar";
-
 import { UserForm } from "components/Form";
 import { postUser } from "libs/api/user";
 

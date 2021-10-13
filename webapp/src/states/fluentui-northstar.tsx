@@ -1,8 +1,7 @@
+import { ThemePrepared } from "@fluentui/react-northstar";
+import { getLocalStorageTheme, setLocalStorageTheme } from "libs/local-storage";
 import { useEffect } from "react";
 import { atom, useRecoilValue } from "recoil";
-import { ThemePrepared } from "@fluentui/react-northstar";
-
-import { getLocalStorageTheme, setLocalStorageTheme } from "libs/local-storage";
 
 export const FluentuiNorthstarThemeState = atom<ThemePrepared>({
   key: "FluentuiNorthstarThemeState",

@@ -1,19 +1,18 @@
-import { lazy, Suspense } from "react";
-import { useRecoilValue } from "recoil";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { ErrorBoundary } from "react-error-boundary";
-import { ReactQueryDevtools } from "react-query/devtools";
 import { Provider as FluentuiNorthstarProvider } from "@fluentui/react-northstar";
-
-import {
-  FluentuiNorthstarThemeState,
-  FluentuiNorthstarThemeEffect,
-} from "states/fluentui-northstar";
 import AppLayout from "components/AppLayout";
-import Header from "components/Header";
 import ErrorFallback from "components/ErrorFallback";
+import Header from "components/Header";
 import Spinner from "components/Loading";
 import { handlerOnError } from "libs/error";
+import { lazy, Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { BrowserRouter as Router, Route,Switch } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import {
+  FluentuiNorthstarThemeEffect,
+  FluentuiNorthstarThemeState,
+} from "states/fluentui-northstar";
 
 const About = lazy(() => import("pages/About"));
 const Users = lazy(() => import("pages/Users"));

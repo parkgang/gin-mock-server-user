@@ -1,9 +1,8 @@
-import { useRecoilValue } from "recoil";
-import styled from "styled-components";
 import * as reactTeams from "@fluentui/react-teams";
-
+import { useRecoilValue } from "recoil";
 import { FluentuiNorthstarThemeState } from "states/fluentui-northstar";
 import { FluentuiTeamsThemeState } from "states/fluentui-teams";
+import styled from "styled-components";
 
 type ResetStyleProps = {
   backgroundColor: string;

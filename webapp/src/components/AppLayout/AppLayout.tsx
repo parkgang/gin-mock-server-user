@@ -1,7 +1,6 @@
-import { ReactNode } from "react";
 import { Flex } from "@fluentui/react-northstar";
-
 import useDevice from "hooks/useDevice";
+import { ReactNode } from "react";
 
 type Props = {
   children: ReactNode;

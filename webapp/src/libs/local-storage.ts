@@ -1,10 +1,10 @@
 import { ThemePrepared } from "@fluentui/react-northstar";
-
-import { name } from "../../package.json";
 import {
   getFluentuiNorthstarThemeToString,
   getStringToFluentuiNorthstarTheme,
 } from "types/fluentui-northstar";
+
+import { name } from "../../package.json";
 
 const themeKey = `${name}-theme`;
 
