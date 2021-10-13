@@ -33,3 +33,4 @@ npx create-react-app webapp --template typescript
 ### Custom
 
 1. [절대경로 설정](https://okky.tistory.com/340)
+1. eslint rules 변경
