@@ -6,6 +6,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/pkg/errors"
 )
@@ -22,22 +23,25 @@ func NewXWwwFormUrlencodedHelperOptions() *xWwwFormUrlencodedHelperOptions {
 	}
 }
 
-// [http Content-Type application/x-www-form-urlencoded 를 쉽게 요청할 수 있는 헬퍼 함수입니다.](https://golang.cafe/blog/how-to-make-http-url-form-encoded-request-golang.html)
+// [http Content-Type application/x-www-form-urlencoded 를 쉽게 요청할 수 있는 헬퍼 함수이며 해당 글을 참고하여 제작되었습니다.](https://golang.cafe/blog/how-to-make-http-url-form-encoded-request-golang.html)
+// [자세한 설명](https://golangbyexample.com/http-client-urlencoded-body-go)
 func (o *xWwwFormUrlencodedHelperOptions) Run(method Method, endpoint string) (body []byte, err error) {
 	// URL-encoded payload
-	r, err := http.NewRequest(method.String(), endpoint, strings.NewReader(o.Data.Encode()))
+	req, err := http.NewRequest(method.String(), endpoint, strings.NewReader(o.Data.Encode()))
 	if err != nil {
 		return nil, errors.Wrap(err, "http request 생성 실패")
 	}
 
-	r.Header.Add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
-	r.Header.Add("Content-Length", strconv.Itoa(len(o.Data.Encode())))
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
+	req.Header.Add("Content-Length", strconv.Itoa(len(o.Data.Encode())))
 	for i, v := range o.Header {
-		r.Header.Add(i, v)
+		req.Header.Add(i, v)
 	}
 
-	client := &http.Client{}
-	res, err := client.Do(r)
+	client := &http.Client{
+		Timeout: time.Second * 10,
+	}
+	res, err := client.Do(req)
 	if err != nil {
 		return nil, errors.Wrap(err, "http request 실패")
 	}
