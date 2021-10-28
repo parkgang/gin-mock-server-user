@@ -1,4 +1,3 @@
-import Logo from "components/Brand/Logo";
 import useConfigQuery from "hooks/query/useConfigQuery";
 
 export default function Users() {
@@ -11,7 +10,6 @@ export default function Users() {
   }
   return (
     <>
-      <Logo />
       <button onClick={handleKakaoLogin}>카카오 로그인</button>
     </>
   );

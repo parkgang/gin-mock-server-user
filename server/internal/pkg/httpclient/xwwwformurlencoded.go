@@ -25,7 +25,7 @@ func NewXWwwFormUrlencodedHelperOptions() *xWwwFormUrlencodedHelperOptions {
 
 // [http Content-Type application/x-www-form-urlencoded 를 쉽게 요청할 수 있는 헬퍼 함수이며 해당 글을 참고하여 제작되었습니다.](https://golang.cafe/blog/how-to-make-http-url-form-encoded-request-golang.html)
 // [자세한 설명](https://golangbyexample.com/http-client-urlencoded-body-go)
-func (o *xWwwFormUrlencodedHelperOptions) Run(method Method, endpoint string) (body []byte, err error) {
+func (o *xWwwFormUrlencodedHelperOptions) Req(method Method, endpoint string) (body []byte, err error) {
 	// URL-encoded payload
 	req, err := http.NewRequest(method.String(), endpoint, strings.NewReader(o.Data.Encode()))
 	if err != nil {

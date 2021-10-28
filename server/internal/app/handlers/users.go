@@ -241,10 +241,24 @@ func UserLogin(c *gin.Context) {
 }
 
 func UserKakaoLoginCallBack(c *gin.Context) {
-	// TODO: Error 코드같은거 들어오면 처리할 수 있도록 디자인
+	kakaoToken := models.KakaoToken{}
+
 	code := c.Query("code")
-	kakao.GetToken(code)
-	kakao.GetUserInfo()
+	if code == "" {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": "인가 코드가 전달되지 않았습니다. url에 있는 error_description key의 value를 확인해 주세요.",
+		})
+		return
+	}
+
+	if err := kakao.GetToken(code, &kakaoToken); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	kakao.GetUserInfo(kakaoToken.AccessToken)
 	// TODO: 하드 코딩이므로 동적으로 변경될 것을 고려해야합니다.
 	c.Redirect(http.StatusFound, "http://localhost:3000/auth-end")
 }
