@@ -54,9 +54,9 @@
       "type": "shell",
       "command": "gin",
       "args": [
-        // 기본 port는 cra webpack dev server와 port가 겹치므로 live reloading 5000으로 실행
+        // 기본 port는 cra webpack dev server와 port가 겹치므로 live reloading port를 변경합니다.
         "--port",
-        "5000",
+        "5100",
         "--immediate",
         "--notifications"
       ],
