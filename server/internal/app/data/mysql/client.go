@@ -30,7 +30,7 @@ func init() {
 	}
 
 	log.Println("mysql 마이그레이션 중...")
-	if err := db.AutoMigrate(&models.User{}); err != nil {
+	if err := db.AutoMigrate(&models.User{}, &models.KakaoTalkSocial{}); err != nil {
 		log.Panic("DB 마이그레이션에 실패하였습니다.\n\t" + err.Error())
 	}
 
