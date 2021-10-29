@@ -7,7 +7,7 @@ import { handlerOnError } from "libs/error";
 import { lazy, Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { BrowserRouter as Router, Route,Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import {
   FluentuiNorthstarThemeEffect,
@@ -17,10 +17,14 @@ import {
 const About = lazy(() => import("pages/About"));
 const Users = lazy(() => import("pages/Users"));
 const Home = lazy(() => import("pages/Home"));
+const SignIn = lazy(() => import("pages/SignIn"));
+const SignUp = lazy(() => import("pages/SignUp"));
 const NotFound = lazy(() => import("pages/NotFound"));
 
 export const AboutPath = "/about";
 export const UsersPath = "/users";
+export const SignInPath = "/sign-in";
+export const SignUpPath = "/sign-up";
 export const HomePath = "/";
 
 export default function App() {
@@ -41,8 +45,10 @@ export default function App() {
                   <Header />
                   <Switch>
                     <Route exact path={AboutPath} component={About} />
-                    <Route exact path={UsersPath} component={Users} />
                     <Route exact path={HomePath} component={Home} />
+                    <Route exact path={UsersPath} component={Users} />
+                    <Route exact path={SignInPath} component={SignIn} />
+                    <Route exact path={SignUpPath} component={SignUp} />
                     <Route component={NotFound} />
                   </Switch>
                 </Router>
