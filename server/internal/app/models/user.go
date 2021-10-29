@@ -7,7 +7,7 @@ import (
 type User struct {
 	Id                 uint   `gorm:"primary_key;auto_increment;"`
 	Email              string `gorm:"unique;not null;size:50;"`
-	Password           string `gorm:"not null;size:20;"`
+	Password           string `gorm:"not null;size:64;"`
 	Name               string `gorm:"not null;size:20;"`
 	AvatarImage        []byte
 	ConnectedAt        time.Time `gorm:"type:TIMESTAMP;default:current_timestamp;not null;"`
