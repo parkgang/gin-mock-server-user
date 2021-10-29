@@ -2,7 +2,6 @@ package kakao
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/url"
 
@@ -12,18 +11,21 @@ import (
 	"github.com/spf13/viper"
 )
 
-func GetUserInfo(token string) {
+// 카카오 사용자 정보를 가져옵니다.
+func GetUserInfo(token string) (string, error) {
 	endpoint := "https://kapi.kakao.com/v2/user/me"
+
 	xWwwFormUrlencodedHelper := httpclient.NewXWwwFormUrlencodedHelperOptions()
 	xWwwFormUrlencodedHelper.Header = map[string]string{
 		"Authorization": "Bearer " + token,
 	}
+
 	resBody, err := xWwwFormUrlencodedHelper.Req(httpclient.POST, endpoint)
 	if err != nil {
-		fmt.Println(err)
+		return "", errors.Wrap(err, "kakao 사용자 정보 가져오기 실패")
 	}
-	// 응답 string으로 출력, TODO: 사용자 정보를 담고 있는 모델만들기
-	log.Println(string(resBody))
+
+	return string(resBody), nil
 }
 
 // 카카오 로그인이 완료되어 발급받은 인가 코드로 액세스 토큰과 리프레시 토큰을 발급 받습니다.

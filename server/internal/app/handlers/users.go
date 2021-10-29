@@ -3,6 +3,7 @@ package handlers
 import (
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -258,7 +259,17 @@ func UserKakaoLoginCallBack(c *gin.Context) {
 		return
 	}
 
-	kakao.GetUserInfo(kakaoToken.AccessToken)
+	userInfo, err := kakao.GetUserInfo(kakaoToken.AccessToken)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	// TODO: 사용자 정보 모델 만들어서 DB에 저장하기
+	log.Println("kakao 사용자 정보:" + userInfo)
+
 	// TODO: 하드 코딩이므로 동적으로 변경될 것을 고려해야합니다.
 	c.Redirect(http.StatusFound, "http://localhost:3000/auth-end")
 }
