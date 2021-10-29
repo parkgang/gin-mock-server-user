@@ -26,12 +26,12 @@ func init() {
 	log.Println("mysql 연결 중...")
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Panic("DB 연결에 실패하였습니다.\n\t" + err.Error())
+		log.Panic("mysql 연결에 실패하였습니다.\n\t" + err.Error())
 	}
 
 	log.Println("mysql 마이그레이션 중...")
 	if err := db.AutoMigrate(&models.User{}, &models.KakaoTalkSocial{}); err != nil {
-		log.Panic("DB 마이그레이션에 실패하였습니다.\n\t" + err.Error())
+		log.Panic("mysql 마이그레이션에 실패하였습니다.\n\t" + err.Error())
 	}
 
 	log.Printf("mysql starting at %s\n", dsn)

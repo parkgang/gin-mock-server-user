@@ -14,3 +14,8 @@ services:
       # 한글과 이모지 입력을 위하여 기본 문자셋 인코딩 변경
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
+  redis:
+    image: redis:6.2.4-alpine
+    container_name: redis-dev
+    ports:
+      - 6379:6379
