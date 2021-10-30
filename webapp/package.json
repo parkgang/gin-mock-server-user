@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "author": "parkgang[Kyungeun Park]<ruddms936@naver.com>",
   "dependencies": {
-    "@fluentui/react-northstar": "^0.57.0",
+    "@fluentui/react-northstar": "^0.59.0",
     "@fluentui/react-teams": "^6.0.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

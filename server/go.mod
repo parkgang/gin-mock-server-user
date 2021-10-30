@@ -23,7 +23,7 @@ require (
 	github.com/twinj/uuid v1.0.0
 	github.com/ugorji/go v1.2.6 // indirect
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519 // indirect
-	golang.org/x/net v0.0.0-20211029160332-540bb53d3b2e // indirect
+	golang.org/x/net v0.0.0-20211029224645-99673261e6eb // indirect
 	golang.org/x/sys v0.0.0-20211029165221-6e7872819dc8 // indirect
 	golang.org/x/tools v0.1.7 // indirect
 	gopkg.in/stretchr/testify.v1 v1.2.2 // indirect
