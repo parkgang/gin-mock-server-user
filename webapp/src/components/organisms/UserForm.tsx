@@ -1,8 +1,8 @@
-import { Button, Flex,Form, FormInput } from "@fluentui/react-northstar";
-import { ConfirmDialog } from "components/Dialog";
+import { Button, Flex, Form, FormInput } from "@fluentui/react-northstar";
+import ConfirmDialog from "components/molecules/ConfirmDialog";
 import { UserFormApi } from "libs/api/user";
 import { nestedError } from "libs/error";
-import { cloneElement, SyntheticEvent,useState } from "react";
+import { cloneElement, SyntheticEvent, useState } from "react";
 import { useErrorHandler } from "react-error-boundary";
 import { useQueryClient } from "react-query";
 import { UserDTO } from "types/user";

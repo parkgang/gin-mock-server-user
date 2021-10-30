@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction,useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 export default function useKeyword(
   init: string = ""

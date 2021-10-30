@@ -1,7 +1,8 @@
 import { Flex } from "@fluentui/react-northstar";
-import ErrorFallback from "components/ErrorFallback";
-import { LoadingCard } from "components/Loading";
-import { Header,UserCard } from "components/UserList";
+import LoadingCard from "components/organisms/LoadingCard";
+import UserCard from "components/organisms/UserCard";
+import UserListHeader from "components/organisms/UserListHeader";
+import ErrorFallback from "components/wrapped/ErrorFallback";
 import useKeyword from "hooks/useKeyword";
 import { handlerOnError } from "libs/error";
 import { Suspense } from "react";
@@ -26,7 +27,7 @@ export default function Home() {
           gap="gap.small"
           style={{ overflowX: "hidden", overflowY: "scroll" }}
         >
-          <Header value={name} onChange={onChangeKeyword} />
+          <UserListHeader value={name} onChange={onChangeKeyword} />
           <Suspense fallback={<LoadingCard />}>
             <UserCard searchKeyword={name} />
           </Suspense>

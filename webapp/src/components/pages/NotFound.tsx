@@ -1,7 +1,7 @@
 import { CommunicationOptions } from "@fluentui/react-teams";
 import { HomePath } from "App";
-import { Communication } from "components/ReactTeams";
-import { RouteComponentProps,useHistory } from "react-router";
+import ReactTeamsCommunication from "components/wrapped/ReactTeamsCommunication";
+import { RouteComponentProps, useHistory } from "react-router";
 
 export default function NotFound({ location }: RouteComponentProps) {
   const history = useHistory();
@@ -16,7 +16,7 @@ export default function NotFound({ location }: RouteComponentProps) {
 
   return (
     <>
-      <Communication
+      <ReactTeamsCommunication
         option={CommunicationOptions.Thanks}
         fields={{
           title: `오, 존재하지 않는 페이지를 찾았어요!`,

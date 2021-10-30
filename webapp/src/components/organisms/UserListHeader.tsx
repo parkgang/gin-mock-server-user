@@ -5,7 +5,7 @@ import {
   ParticipantAddIcon,
   SearchIcon,
 } from "@fluentui/react-northstar";
-import { UserForm } from "components/Form";
+import UserForm from "components/organisms/UserForm";
 import { postUser } from "libs/api/user";
 
 type Props = {

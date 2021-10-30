@@ -9,9 +9,9 @@ import {
   TrashCanIcon,
 } from "@fluentui/react-northstar";
 import { CommunicationOptions } from "@fluentui/react-teams";
-import { UserForm } from "components/Form";
-import { Communication } from "components/ReactTeams";
-import ConfirmDelete from "components/UserList/ConfirmDelete";
+import ConfirmDelete from "components/organisms/ConfirmDelete";
+import UserForm from "components/organisms/UserForm";
+import ReactTeamsCommunication from "components/wrapped/ReactTeamsCommunication";
 import useUserListQuery from "hooks/query/useUserListQuery";
 import { putUser } from "libs/api/user";
 import { Children } from "react";
@@ -26,7 +26,7 @@ export default function UserCard({ searchKeyword = "" }: Props) {
   if (userLists === null) {
     return (
       <>
-        <Communication
+        <ReactTeamsCommunication
           option={CommunicationOptions.Empty}
           fields={{
             title: `아직 사용자가 없습니다.`,
@@ -44,7 +44,7 @@ export default function UserCard({ searchKeyword = "" }: Props) {
   if (resultItems.length === 0) {
     return (
       <>
-        <Communication
+        <ReactTeamsCommunication
           option={CommunicationOptions.Empty}
           fields={{
             title: `검색된 사용자가 없습니다.`,

@@ -1,6 +1,6 @@
 import { CommunicationOptions } from "@fluentui/react-teams";
 import axios from "axios";
-import { Communication } from "components/ReactTeams";
+import ReactTeamsCommunication from "components/wrapped/ReactTeamsCommunication";
 
 type Props = {
   title?: string;
@@ -37,7 +37,7 @@ export default function ErrorFallback({
 
   return (
     <>
-      <Communication
+      <ReactTeamsCommunication
         option={CommunicationOptions.Error}
         fields={{
           title: `앗, 이런! ${title}`,

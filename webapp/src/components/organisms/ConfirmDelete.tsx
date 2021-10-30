@@ -1,8 +1,8 @@
 import { Button, Flex, Header } from "@fluentui/react-northstar";
-import { ConfirmDialog } from "components/Dialog";
+import ConfirmDialog from "components/molecules/ConfirmDialog";
 import { deleteUser } from "libs/api/user";
 import { nestedError } from "libs/error";
-import { cloneElement,useState } from "react";
+import { cloneElement, useState } from "react";
 import { useErrorHandler } from "react-error-boundary";
 import { useQueryClient } from "react-query";
 

@@ -9,7 +9,7 @@ import {
   teamsV2Theme,
   ThemePrepared,
 } from "@fluentui/react-northstar";
-import { AboutPath, HomePath,UsersPath } from "App";
+import { AboutPath, HomePath, UsersPath } from "App";
 import { useHistory } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { FluentuiNorthstarThemeState } from "states/fluentui-northstar";
