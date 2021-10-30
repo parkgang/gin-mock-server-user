@@ -88,6 +88,19 @@ func UserKakaoLoginCallBack(c *gin.Context) {
 	c.Redirect(http.StatusFound, "http://localhost:3000/auth-end")
 }
 
+func UserSignup(c *gin.Context) {
+	user := models.User{}
+
+	if err := c.BindJSON(&user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	fmt.Println(user)
+}
+
 func UserLogout(c *gin.Context) {
 	au, err := auth.ExtractTokenMetadata(c.Request)
 	if err != nil {

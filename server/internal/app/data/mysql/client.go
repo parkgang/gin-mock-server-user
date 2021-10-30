@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/parkgang/modern-board/internal/app/models"
+	"github.com/parkgang/modern-board/internal/app/entitys"
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -30,7 +30,7 @@ func init() {
 	}
 
 	log.Println("mysql 마이그레이션 중...")
-	if err := db.AutoMigrate(&models.User{}, &models.KakaoTalkSocial{}); err != nil {
+	if err := db.AutoMigrate(&entitys.User{}, &entitys.KakaoTalkSocial{}); err != nil {
 		log.Panic("mysql 마이그레이션에 실패하였습니다.\n\t" + err.Error())
 	}
 

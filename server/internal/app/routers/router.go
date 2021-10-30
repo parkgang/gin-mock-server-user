@@ -14,6 +14,7 @@ func Use(api *gin.RouterGroup) {
 	{
 		users.POST("/login", handlers.UserLogin)
 		users.GET("/login/kakao", handlers.UserKakaoLoginCallBack)
+		users.POST("/signup", handlers.UserSignup)
 		users.POST("/logout", middlewares.TokenAuthMiddleware(), handlers.UserLogout)
 		users.POST("/token/refresh", handlers.UserTokenRefresh)
 	}

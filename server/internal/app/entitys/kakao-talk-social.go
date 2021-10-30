@@ -1,4 +1,4 @@
-package models
+package entitys
 
 type KakaoTalkSocial struct {
 	Id             uint   `gorm:"primary_key;"`
