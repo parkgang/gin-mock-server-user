@@ -1,5 +1,5 @@
 import { Provider as FluentuiNorthstarProvider } from "@fluentui/react-northstar";
-import Spinner from "components/molecules/Loading";
+import Spinner from "components/molecules/Spinner";
 import Header from "components/organisms/Header";
 import AppLayout from "components/templates/AppLayout";
 import ErrorFallback from "components/wrapped/ErrorFallback";
@@ -13,6 +13,7 @@ import {
   FluentuiNorthstarThemeEffect,
   FluentuiNorthstarThemeState,
 } from "states/fluentui-northstar";
+import GlobalStyle from "styles/GlobalStyle";
 
 const About = lazy(() => import("components/pages/About"));
 const Users = lazy(() => import("components/pages/Users"));
@@ -55,6 +56,7 @@ export default function App() {
           </ErrorBoundary>
         </AppLayout>
       </FluentuiNorthstarProvider>
+      <GlobalStyle />
       <ReactQueryDevtools initialIsOpen={false} />
     </>
   );
