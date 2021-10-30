@@ -1,6 +1,6 @@
 import { Provider as FluentuiNorthstarProvider } from "@fluentui/react-northstar";
 import Spinner from "components/molecules/Spinner";
-import Header from "components/organisms/Header";
+import Gnb from "components/organisms/Gnb";
 import AppLayout from "components/templates/AppLayout";
 import ErrorFallback from "components/wrapped/ErrorFallback";
 import { handlerOnError } from "libs/error";
@@ -15,36 +15,32 @@ import {
 } from "states/fluentui-northstar";
 import GlobalStyle from "styles/GlobalStyle";
 
-const About = lazy(() => import("components/pages/About"));
-const Users = lazy(() => import("components/pages/Users"));
 const Home = lazy(() => import("components/pages/Home"));
+const Users = lazy(() => import("components/pages/Users"));
 const SignIn = lazy(() => import("components/pages/SignIn"));
 const SignUp = lazy(() => import("components/pages/SignUp"));
 const NotFound = lazy(() => import("components/pages/NotFound"));
 
-export const AboutPath = "/about";
+export const HomePath = "/";
 export const UsersPath = "/users";
 export const SignInPath = "/sign-in";
 export const SignUpPath = "/sign-up";
-export const HomePath = "/";
 
 export default function App() {
   const theme = useRecoilValue(FluentuiNorthstarThemeState);
 
   return (
     <>
-      <FluentuiNorthstarThemeEffect />
       <FluentuiNorthstarProvider theme={theme}>
         <AppLayout>
           <ErrorBoundary
-            fallbackRender={({ error }) => <ErrorFallback error={error} />}
+            FallbackComponent={ErrorFallback}
             onError={handlerOnError}
           >
             <Suspense fallback={<Spinner message="페이지 불러오는 중..." />}>
               <Router>
-                <Header />
+                <Gnb />
                 <Switch>
-                  <Route exact path={AboutPath} component={About} />
                   <Route exact path={HomePath} component={Home} />
                   <Route exact path={UsersPath} component={Users} />
                   <Route exact path={SignInPath} component={SignIn} />
@@ -57,6 +53,7 @@ export default function App() {
         </AppLayout>
       </FluentuiNorthstarProvider>
       <GlobalStyle />
+      <FluentuiNorthstarThemeEffect />
       <ReactQueryDevtools initialIsOpen={false} />
     </>
   );

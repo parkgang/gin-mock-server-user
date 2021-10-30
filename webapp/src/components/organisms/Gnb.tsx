@@ -9,7 +9,7 @@ import {
   teamsV2Theme,
   ThemePrepared,
 } from "@fluentui/react-northstar";
-import { AboutPath, HomePath, UsersPath } from "App";
+import { HomePath, UsersPath } from "App";
 import { useHistory } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { FluentuiNorthstarThemeState } from "states/fluentui-northstar";
@@ -18,7 +18,7 @@ import {
   getFluentuiNorthstarThemeToString,
 } from "types/fluentui-northstar";
 
-export default function Header() {
+export default function Gnb() {
   const [fluentuiNorthstarTheme, setFluentuiNorthstarTheme] = useRecoilState(
     FluentuiNorthstarThemeState
   );
@@ -31,16 +31,6 @@ export default function Header() {
       content: "Home",
       onClick() {
         history.push(HomePath);
-      },
-      styles: {
-        padding: "0.6rem",
-      },
-    },
-    {
-      key: AboutPath,
-      content: "About",
-      onClick() {
-        history.push(AboutPath);
       },
       styles: {
         padding: "0.6rem",

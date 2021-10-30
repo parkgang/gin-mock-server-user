@@ -1,6 +1,6 @@
 import { CommunicationOptions } from "@fluentui/react-teams";
 import { HomePath } from "App";
-import ReactTeamsCommunication from "components/wrapped/ReactTeamsCommunication";
+import ReactTeamsCommunication from "components/organisms/ReactTeamsCommunication";
 import { RouteComponentProps, useHistory } from "react-router";
 
 export default function NotFound({ location }: RouteComponentProps) {

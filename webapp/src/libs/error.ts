@@ -1,29 +1,25 @@
-import axios from "axios";
+import VError from "verror";
 
 export function handlerOnError(error: Error, info: { componentStack: string }) {
   console.log(error);
   console.log(info.componentStack);
 }
 
-export function nestedError(message: string, throwError: any): Error {
-  let throwErrorMessage: string = "throw된 error가 처리되지 않았습니다.";
+/**
+ * VError으로 Wrap된 에러의 시작을 찾습니다.
+ */
+export function getErrorsCause(err: Error): Error {
+  const maxLoop = 100;
 
-  if (typeof throwError === "string") {
-    throwErrorMessage = throwError;
-  } else if (axios.isAxiosError(throwError)) {
-    switch (throwError.response?.status) {
-      case 403:
-        // TODO: 인증관련 에러의 경우 서버 측 response 데이터를 사용하기 위해서 그대로 throw
-        throw throwError;
-      default:
-        throwErrorMessage = throwError.response?.data
-          ? JSON.stringify(throwError.response?.data)
-          : throwError.message;
-        break;
+  for (let i = 0; i < maxLoop; i++) {
+    const cause = VError.cause(err);
+    if (cause === null) {
+      return err;
     }
-  } else if (throwError instanceof Error) {
-    throwErrorMessage = throwError.message;
+    err = cause as VError;
   }
 
-  return new Error(`${message} (${throwErrorMessage})`);
+  throw new Error(
+    `${maxLoop} 순회 결과 VError의 시작 Error를 찾지 못하였습니다`
+  );
 }
