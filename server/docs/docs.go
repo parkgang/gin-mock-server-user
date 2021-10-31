@@ -41,40 +41,7 @@ var doc = `{
                 }
             }
         },
-        "/users": {
-            "get": {
-                "description": "전체 사용자를 반환합니다.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "전체 사용자 조회",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/models.User"
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": ""
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/models.ErrResponse"
-                        }
-                    }
-                }
-            },
+        "/users/signup": {
             "post": {
                 "description": "사용자를 생성합니다.",
                 "consumes": [
@@ -86,10 +53,10 @@ var doc = `{
                 "tags": [
                     "User"
                 ],
-                "summary": "사용자 생성",
+                "summary": "회원가입",
                 "parameters": [
                     {
-                        "description": "사용자 메타데이터",
+                        "description": "회원가입을 위한 정보",
                         "name": "data",
                         "in": "body",
                         "required": true,
@@ -117,178 +84,11 @@ var doc = `{
                             "$ref": "#/definitions/models.ErrResponse"
                         }
                     },
-                    "500": {
-                        "description": "Internal Server Error",
+                    "409": {
+                        "description": "Conflict",
                         "schema": {
                             "$ref": "#/definitions/models.ErrResponse"
                         }
-                    }
-                }
-            },
-            "delete": {
-                "description": "전체 사용자 정보를 삭제합니다. 모든데이터가 날라가므로 주의해서 사용해주세요😨",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "전체 사용자 삭제",
-                "responses": {
-                    "204": {
-                        "description": ""
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/models.ErrResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/users/{id}": {
-            "get": {
-                "description": "사용자 정보를 반환합니다.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "사용자 조회",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "사용자 id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.User"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/models.ErrResponse"
-                        }
-                    },
-                    "404": {
-                        "description": ""
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/models.ErrResponse"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "사용자 정보를 수정합니다.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "사용자 수정",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "사용자 id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "사용자 메타데이터",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.User"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/models.User"
-                        },
-                        "headers": {
-                            "Location": {
-                                "type": "string",
-                                "description": "/users/1"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/models.ErrResponse"
-                        }
-                    },
-                    "404": {
-                        "description": ""
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/models.ErrResponse"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "사용자를 삭제합니다.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "사용자 삭제",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "사용자 id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": ""
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/models.ErrResponse"
-                        }
-                    },
-                    "404": {
-                        "description": ""
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -305,7 +105,8 @@ var doc = `{
             "type": "object",
             "properties": {
                 "message": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "여기에 에러 메시지가 전달됩니다."
                 }
             }
         },
@@ -321,17 +122,27 @@ var doc = `{
         "models.User": {
             "type": "object",
             "required": [
-                "arg",
-                "name"
+                "email",
+                "name",
+                "password",
+                "passwordConfirm"
             ],
             "properties": {
-                "arg": {
-                    "type": "integer",
-                    "example": 99
+                "email": {
+                    "type": "string",
+                    "example": "user01@test.com"
                 },
                 "name": {
                     "type": "string",
-                    "example": "kyungeun"
+                    "example": "사용자01"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "test1!"
+                },
+                "passwordConfirm": {
+                    "type": "string",
+                    "example": "test1!"
                 }
             }
         }

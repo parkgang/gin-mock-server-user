@@ -93,6 +93,18 @@ func UserKakaoLoginCallBack(c *gin.Context) {
 	c.Redirect(http.StatusFound, "http://localhost:3000/auth-end")
 }
 
+// @Summary 회원가입
+// @Description 사용자를 생성합니다.
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param data body models.User true "회원가입을 위한 정보"
+// @Success 201 {object} models.User
+// @Header 201 {string} Location "/users/1"
+// @Failure 400 {object} models.ErrResponse
+// @Failure 409 {object} models.ErrResponse
+// @Failure 500 {object} models.ErrResponse
+// @Router /users/signup [post]
 func UserSignup(c *gin.Context) {
 	userBody := models.User{}
 
@@ -137,6 +149,9 @@ func UserSignup(c *gin.Context) {
 		})
 		return
 	}
+
+	c.Header("Location", fmt.Sprintf("/users/%d", user.Id))
+	c.JSON(http.StatusCreated, user)
 }
 
 func UserLogout(c *gin.Context) {
