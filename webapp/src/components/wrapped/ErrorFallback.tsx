@@ -22,9 +22,11 @@ export default function ErrorFallback({ error }: FallbackProps) {
     // 다른 에러 컴포넌트와 interface를 맞추기 위해 Error 객체로 boxing 합니다.
     error = new Error(error);
   } else if (axios.isAxiosError(errorsCause)) {
-    error.message = errorsCause.response?.data
-      ? JSON.stringify(errorsCause.response?.data)
-      : errorsCause.message;
+    error.message = `상태코드 => ${errorsCause.response?.status}, 응답 => ${
+      errorsCause.response?.data
+        ? JSON.stringify(errorsCause.response?.data)
+        : errorsCause.message
+    }`;
   }
 
   return (

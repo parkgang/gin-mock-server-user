@@ -1,8 +1,10 @@
 import VError from "verror";
 
 export function handlerOnError(error: Error, info: { componentStack: string }) {
-  console.log(error);
-  console.log(info.componentStack);
+  console.error({
+    error,
+    componentStack: info.componentStack,
+  });
 }
 
 /**

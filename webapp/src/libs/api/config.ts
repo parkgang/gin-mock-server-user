@@ -8,7 +8,6 @@ export async function GetConfig() {
     return data;
   } catch (error) {
     const message = `config 값을 가져오지 못함`;
-
     if (error instanceof Error) {
       throw new VError(error, message);
     }
