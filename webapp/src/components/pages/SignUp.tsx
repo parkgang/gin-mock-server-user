@@ -16,10 +16,10 @@ const FlexContainer = styled.section`
 `;
 
 export default function SignUp() {
-  const [name, , handleName] = useKeyword();
   const [email, , handleEmail] = useKeyword();
   const [password, , handlePassword] = useKeyword();
   const [passwordConfirm, , handlePasswordConfirm] = useKeyword();
+  const [name, , handleName] = useKeyword();
 
   const handleError = useErrorHandler();
 
@@ -40,12 +40,6 @@ export default function SignUp() {
           <FlexContainer>
             <Input
               fluid
-              label="이름"
-              labelPosition="inside"
-              onChange={handleName}
-            />
-            <Input
-              fluid
               label="이메일"
               labelPosition="inside"
               onChange={handleEmail}
@@ -63,6 +57,12 @@ export default function SignUp() {
               labelPosition="inside"
               type="password"
               onChange={handlePasswordConfirm}
+            />
+            <Input
+              fluid
+              label="이름"
+              labelPosition="inside"
+              onChange={handleName}
             />
             <Button fluid primary content="회원가입" onClick={handleSignUp} />
           </FlexContainer>

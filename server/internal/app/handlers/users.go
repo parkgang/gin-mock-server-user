@@ -6,9 +6,12 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
+	"github.com/parkgang/modern-board/internal/app/data/mysql"
+	"github.com/parkgang/modern-board/internal/app/entitys"
 	"github.com/parkgang/modern-board/internal/app/models"
 	"github.com/parkgang/modern-board/internal/pkg/auth"
 	"github.com/parkgang/modern-board/internal/pkg/kakao"
@@ -89,16 +92,36 @@ func UserKakaoLoginCallBack(c *gin.Context) {
 }
 
 func UserSignup(c *gin.Context) {
-	user := models.User{}
+	userBody := models.User{}
 
-	if err := c.BindJSON(&user); err != nil {
+	if err := c.BindJSON(&userBody); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
 		})
 		return
 	}
 
-	fmt.Println(user)
+	if userBody.Password != userBody.PasswordConfirm {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "비밀번호가 일치하지 않습니다.",
+		})
+		return
+	}
+
+	user := entitys.User{
+		Email:       userBody.Email,
+		Password:    userBody.Password,
+		Name:        userBody.Name,
+		ConnectedAt: time.Now(),
+	}
+
+	// TODO: 비번 암호화 안됨, 로그인 시간 utc아님
+	if err := mysql.Client.Select("Email", "Password", "Name", "ConnectedAt").Create(&user).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
 }
 
 func UserLogout(c *gin.Context) {
