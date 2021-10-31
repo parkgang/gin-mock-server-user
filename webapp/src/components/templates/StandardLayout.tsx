@@ -13,11 +13,11 @@ const FlexContainer = styled.div`
   padding: 0.5rem;
 `;
 
-type TDeviceHandlingFlexContainer = {
+type DeviceHandlingFlexContainerProps = {
   isMobile: boolean;
 };
 
-const DeviceHandlingFlexContainer = styled.div<TDeviceHandlingFlexContainer>`
+const DeviceHandlingFlexContainer = styled.div<DeviceHandlingFlexContainerProps>`
   width: ${(props) => (props.isMobile ? "100%" : "80%")};
   height: 100%;
 

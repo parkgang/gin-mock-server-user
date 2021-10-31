@@ -9,14 +9,21 @@ type ResetStyleProps = {
 };
 
 /**
- * 의외로 많이 발생하는 @fluentui/react-teams 스타일 문제를 해결하기 위한 css-in-js 입니다.
+ * 의외로 많이 발생하는 @fluentui/react-teams 스타일 문제를 해결하기 위한 css-in-js 입니다. 부모의 높이를 모두 상속받도록 스타일을 설정하였습니다.
  */
 const ResetStyle = styled.div<ResetStyleProps>`
+  height: 100%;
   & > div {
-    /* Communication 컴포넌트가 height: "100vh"로 고정되어 있어 불필요한 공간을 차지하는 현상 제거용 */
-    height: initial;
-    /* 동일한 테마 프레임워크에 불구하고 northstar와 배경색이 애매하게 다릅니다. 룩앤필을 위하여 그냥 northstar의 배경색으로 오버라이트 합니다. */
-    background-color: ${(props) => props.backgroundColor};
+    height: 100%;
+    & > div {
+      height: 100%;
+      /* 동일한 테마 프레임워크에 불구하고 northstar와 배경색이 애매하게 다릅니다. 룩앤필을 위하여 그냥 northstar의 배경색으로 오버라이트 합니다. */
+      background-color: ${(props) => props.backgroundColor};
+      & > div {
+        /* Communication 컴포넌트가 height: "100vh"로 고정되어 있어 불필요한 공간을 차지하는 현상 제거용 */
+        height: initial;
+      }
+    }
   }
 `;
 
@@ -30,12 +37,12 @@ export default function ReactTeamsCommunication(
   const fluentuiReactTeamsTheme = useRecoilValue(FluentuiTeamsThemeState);
 
   return (
-    <reactTeams.Provider themeName={fluentuiReactTeamsTheme} lang="en-US">
-      <ResetStyle
-        backgroundColor={fluentuiNorthstarTheme.siteVariables.bodyBackground}
-      >
+    <ResetStyle
+      backgroundColor={fluentuiNorthstarTheme.siteVariables.bodyBackground}
+    >
+      <reactTeams.Provider themeName={fluentuiReactTeamsTheme} lang="en-US">
         <reactTeams.Communication {...props} />
-      </ResetStyle>
-    </reactTeams.Provider>
+      </reactTeams.Provider>
+    </ResetStyle>
   );
 }
