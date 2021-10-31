@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/parkgang/modern-board/configs"
 	"github.com/parkgang/modern-board/docs"
-	_ "github.com/parkgang/modern-board/internal/app/data/mysql"
+	_ "github.com/parkgang/modern-board/internal/app/data/orm"
 	"github.com/parkgang/modern-board/internal/app/middlewares"
 	apiRouter "github.com/parkgang/modern-board/internal/app/routers"
 	"github.com/spf13/viper"

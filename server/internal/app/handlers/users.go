@@ -1,16 +1,18 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
-	"time"
+	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-sql-driver/mysql"
 	"github.com/golang-jwt/jwt"
-	"github.com/parkgang/modern-board/internal/app/data/mysql"
+	"github.com/parkgang/modern-board/internal/app/data/orm"
 	"github.com/parkgang/modern-board/internal/app/entitys"
 	"github.com/parkgang/modern-board/internal/app/models"
 	"github.com/parkgang/modern-board/internal/pkg/auth"
@@ -109,14 +111,27 @@ func UserSignup(c *gin.Context) {
 	}
 
 	user := entitys.User{
-		Email:       userBody.Email,
-		Password:    userBody.Password,
-		Name:        userBody.Name,
-		ConnectedAt: time.Now(),
+		Email:    userBody.Email,
+		Password: userBody.Password,
+		Name:     userBody.Name,
 	}
 
-	// TODO: 비번 암호화 안됨, 로그인 시간 utc아님
-	if err := mysql.Client.Select("Email", "Password", "Name", "ConnectedAt").Create(&user).Error; err != nil {
+	if err := orm.Client.Select("Email", "Password", "Name", "ConnectedAt").Create(&user).Error; err != nil {
+		// 중복 키 에러 처리: https://github.com/go-gorm/gorm/issues/4037#issuecomment-771499867
+		// 예시 에러 => Error 1062: Duplicate entry 'user01@test.com' for key 'email'
+		var mysqlErr *mysql.MySQLError
+		if errors.As(err, &mysqlErr) && mysqlErr.Number == 1062 {
+			parseKey := strings.Split(mysqlErr.Message, "key ")[1]
+			duplicateKey := strings.Replace(parseKey, "'", "", -1)
+			switch duplicateKey {
+			case "email":
+				c.JSON(http.StatusConflict, gin.H{
+					"message": "이미 사용중인 이메일입니다.",
+				})
+				return
+			}
+		}
+
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": err.Error(),
 		})

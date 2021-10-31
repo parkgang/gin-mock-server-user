@@ -1,7 +1,10 @@
-import { Button, Input } from "@fluentui/react-northstar";
+import { Alert, Button, Input } from "@fluentui/react-northstar";
+import axios from "axios";
 import StandardLayout from "components/templates/StandardLayout";
 import useKeyword from "hooks/useKeyword";
 import { PostUser } from "libs/api/user";
+import { getErrorsCause } from "libs/error";
+import { useState } from "react";
 import { useErrorHandler } from "react-error-boundary";
 import styled from "styled-components";
 import ElementCenter from "styles/ElementCenter";
@@ -16,6 +19,8 @@ const FlexContainer = styled.section`
 `;
 
 export default function SignUp() {
+  const [alertMessage, setAlertMessage] = useState<string>("");
+
   const [email, , handleEmail] = useKeyword();
   const [password, , handlePassword] = useKeyword();
   const [passwordConfirm, , handlePasswordConfirm] = useKeyword();
@@ -27,11 +32,20 @@ export default function SignUp() {
     try {
       await PostUser({ name, email, password, passwordConfirm });
     } catch (error) {
+      if (error instanceof Error) {
+        const cause = getErrorsCause(error);
+        if (axios.isAxiosError(cause)) {
+          switch (cause.response?.status) {
+            case 400:
+            case 409:
+              setAlertMessage(cause.response.data.message);
+              return;
+          }
+        }
+      }
       handleError(error);
     }
   }
-
-  console.log({ name, email, password, passwordConfirm });
 
   return (
     <>
@@ -64,7 +78,19 @@ export default function SignUp() {
               labelPosition="inside"
               onChange={handleName}
             />
-            <Button fluid primary content="회원가입" onClick={handleSignUp} />
+            <div style={{ width: "100%" }}>
+              <Button fluid primary content="회원가입" onClick={handleSignUp} />
+              {alertMessage && (
+                <Alert
+                  attached="bottom"
+                  content={alertMessage}
+                  variables={{
+                    oof: true,
+                  }}
+                  style={{ width: "100%" }}
+                />
+              )}
+            </div>
           </FlexContainer>
         </ElementCenter>
       </StandardLayout>

@@ -1,4 +1,4 @@
-package mysql
+package orm
 
 import (
 	"fmt"
@@ -21,7 +21,8 @@ func init() {
 	mysqlMasterPass := viper.GetString("MYSQL_MASTER_PASSWORD")
 	mysqlMasterDbname := viper.GetString("MYSQL_MASTER_DATABASE")
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", mysqlMasterUser, mysqlMasterPass, mysqlMasterHost, mysqlMasterPort, mysqlMasterDbname)
+	// UTC으로 시간을 저장하기 위하여 UTC으로 연결합니다: https://stackoverflow.com/a/60974094
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=UTC", mysqlMasterUser, mysqlMasterPass, mysqlMasterHost, mysqlMasterPort, mysqlMasterDbname)
 
 	log.Println("mysql 연결 중...")
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
