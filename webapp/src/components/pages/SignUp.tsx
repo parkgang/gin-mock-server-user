@@ -5,7 +5,7 @@ import styled from "styled-components";
 import ElementCenter from "styles/ElementCenter";
 
 const FlexContainer = styled.section`
-  width: 20%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,9 +16,10 @@ const FlexContainer = styled.section`
 export default function SignUp() {
   const [name, , handleName] = useKeyword();
   const [emaill, , handleEmaill] = useKeyword();
-  const [pw, , handlePw] = useKeyword();
+  const [password, , handlePassword] = useKeyword();
+  const [passwordConfirm, , handlePasswordConfirm] = useKeyword();
 
-  console.log({ name, emaill, pw });
+  console.log({ name, emaill, password, passwordConfirm });
 
   return (
     <>
@@ -39,10 +40,17 @@ export default function SignUp() {
             />
             <Input
               fluid
-              label="패스워드"
+              label="비밀번호"
               labelPosition="inside"
               type="password"
-              onChange={handlePw}
+              onChange={handlePassword}
+            />
+            <Input
+              fluid
+              label="비밀번호 확인"
+              labelPosition="inside"
+              type="password"
+              onChange={handlePasswordConfirm}
             />
             <Button fluid primary content="회원가입" />
           </FlexContainer>
