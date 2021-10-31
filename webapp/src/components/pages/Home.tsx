@@ -1,8 +1,29 @@
 import { Button, EmojiSurprisedIcon } from "@fluentui/react-northstar";
 import ConfirmDialog from "components/organisms/ConfirmDialog";
 import StandardLayout from "components/templates/StandardLayout";
+import { useState } from "react";
+import styled from "styled-components";
+
+const ImageUpload = styled.div`
+  label {
+    cursor: pointer;
+    font-size: 1em;
+  }
+
+  #chooseFile {
+    display: none;
+  }
+`;
 
 export default function Home() {
+  const [profileImage, setProfileImage] = useState<File>();
+
+  function loadFile(event: any) {
+    const target = event.target as HTMLInputElement;
+    const file = target.files![0];
+    setProfileImage(file);
+  }
+
   return (
     <>
       <StandardLayout>
@@ -28,6 +49,30 @@ export default function Home() {
             console.log(`확인 함수 테스트`);
           }}
         />
+        <ImageUpload>
+          <label htmlFor="chooseFile">
+            <img
+              src={
+                profileImage
+                  ? URL.createObjectURL(profileImage)
+                  : "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/RobertTolbert.jpg"
+              }
+              alt="사용자 프로필 사진 선택"
+              style={{
+                borderRadius: "30px",
+                cursor: "pointer",
+                width: "150px",
+              }}
+            />
+          </label>
+          <input
+            type="file"
+            id="chooseFile"
+            name="chooseFile"
+            accept="image/*"
+            onChange={loadFile}
+          />
+        </ImageUpload>
       </StandardLayout>
     </>
   );

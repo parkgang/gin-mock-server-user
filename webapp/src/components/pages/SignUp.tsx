@@ -1,15 +1,8 @@
 import { Button, Input } from "@fluentui/react-northstar";
 import StandardLayout from "components/templates/StandardLayout";
 import useKeyword from "hooks/useKeyword";
-import { useState } from "react";
 import styled from "styled-components";
-
-const Layout = styled.section`
-  display: flex;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-`;
+import ElementCenter from "styles/ElementCenter";
 
 const FlexContainer = styled.section`
   width: 20%;
@@ -20,60 +13,18 @@ const FlexContainer = styled.section`
   gap: 1rem;
 `;
 
-const ImageUpload = styled.div`
-  label {
-    cursor: pointer;
-    font-size: 1em;
-  }
-
-  #chooseFile {
-    display: none;
-  }
-`;
-
 export default function SignUp() {
   const [name, , handleName] = useKeyword();
   const [emaill, , handleEmaill] = useKeyword();
   const [pw, , handlePw] = useKeyword();
-  const [profileImage, setProfileImage] = useState<File>();
 
   console.log({ name, emaill, pw });
-
-  function loadFile(event: any) {
-    const target = event.target as HTMLInputElement;
-    const file = target.files![0];
-    setProfileImage(file);
-  }
 
   return (
     <>
       <StandardLayout>
-        <Layout>
+        <ElementCenter>
           <FlexContainer>
-            <ImageUpload>
-              <label htmlFor="chooseFile">
-                <img
-                  src={
-                    profileImage
-                      ? URL.createObjectURL(profileImage)
-                      : "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/RobertTolbert.jpg"
-                  }
-                  alt="사용자 프로필 사진 선택"
-                  style={{
-                    borderRadius: "30px",
-                    cursor: "pointer",
-                    width: "150px",
-                  }}
-                />
-              </label>
-              <input
-                type="file"
-                id="chooseFile"
-                name="chooseFile"
-                accept="image/*"
-                onChange={loadFile}
-              />
-            </ImageUpload>
             <Input
               fluid
               label="이름"
@@ -95,7 +46,7 @@ export default function SignUp() {
             />
             <Button fluid primary content="회원가입" />
           </FlexContainer>
-        </Layout>
+        </ElementCenter>
       </StandardLayout>
     </>
   );
