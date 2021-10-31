@@ -31,6 +31,7 @@ export default function SignUp() {
   async function handleSignUp() {
     try {
       await PostUser({ name, email, password, passwordConfirm });
+      setAlertMessage("");
     } catch (error) {
       if (error instanceof Error) {
         const cause = getErrorsCause(error);
