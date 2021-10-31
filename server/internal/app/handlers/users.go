@@ -99,7 +99,7 @@ func UserKakaoLoginCallBack(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param data body models.User true "회원가입을 위한 정보"
-// @Success 201 {object} models.User
+// @Success 201 {object} entitys.User
 // @Header 201 {string} Location "/users/1"
 // @Failure 400 {object} models.ErrResponse
 // @Failure 409 {object} models.ErrResponse

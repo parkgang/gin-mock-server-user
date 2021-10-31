@@ -9,14 +9,14 @@ import (
 )
 
 type User struct {
-	Id                 uint   `gorm:"primary_key;auto_increment;"`
-	Email              string `gorm:"unique;not null;size:50;"`
-	Password           string `gorm:"not null;size:64;"`
-	Name               string `gorm:"not null;size:20;"`
-	AvatarImage        []byte
-	ConnectedAt        time.Time `gorm:"type:TIMESTAMP;default:current_timestamp;not null;"`
-	KakaoTalkSocialsId uint
-	KakaoTalkSocial    KakaoTalkSocial `gorm:"foreignkey:KakaoTalkSocialsId;references:Id;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	Id                 uint            `gorm:"primary_key;auto_increment;" json:"id"`
+	Email              string          `gorm:"unique;not null;size:50;" json:"email"`
+	Password           string          `gorm:"not null;size:64;" json:"password"`
+	Name               string          `gorm:"not null;size:20;" json:"name"`
+	AvatarImage        []byte          `json:"avatarImage"`
+	ConnectedAt        time.Time       `gorm:"type:TIMESTAMP;default:current_timestamp;not null;" json:"connectedAt"`
+	KakaoTalkSocialsId uint            `json:"kakaoTalkSocialsId"`
+	KakaoTalkSocial    KakaoTalkSocial `gorm:"foreignkey:KakaoTalkSocialsId;references:Id;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"kakaoTalkSocial"`
 }
 
 func (u *User) BeforeSave(tx *gorm.DB) (err error) {
