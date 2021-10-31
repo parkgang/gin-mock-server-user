@@ -6,7 +6,7 @@ type Props = {
   content: ReactNode;
 };
 
-export default function ConfirmDialog({ isOpen, content }: Props) {
+export default function DialogFrame({ isOpen, content }: Props) {
   const parentDialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
