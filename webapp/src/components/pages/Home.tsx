@@ -18,7 +18,7 @@ export default function Home() {
               content={<EmojiSurprisedIcon />}
             />
           }
-          message="확인 메시지 테스트"
+          message="컴펌 메시지 테스트"
           cancelContent="취소"
           confirmContent="확인"
           onCancel={() => {
