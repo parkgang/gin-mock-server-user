@@ -1,5 +1,5 @@
 import { Provider as FluentuiNorthstarProvider } from "@fluentui/react-northstar";
-import Spinner from "components/molecules/Spinner";
+import LoadingSpinner from "components/molecules/LoadingSpinner";
 import ErrorFallback from "components/wrapped/ErrorFallback";
 import { handlerOnError } from "libs/error";
 import { lazy, Suspense } from "react";
@@ -34,7 +34,14 @@ export default function App() {
           FallbackComponent={ErrorFallback}
           onError={handlerOnError}
         >
-          <Suspense fallback={<Spinner message="페이지 불러오는 중..." />}>
+          <Suspense
+            fallback={
+              <LoadingSpinner
+                message="페이지 불러오는 중..."
+                style={{ height: "100vh" }}
+              />
+            }
+          >
             <Router>
               <Switch>
                 <Route path={HomePath} component={Home} exact />
