@@ -1,7 +1,5 @@
 import { Provider as FluentuiNorthstarProvider } from "@fluentui/react-northstar";
 import Spinner from "components/molecules/Spinner";
-import Gnb from "components/organisms/Gnb";
-import AppLayout from "components/templates/AppLayout";
 import ErrorFallback from "components/wrapped/ErrorFallback";
 import { handlerOnError } from "libs/error";
 import { lazy, Suspense } from "react";
@@ -32,25 +30,22 @@ export default function App() {
   return (
     <>
       <FluentuiNorthstarProvider theme={theme}>
-        <AppLayout>
-          <ErrorBoundary
-            FallbackComponent={ErrorFallback}
-            onError={handlerOnError}
-          >
-            <Suspense fallback={<Spinner message="페이지 불러오는 중..." />}>
-              <Router>
-                <Gnb />
-                <Switch>
-                  <Route exact path={HomePath} component={Home} />
-                  <Route exact path={UsersPath} component={Users} />
-                  <Route exact path={SignInPath} component={SignIn} />
-                  <Route exact path={SignUpPath} component={SignUp} />
-                  <Route component={NotFound} />
-                </Switch>
-              </Router>
-            </Suspense>
-          </ErrorBoundary>
-        </AppLayout>
+        <ErrorBoundary
+          FallbackComponent={ErrorFallback}
+          onError={handlerOnError}
+        >
+          <Suspense fallback={<Spinner message="페이지 불러오는 중..." />}>
+            <Router>
+              <Switch>
+                <Route path={HomePath} component={Home} exact />
+                <Route path={UsersPath} component={Users} exact />
+                <Route path={SignInPath} component={SignIn} exact />
+                <Route path={SignUpPath} component={SignUp} exact />
+                <Route component={NotFound} />
+              </Switch>
+            </Router>
+          </Suspense>
+        </ErrorBoundary>
       </FluentuiNorthstarProvider>
       <GlobalStyle />
       <FluentuiNorthstarThemeEffect />

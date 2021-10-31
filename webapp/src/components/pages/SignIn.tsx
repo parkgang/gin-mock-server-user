@@ -1,4 +1,5 @@
 import { Button, Input } from "@fluentui/react-northstar";
+import StandardLayout from "components/templates/StandardLayout";
 import useConfigQuery from "hooks/query/useConfigQuery";
 import useKeyword from "hooks/useKeyword";
 import styled from "styled-components";
@@ -34,31 +35,33 @@ export default function SignIn() {
 
   return (
     <>
-      <Layout>
-        <FlexContainer>
-          <Input
-            fluid
-            label="이메일"
-            labelPosition="inside"
-            onChange={handleEmaill}
-          />
-          <Input
-            fluid
-            label="패스워드"
-            labelPosition="inside"
-            type="password"
-            onChange={handlePw}
-          />
-          <Button fluid primary content="로그인" />
-          <img
-            src="./kakao_login_medium_narrow.png"
-            width="100%"
-            alt="카카오 로그인 버튼"
-            onClick={handleKakaoLogin}
-            style={{ cursor: "pointer" }}
-          />
-        </FlexContainer>
-      </Layout>
+      <StandardLayout>
+        <Layout>
+          <FlexContainer>
+            <Input
+              fluid
+              label="이메일"
+              labelPosition="inside"
+              onChange={handleEmaill}
+            />
+            <Input
+              fluid
+              label="패스워드"
+              labelPosition="inside"
+              type="password"
+              onChange={handlePw}
+            />
+            <Button fluid primary content="로그인" />
+            <img
+              src="./kakao_login_medium_narrow.png"
+              width="100%"
+              alt="카카오 로그인 버튼"
+              onClick={handleKakaoLogin}
+              style={{ cursor: "pointer" }}
+            />
+          </FlexContainer>
+        </Layout>
+      </StandardLayout>
     </>
   );
 }

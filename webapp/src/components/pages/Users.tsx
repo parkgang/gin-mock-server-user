@@ -1,5 +1,6 @@
 import { Button } from "@fluentui/react-northstar";
 import { SignInPath, SignUpPath } from "App";
+import StandardLayout from "components/templates/StandardLayout";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
@@ -20,24 +21,26 @@ export default function Users() {
 
   return (
     <>
-      <FlexContainer>
-        <img
-          src="https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/RobertTolbert.jpg"
-          alt="사용자 프로필 사진"
-          style={{
-            borderRadius: "30px",
-            width: "150px",
-          }}
-        />
-        <span>테스트 사용자</span>
-        <span>test01@test.com</span>
-        <Button content="Sign in" onClick={handleHistoryPush(SignInPath)} />
-        <Button
-          primary
-          content="Sign up"
-          onClick={handleHistoryPush(SignUpPath)}
-        />
-      </FlexContainer>
+      <StandardLayout>
+        <FlexContainer>
+          <img
+            src="https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/RobertTolbert.jpg"
+            alt="사용자 프로필 사진"
+            style={{
+              borderRadius: "30px",
+              width: "150px",
+            }}
+          />
+          <span>테스트 사용자</span>
+          <span>test01@test.com</span>
+          <Button content="Sign in" onClick={handleHistoryPush(SignInPath)} />
+          <Button
+            primary
+            content="Sign up"
+            onClick={handleHistoryPush(SignUpPath)}
+          />
+        </FlexContainer>
+      </StandardLayout>
     </>
   );
 }

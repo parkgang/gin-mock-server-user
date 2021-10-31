@@ -1,7 +1,11 @@
+import StandardLayout from "components/templates/StandardLayout";
+
 export default function Home() {
   return (
     <>
-      <h1>Home</h1>
+      <StandardLayout>
+        <h1>Home</h1>
+      </StandardLayout>
     </>
   );
 }

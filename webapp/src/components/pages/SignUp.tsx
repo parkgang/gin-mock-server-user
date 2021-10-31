@@ -1,4 +1,5 @@
 import { Button, Input } from "@fluentui/react-northstar";
+import StandardLayout from "components/templates/StandardLayout";
 import useKeyword from "hooks/useKeyword";
 import { useState } from "react";
 import styled from "styled-components";
@@ -46,54 +47,56 @@ export default function SignUp() {
 
   return (
     <>
-      <Layout>
-        <FlexContainer>
-          <ImageUpload>
-            <label htmlFor="chooseFile">
-              <img
-                src={
-                  profileImage
-                    ? URL.createObjectURL(profileImage)
-                    : "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/RobertTolbert.jpg"
-                }
-                alt="사용자 프로필 사진 선택"
-                style={{
-                  borderRadius: "30px",
-                  cursor: "pointer",
-                  width: "150px",
-                }}
+      <StandardLayout>
+        <Layout>
+          <FlexContainer>
+            <ImageUpload>
+              <label htmlFor="chooseFile">
+                <img
+                  src={
+                    profileImage
+                      ? URL.createObjectURL(profileImage)
+                      : "https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/RobertTolbert.jpg"
+                  }
+                  alt="사용자 프로필 사진 선택"
+                  style={{
+                    borderRadius: "30px",
+                    cursor: "pointer",
+                    width: "150px",
+                  }}
+                />
+              </label>
+              <input
+                type="file"
+                id="chooseFile"
+                name="chooseFile"
+                accept="image/*"
+                onChange={loadFile}
               />
-            </label>
-            <input
-              type="file"
-              id="chooseFile"
-              name="chooseFile"
-              accept="image/*"
-              onChange={loadFile}
+            </ImageUpload>
+            <Input
+              fluid
+              label="이름"
+              labelPosition="inside"
+              onChange={handleName}
             />
-          </ImageUpload>
-          <Input
-            fluid
-            label="이름"
-            labelPosition="inside"
-            onChange={handleName}
-          />
-          <Input
-            fluid
-            label="이메일"
-            labelPosition="inside"
-            onChange={handleEmaill}
-          />
-          <Input
-            fluid
-            label="패스워드"
-            labelPosition="inside"
-            type="password"
-            onChange={handlePw}
-          />
-          <Button fluid primary content="회원가입" />
-        </FlexContainer>
-      </Layout>
+            <Input
+              fluid
+              label="이메일"
+              labelPosition="inside"
+              onChange={handleEmaill}
+            />
+            <Input
+              fluid
+              label="패스워드"
+              labelPosition="inside"
+              type="password"
+              onChange={handlePw}
+            />
+            <Button fluid primary content="회원가입" />
+          </FlexContainer>
+        </Layout>
+      </StandardLayout>
     </>
   );
 }
