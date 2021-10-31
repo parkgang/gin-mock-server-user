@@ -1,6 +1,8 @@
 import { Button, Input } from "@fluentui/react-northstar";
 import StandardLayout from "components/templates/StandardLayout";
 import useKeyword from "hooks/useKeyword";
+import { PostUser } from "libs/api/user";
+import { useErrorHandler } from "react-error-boundary";
 import styled from "styled-components";
 import ElementCenter from "styles/ElementCenter";
 
@@ -15,11 +17,21 @@ const FlexContainer = styled.section`
 
 export default function SignUp() {
   const [name, , handleName] = useKeyword();
-  const [emaill, , handleEmaill] = useKeyword();
+  const [email, , handleEmail] = useKeyword();
   const [password, , handlePassword] = useKeyword();
   const [passwordConfirm, , handlePasswordConfirm] = useKeyword();
 
-  console.log({ name, emaill, password, passwordConfirm });
+  const handleError = useErrorHandler();
+
+  async function handleSignUp() {
+    try {
+      await PostUser({ name, email, password, passwordConfirm });
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
+  console.log({ name, email, password, passwordConfirm });
 
   return (
     <>
@@ -36,7 +48,7 @@ export default function SignUp() {
               fluid
               label="이메일"
               labelPosition="inside"
-              onChange={handleEmaill}
+              onChange={handleEmail}
             />
             <Input
               fluid
@@ -52,7 +64,7 @@ export default function SignUp() {
               type="password"
               onChange={handlePasswordConfirm}
             />
-            <Button fluid primary content="회원가입" />
+            <Button fluid primary content="회원가입" onClick={handleSignUp} />
           </FlexContainer>
         </ElementCenter>
       </StandardLayout>
