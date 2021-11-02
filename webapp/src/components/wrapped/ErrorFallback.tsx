@@ -14,6 +14,11 @@ function handleInteraction(target: string) {
 }
 
 export default function ErrorFallback({ error }: FallbackProps) {
+  // Error type이 온다고 타입 정의가 되어있지만 "handleError()" 에서 Error 이외의 값을 던질 수 있음으로 방어적으로 대처합니다.
+  if (!(error instanceof Error)) {
+    error = new Error(error);
+  }
+
   const errorsCause = getErrorsCause(error);
 
   // handleError(); 등 을 통해 error를 any 타입으로 던지는 경우 Error interface 를 충족하지 못하여 문제가 발생합니다.
