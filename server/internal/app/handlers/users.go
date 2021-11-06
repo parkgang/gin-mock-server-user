@@ -17,6 +17,7 @@ import (
 	"github.com/parkgang/modern-board/internal/app/models"
 	"github.com/parkgang/modern-board/internal/pkg/auth"
 	"github.com/parkgang/modern-board/internal/pkg/kakao"
+	"github.com/parkgang/modern-board/internal/pkg/util"
 )
 
 type User struct {
@@ -46,7 +47,7 @@ var user = User{
 // @Failure 500 {object} models.ErrResponse
 // @Router /users/signup [post]
 func UserSignup(c *gin.Context) {
-	userBody := models.User{}
+	userBody := models.UserSignUp{}
 
 	if err := c.BindJSON(&userBody); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -95,28 +96,55 @@ func UserSignup(c *gin.Context) {
 }
 
 func UserLogin(c *gin.Context) {
-	var u User
-	if err := c.ShouldBindJSON(&u); err != nil {
-		c.JSON(http.StatusUnprocessableEntity, "Invalid json provided")
+	userBody := models.UserLogin{}
+	user := entitys.User{}
+
+	if err := c.BindJSON(&userBody); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
 		return
 	}
-	//compare the user from the request, with the one we defined:
-	if user.Username != u.Username || user.Password != u.Password {
-		c.JSON(http.StatusUnauthorized, "Please provide valid login details")
+
+	// 존재하는 사용자 인지 확인
+	if err := orm.Client.Where("email = ?", userBody.Email).Find(&user).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
 		return
 	}
-	ts, err := auth.CreateToken(user.ID)
+	if userBody.Email != user.Email {
+		c.Status(http.StatusNotFound)
+		return
+	}
+
+	// 비밀번호 일치하는지 확인
+	if util.Sha256(userBody.Password) != user.Password {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"message": "비밀번호가 일치하지 않습니다.",
+		})
+		return
+	}
+
+	// 토큰 생성
+	userIdUint64 := uint64(user.Id)
+	ts, err := auth.CreateToken(userIdUint64)
 	if err != nil {
-		c.JSON(http.StatusUnprocessableEntity, err.Error())
+		c.JSON(http.StatusUnprocessableEntity, gin.H{
+			"message": err.Error(),
+		})
 		return
 	}
-	saveErr := auth.CreateAuth(user.ID, ts)
-	if saveErr != nil {
-		c.JSON(http.StatusUnprocessableEntity, saveErr.Error())
+	if err := auth.CreateAuth(userIdUint64, ts); err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{
+			"message": err.Error(),
+		})
+		return
 	}
+
 	tokens := map[string]string{
-		"access_token":  ts.AccessToken,
-		"refresh_token": ts.RefreshToken,
+		"accessToken":  ts.AccessToken,
+		"refreshToken": ts.RefreshToken,
 	}
 	c.JSON(http.StatusOK, tokens)
 }
