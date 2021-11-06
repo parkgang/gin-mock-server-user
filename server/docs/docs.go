@@ -174,7 +174,7 @@ var doc = `{
                 "nickName": {
                     "type": "string"
                 },
-                "thumbnailImage": {
+                "thumbnailImageUrl": {
                     "description": "이미지의 url을 저장하기 위한 최대 크기로 잡아놓았습니다.",
                     "type": "string"
                 }
