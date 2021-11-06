@@ -16,9 +16,7 @@
       "program": "${workspaceFolder}/server",
       "env": {
         "GO_ENV": "development"
-      },
-      "preLaunchTask": "container up",
-      "postDebugTask": "container stop"
+      }
     },
     {
       "name": "Client",
