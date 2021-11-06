@@ -33,66 +33,6 @@ var user = User{
 	Phone:    "49123454322",
 }
 
-func UserLogin(c *gin.Context) {
-	var u User
-	if err := c.ShouldBindJSON(&u); err != nil {
-		c.JSON(http.StatusUnprocessableEntity, "Invalid json provided")
-		return
-	}
-	//compare the user from the request, with the one we defined:
-	if user.Username != u.Username || user.Password != u.Password {
-		c.JSON(http.StatusUnauthorized, "Please provide valid login details")
-		return
-	}
-	ts, err := auth.CreateToken(user.ID)
-	if err != nil {
-		c.JSON(http.StatusUnprocessableEntity, err.Error())
-		return
-	}
-	saveErr := auth.CreateAuth(user.ID, ts)
-	if saveErr != nil {
-		c.JSON(http.StatusUnprocessableEntity, saveErr.Error())
-	}
-	tokens := map[string]string{
-		"access_token":  ts.AccessToken,
-		"refresh_token": ts.RefreshToken,
-	}
-	c.JSON(http.StatusOK, tokens)
-}
-
-func UserKakaoLoginCallBack(c *gin.Context) {
-	kakaoToken := models.KakaoToken{}
-
-	code := c.Query("code")
-	if code == "" {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "인가 코드가 전달되지 않았습니다. url에 있는 error_description key의 value를 확인해 주세요.",
-		})
-		return
-	}
-
-	if err := kakao.GetToken(code, &kakaoToken); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": err.Error(),
-		})
-		return
-	}
-
-	userInfo, err := kakao.GetUserInfo(kakaoToken.AccessToken)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": err.Error(),
-		})
-		return
-	}
-
-	// TODO: 사용자 정보 모델 만들어서 DB에 저장하기
-	log.Println("kakao 사용자 정보:" + userInfo)
-
-	// TODO: 하드 코딩이므로 동적으로 변경될 것을 고려해야합니다.
-	c.Redirect(http.StatusFound, "http://localhost:3000/auth-end")
-}
-
 // @Summary 회원가입
 // @Description 사용자를 생성합니다.
 // @Tags User
@@ -152,6 +92,66 @@ func UserSignup(c *gin.Context) {
 
 	c.Header("Location", fmt.Sprintf("/users/%d", user.Id))
 	c.JSON(http.StatusCreated, user)
+}
+
+func UserLogin(c *gin.Context) {
+	var u User
+	if err := c.ShouldBindJSON(&u); err != nil {
+		c.JSON(http.StatusUnprocessableEntity, "Invalid json provided")
+		return
+	}
+	//compare the user from the request, with the one we defined:
+	if user.Username != u.Username || user.Password != u.Password {
+		c.JSON(http.StatusUnauthorized, "Please provide valid login details")
+		return
+	}
+	ts, err := auth.CreateToken(user.ID)
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, err.Error())
+		return
+	}
+	saveErr := auth.CreateAuth(user.ID, ts)
+	if saveErr != nil {
+		c.JSON(http.StatusUnprocessableEntity, saveErr.Error())
+	}
+	tokens := map[string]string{
+		"access_token":  ts.AccessToken,
+		"refresh_token": ts.RefreshToken,
+	}
+	c.JSON(http.StatusOK, tokens)
+}
+
+func UserKakaoLoginCallBack(c *gin.Context) {
+	kakaoToken := models.KakaoToken{}
+
+	code := c.Query("code")
+	if code == "" {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": "인가 코드가 전달되지 않았습니다. url에 있는 error_description key의 value를 확인해 주세요.",
+		})
+		return
+	}
+
+	if err := kakao.GetToken(code, &kakaoToken); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	userInfo, err := kakao.GetUserInfo(kakaoToken.AccessToken)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	// TODO: 사용자 정보 모델 만들어서 DB에 저장하기
+	log.Println("kakao 사용자 정보:" + userInfo)
+
+	// TODO: 하드 코딩이므로 동적으로 변경될 것을 고려해야합니다.
+	c.Redirect(http.StatusFound, "http://localhost:3000/auth-end")
 }
 
 func UserLogout(c *gin.Context) {
