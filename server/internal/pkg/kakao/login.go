@@ -12,7 +12,7 @@ import (
 )
 
 // 카카오 사용자 정보를 가져옵니다.
-func GetUserInfo(token string) (string, error) {
+func GetUserInfo(token string, v *models.KakaoUserInformation) error {
 	endpoint := "https://kapi.kakao.com/v2/user/me"
 
 	xWwwFormUrlencodedHelper := httpclient.NewXWwwFormUrlencodedHelperOptions()
@@ -22,10 +22,14 @@ func GetUserInfo(token string) (string, error) {
 
 	resBody, err := xWwwFormUrlencodedHelper.Req(httpclient.POST, endpoint)
 	if err != nil {
-		return "", errors.Wrap(err, "kakao 사용자 정보 가져오기 실패")
+		return errors.Wrap(err, "kakao 사용자 정보 가져오기 실패")
 	}
+	log.Println("kakao 사용자 정보:" + string(resBody))
 
-	return string(resBody), nil
+	if err := json.Unmarshal(resBody, &v); err != nil {
+		return errors.Wrap(err, "kakao 사용자 정보 역직렬화 실패")
+	}
+	return nil
 }
 
 // 카카오 로그인이 완료되어 발급받은 인가 코드로 액세스 토큰과 리프레시 토큰을 발급 받습니다.
@@ -49,7 +53,7 @@ func GetToken(code string, v *models.KakaoToken) (err error) {
 	log.Println("카카오 로그인 후 REST API으로 토큰 받기 응답결과: " + string(resBody))
 
 	// 응답 역직렬화
-	if err := json.Unmarshal([]byte(resBody), &v); err != nil {
+	if err := json.Unmarshal(resBody, &v); err != nil {
 		return errors.Wrap(err, "kakao 발급받은 토큰 역직렬화 실패")
 	}
 	return nil

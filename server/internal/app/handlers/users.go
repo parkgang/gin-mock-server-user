@@ -3,7 +3,7 @@ package handlers
 import (
 	"errors"
 	"fmt"
-	"log"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
@@ -18,6 +18,7 @@ import (
 	"github.com/parkgang/modern-board/internal/pkg/auth"
 	"github.com/parkgang/modern-board/internal/pkg/kakao"
 	"github.com/parkgang/modern-board/internal/pkg/util"
+	"github.com/spf13/viper"
 )
 
 type User struct {
@@ -68,7 +69,6 @@ func UserSignup(c *gin.Context) {
 		Password: userBody.Password,
 		Name:     userBody.Name,
 	}
-
 	if err := orm.Client.Select("Email", "Password", "Name", "ConnectedAt").Create(&user).Error; err != nil {
 		// 중복 키 에러 처리: https://github.com/go-gorm/gorm/issues/4037#issuecomment-771499867
 		// 예시 에러 => Error 1062: Duplicate entry 'user01@test.com' for key 'email'
@@ -110,7 +110,6 @@ func UserSignup(c *gin.Context) {
 // @Router /users/login [post]
 func UserLogin(c *gin.Context) {
 	userBody := models.UserLogin{}
-	user := entitys.User{}
 
 	if err := c.BindJSON(&userBody); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -120,6 +119,7 @@ func UserLogin(c *gin.Context) {
 	}
 
 	// 존재하는 사용자 인지 확인
+	user := entitys.User{}
 	if err := orm.Client.Where("email = ?", userBody.Email).Find(&user).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": err.Error(),
@@ -163,7 +163,10 @@ func UserLogin(c *gin.Context) {
 }
 
 func UserKakaoLoginCallBack(c *gin.Context) {
-	kakaoToken := models.KakaoToken{}
+	webappUrl := viper.GetString("WEBAPP_URL")
+	signUpUrl := func(userId uint) string {
+		return fmt.Sprintf("%s/sign-up/%d", webappUrl, userId)
+	}
 
 	code := c.Query("code")
 	if code == "" {
@@ -173,6 +176,7 @@ func UserKakaoLoginCallBack(c *gin.Context) {
 		return
 	}
 
+	kakaoToken := models.KakaoToken{}
 	if err := kakao.GetToken(code, &kakaoToken); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": err.Error(),
@@ -180,19 +184,83 @@ func UserKakaoLoginCallBack(c *gin.Context) {
 		return
 	}
 
-	userInfo, err := kakao.GetUserInfo(kakaoToken.AccessToken)
-	if err != nil {
+	kakaoUserInformation := models.KakaoUserInformation{}
+	if err := kakao.GetUserInfo(kakaoToken.AccessToken, &kakaoUserInformation); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": err.Error(),
 		})
 		return
 	}
 
-	// TODO: 사용자 정보 모델 만들어서 DB에 저장하기
-	log.Println("kakao 사용자 정보:" + userInfo)
+	// 사용자 테이블에 로그인된 카카오 아이디로 생성된 사용지 있는지 확인
+	// TODO: 나중에 조인 쿼리 날려보기
+	user := entitys.User{}
+	if err := orm.Client.Where("kakao_talk_socials_id = ?", kakaoUserInformation.Id).Find(&user).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
 
-	// TODO: 하드 코딩이므로 동적으로 변경될 것을 고려해야합니다.
-	c.Redirect(http.StatusFound, "http://localhost:3000/auth-end")
+	if kakaoUserInformation.Id != user.KakaoTalkSocialsId {
+		// 카카오 oauth가 처음인 경우: 카카오 소셜 테이블에 생성 후 사용자 테이블에 인설트 후 해당 아이디 응답
+		kakaoTalkSocial := entitys.KakaoTalkSocial{
+			Id:                kakaoUserInformation.Id,
+			Email:             kakaoUserInformation.KakaoAccount.Email,
+			NickName:          kakaoUserInformation.KakaoAccount.Profile.Nickname,
+			ThumbnailImageUrl: kakaoUserInformation.KakaoAccount.Profile.ThumbnailImageUrl,
+		}
+		if err := orm.Client.Create(&kakaoTalkSocial).Error; err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": err.Error(),
+			})
+			return
+		}
+
+		// kakao 프로필 사진 바이너리로 전환
+		url := kakaoTalkSocial.ThumbnailImageUrl
+		res, err := http.Get(url)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": err.Error(),
+			})
+			return
+		}
+		avatarImageBinary, err := ioutil.ReadAll(res.Body)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": err.Error(),
+			})
+			return
+		}
+		res.Body.Close()
+
+		user := entitys.User{
+			Email:              kakaoTalkSocial.Email,
+			Name:               kakaoTalkSocial.NickName,
+			AvatarImage:        avatarImageBinary,
+			KakaoTalkSocialsId: kakaoTalkSocial.Id,
+		}
+		if err := orm.Client.Select("Email", "Name", "AvatarImage", "KakaoTalkSocialsId").Create(&user).Error; err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": err.Error(),
+			})
+			return
+		}
+		c.Redirect(http.StatusFound, signUpUrl(user.Id))
+	} else if user.Password == "" {
+		// 카카오 oauth 인증은 된 사용자 이지만 아직 회원가입을 모두 마치지 않은 경우
+		c.Redirect(http.StatusFound, signUpUrl(user.Id))
+	} else {
+		// 있다면 토큰 생성 후 쿼리스트링으로 응답
+		// TODO: 토큰 생성하는 코드 추가해야됨
+		jwtToken := models.JWTToken{
+			AccessToken:  "AccessToken",
+			RefreshToken: "RefreshToken",
+		}
+		redUrl := fmt.Sprintf("%s/auth-end?accessToken=%s&refreshToken=%s", webappUrl, jwtToken.AccessToken, jwtToken.RefreshToken)
+		c.Redirect(http.StatusFound, redUrl)
+	}
 }
 
 func UserLogout(c *gin.Context) {
