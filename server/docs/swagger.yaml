@@ -38,13 +38,37 @@ definitions:
         example: 여기에 에러 메시지가 전달됩니다.
         type: string
     type: object
+  models.JWTToken:
+    properties:
+      accessToken:
+        example: header.payLoad.signature
+        type: string
+      refreshToken:
+        example: header.payLoad.signature
+        type: string
+    required:
+    - accessToken
+    - refreshToken
+    type: object
   models.Pong:
     properties:
       message:
         example: pong
         type: string
     type: object
-  models.User:
+  models.UserLogin:
+    properties:
+      email:
+        example: user01@test.com
+        type: string
+      password:
+        example: test1!
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  models.UserSignUp:
     properties:
       email:
         example: user01@test.com
@@ -78,6 +102,46 @@ paths:
           schema:
             $ref: '#/definitions/models.Pong'
       summary: Server Health Check
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: 로그인을 성공 시 JWT token이 발급됩니다.
+      parameters:
+      - description: 로그인 정보
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.JWTToken'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.ErrResponse'
+        "404":
+          description: ""
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/models.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrResponse'
+      summary: 로그인
+      tags:
+      - User
   /users/signup:
     post:
       consumes:
@@ -89,7 +153,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/models.User'
+          $ref: '#/definitions/models.UserSignUp'
       produces:
       - application/json
       responses:

@@ -39,7 +39,7 @@ var user = User{
 // @Tags User
 // @Accept json
 // @Produce json
-// @Param data body models.User true "회원가입을 위한 정보"
+// @Param data body models.UserSignUp true "회원가입을 위한 정보"
 // @Success 201 {object} entitys.User
 // @Header 201 {string} Location "/users/1"
 // @Failure 400 {object} models.ErrResponse
@@ -95,6 +95,19 @@ func UserSignup(c *gin.Context) {
 	c.JSON(http.StatusCreated, user)
 }
 
+// @Summary 로그인
+// @Description 로그인을 성공 시 JWT token이 발급됩니다.
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param data body models.UserLogin true "로그인 정보"
+// @Success 200 {object} models.JWTToken
+// @Failure 400 {object} models.ErrResponse
+// @Failure 401 {object} models.ErrResponse
+// @Failure 404
+// @Failure 422 {object} models.ErrResponse
+// @Failure 500 {object} models.ErrResponse
+// @Router /users/login [post]
 func UserLogin(c *gin.Context) {
 	userBody := models.UserLogin{}
 	user := entitys.User{}
@@ -142,9 +155,9 @@ func UserLogin(c *gin.Context) {
 		return
 	}
 
-	tokens := map[string]string{
-		"accessToken":  ts.AccessToken,
-		"refreshToken": ts.RefreshToken,
+	tokens := models.JWTToken{
+		AccessToken:  ts.AccessToken,
+		RefreshToken: ts.RefreshToken,
 	}
 	c.JSON(http.StatusOK, tokens)
 }

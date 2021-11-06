@@ -41,6 +41,67 @@ var doc = `{
                 }
             }
         },
+        "/users/login": {
+            "post": {
+                "description": "로그인을 성공 시 JWT token이 발급됩니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "로그인",
+                "parameters": [
+                    {
+                        "description": "로그인 정보",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UserLogin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.JWTToken"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/users/signup": {
             "post": {
                 "description": "사용자를 생성합니다.",
@@ -61,7 +122,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.User"
+                            "$ref": "#/definitions/models.UserSignUp"
                         }
                     }
                 ],
@@ -160,6 +221,23 @@ var doc = `{
                 }
             }
         },
+        "models.JWTToken": {
+            "type": "object",
+            "required": [
+                "accessToken",
+                "refreshToken"
+            ],
+            "properties": {
+                "accessToken": {
+                    "type": "string",
+                    "example": "header.payLoad.signature"
+                },
+                "refreshToken": {
+                    "type": "string",
+                    "example": "header.payLoad.signature"
+                }
+            }
+        },
         "models.Pong": {
             "type": "object",
             "properties": {
@@ -169,7 +247,24 @@ var doc = `{
                 }
             }
         },
-        "models.User": {
+        "models.UserLogin": {
+            "type": "object",
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "user01@test.com"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "test1!"
+                }
+            }
+        },
+        "models.UserSignUp": {
             "type": "object",
             "required": [
                 "email",
