@@ -10,7 +10,7 @@ import {
   ThemePrepared,
 } from "@fluentui/react-northstar";
 import { HomePath, UsersPath } from "App";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { FluentuiNorthstarThemeState } from "states/fluentui-northstar";
 import {
@@ -23,14 +23,14 @@ export default function Gnb() {
     FluentuiNorthstarThemeState
   );
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const menuItems = [
     {
       key: HomePath,
       content: "Home",
       onClick() {
-        history.push(HomePath);
+        navigate(HomePath);
       },
       styles: {
         padding: "0.6rem",
@@ -40,7 +40,7 @@ export default function Gnb() {
       key: UsersPath,
       content: "Users",
       onClick() {
-        history.push(UsersPath);
+        navigate(UsersPath);
       },
       styles: {
         padding: "0.6rem",
@@ -48,7 +48,7 @@ export default function Gnb() {
     },
   ];
   const menuDefaultIndex = menuItems.findIndex(
-    (x) => x.key === history.location.pathname
+    (x) => x.key === window.location.pathname
   );
   const dropdownItems = [
     {

@@ -5,7 +5,7 @@ import { handlerOnError } from "libs/error";
 import { lazy, Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import {
   FluentuiNorthstarThemeEffect,
@@ -42,15 +42,13 @@ export default function App() {
               />
             }
           >
-            <Router>
-              <Switch>
-                <Route path={HomePath} component={Home} exact />
-                <Route path={UsersPath} component={Users} exact />
-                <Route path={SignInPath} component={SignIn} exact />
-                <Route path={SignUpPath} component={SignUp} exact />
-                <Route component={NotFound} />
-              </Switch>
-            </Router>
+            <Routes>
+              <Route path={HomePath} element={<Home />} />
+              <Route path={UsersPath} element={<Users />} />
+              <Route path={SignInPath} element={<SignIn />} />
+              <Route path={SignUpPath} element={<SignUp />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
           </Suspense>
         </ErrorBoundary>
       </FluentuiNorthstarProvider>

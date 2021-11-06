@@ -1,7 +1,7 @@
 import { Button } from "@fluentui/react-northstar";
 import { SignInPath, SignUpPath } from "App";
 import StandardLayout from "components/templates/StandardLayout";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ElementCenter from "styles/ElementCenter";
 
@@ -14,10 +14,10 @@ const FlexContainer = styled.section`
 `;
 
 export default function Users() {
-  const histroy = useHistory();
+  const navigate = useNavigate();
 
   function handleHistoryPush(path: string) {
-    return () => histroy.push(path);
+    return () => navigate(path);
   }
 
   return (

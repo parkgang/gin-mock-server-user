@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 
 import { name, version } from "../package.json";
@@ -20,7 +21,9 @@ console.log(`${name}@${version}`);
 ReactDOM.render(
   <RecoilRoot>
     <QueryClientProvider client={queryClient}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </QueryClientProvider>
   </RecoilRoot>,
   document.getElementById("root")
