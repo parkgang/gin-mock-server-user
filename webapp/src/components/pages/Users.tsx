@@ -64,6 +64,7 @@ export default function Users() {
             if (axios.isAxiosError(cause)) {
               switch (cause.response?.status) {
                 case 401:
+                  // refresh token도 만료된 상태입니다: 사용자가 다시 로그인해야되는 시점
                   delLocalStorageAccessToken();
                   delLocalStorageRefreshToken();
                   window.location.reload();
