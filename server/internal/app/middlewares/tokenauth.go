@@ -22,14 +22,14 @@ func TokenAuthMiddleware() gin.HandlerFunc {
 		tokenAuth, err := auth.ExtractTokenMetadata(c.Request)
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, models.ErrResponse{
-				Message: err.Error(),
+				Message: "unauthorized",
 			})
 			c.Abort()
 			return
 		}
 		if _, err := auth.FetchAuth(tokenAuth); err != nil {
 			c.JSON(http.StatusUnauthorized, models.ErrResponse{
-				Message: err.Error(),
+				Message: "unauthorized",
 			})
 			c.Abort()
 			return
