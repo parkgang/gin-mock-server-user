@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/parkgang/modern-board/internal/app/models"
 )
 
 // @Summary Server Health Check
@@ -12,7 +13,7 @@ import (
 // @Success 200 {object} models.Pong
 // @Router /ping [get]
 func Ping(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "pong",
+	c.JSON(http.StatusOK, models.Pong{
+		Message: "pong",
 	})
 }
