@@ -27,17 +27,12 @@ Content-Type: application/json
     "password": "test1!"
 }
 
-### 데이터 생성 (엑세스 토큰 검증을 위한 테스트 요청 입니다)
-POST {{API_END_POINT}}/todo
-Content-Type: application/json
-Authorization: Bearer {{AccessToken}}
-
-{
-    "title": "test todo"
-}
-
 ### 로그아웃
 POST {{API_END_POINT}}/users/logout
+Authorization: Bearer {{AccessToken}}
+
+### 엑세스 토큰 검증
+GET {{API_END_POINT}}/users/token/valid
 Authorization: Bearer {{AccessToken}}
 
 ### RefreshToken

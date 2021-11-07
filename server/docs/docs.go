@@ -71,7 +71,10 @@ var doc = `{
                         }
                     },
                     "401": {
-                        "description": ""
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
                     },
                     "404": {
                         "description": ""
@@ -192,6 +195,47 @@ var doc = `{
                 }
             }
         },
+        "/users/logout": {
+            "post": {
+                "description": "token 클레임에 있는 id 값으로 로그아웃 합니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "로그아웃",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer {jwt token}",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/users/signup": {
             "post": {
                 "description": "사용자를 생성합니다.",
@@ -243,6 +287,41 @@ var doc = `{
                     },
                     "500": {
                         "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/token/valid": {
+            "get": {
+                "description": "올바르게 서명된 token인지 검증합니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "토큰 검증",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer {jwt token}",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "401": {
+                        "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/models.ErrResponse"
                         }

@@ -8,8 +8,6 @@ import (
 
 func Use(api *gin.RouterGroup) {
 	api.GET("/ping", handlers.Ping)
-	// TODO: jwt 테스트 용도
-	api.POST("/todo", middlewares.TokenAuthMiddleware(), handlers.CreateTodo)
 	users := api.Group("/users")
 	{
 		users.POST("/signup", handlers.UserSignup)
@@ -17,6 +15,7 @@ func Use(api *gin.RouterGroup) {
 		users.GET("/login/kakao", handlers.UserKakaoLoginCallBack)
 		users.GET("", middlewares.TokenAuthMiddleware(), handlers.UserInfo)
 		users.POST("/logout", middlewares.TokenAuthMiddleware(), handlers.UserLogout)
+		users.GET("/token/valid", middlewares.TokenAuthMiddleware(), handlers.UserTokenValid)
 		users.POST("/token/refresh", handlers.UserTokenRefresh)
 	}
 	configs := api.Group("/configs")

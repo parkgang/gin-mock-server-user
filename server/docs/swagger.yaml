@@ -141,7 +141,9 @@ paths:
           schema:
             $ref: '#/definitions/models.UserInfo'
         "401":
-          description: ""
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.ErrResponse'
         "404":
           description: ""
         "500":
@@ -222,6 +224,33 @@ paths:
       summary: 카카오 로그인
       tags:
       - User
+  /users/logout:
+    post:
+      consumes:
+      - application/json
+      description: token 클레임에 있는 id 값으로 로그아웃 합니다.
+      parameters:
+      - description: Bearer {jwt token}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrResponse'
+      summary: 로그아웃
+      tags:
+      - User
   /users/signup:
     post:
       consumes:
@@ -258,6 +287,29 @@ paths:
           schema:
             $ref: '#/definitions/models.ErrResponse'
       summary: 회원가입
+      tags:
+      - User
+  /users/token/valid:
+    get:
+      consumes:
+      - application/json
+      description: 올바르게 서명된 token인지 검증합니다.
+      parameters:
+      - description: Bearer {jwt token}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/models.ErrResponse'
+      summary: 토큰 검증
       tags:
       - User
 swagger: "2.0"

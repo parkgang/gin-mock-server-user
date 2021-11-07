@@ -259,14 +259,16 @@ func UserKakaoLoginCallBack(c *gin.Context) {
 // @Produce json
 // @Param Authorization header string true "Bearer {jwt token}"
 // @Success 200 {object} models.UserInfo
-// @Failure 401
+// @Failure 401 {object} models.ErrResponse
 // @Failure 404
 // @Failure 500 {object} models.ErrResponse
 // @Router /users [get]
 func UserInfo(c *gin.Context) {
 	au, err := auth.ExtractTokenMetadata(c.Request)
 	if err != nil {
-		c.Status(http.StatusUnauthorized)
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"message": err.Error(),
+		})
 		return
 	}
 
@@ -308,18 +310,47 @@ func UserInfo(c *gin.Context) {
 	c.JSON(http.StatusOK, res)
 }
 
+// @Summary 로그아웃
+// @Description token 클레임에 있는 id 값으로 로그아웃 합니다.
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer {jwt token}"
+// @Success 200
+// @Failure 401 {object} models.ErrResponse
+// @Failure 500 {object} models.ErrResponse
+// @Router /users/logout [post]
 func UserLogout(c *gin.Context) {
 	au, err := auth.ExtractTokenMetadata(c.Request)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, "unauthorized")
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"message": err.Error(),
+		})
 		return
 	}
-	deleted, delErr := auth.DeleteAuth(au.AccessUuid)
-	if delErr != nil || deleted == 0 {
-		c.JSON(http.StatusUnauthorized, "unauthorized")
+
+	deleted, err := auth.DeleteAuth(au.AccessUuid)
+	if err != nil || deleted == 0 {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"message": err.Error(),
+		})
 		return
 	}
-	c.JSON(http.StatusOK, "Successfully logged out")
+	c.Status(http.StatusOK)
+}
+
+// @Summary 엑세스 토큰 검증
+// @Description 올바르게 서명된 엑세스 토큰인지 검증합니다.
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer {jwt token}"
+// @Success 200
+// @Failure 401 {object} models.ErrResponse
+// @Router /users/token/valid [get]
+func UserTokenValid(c *gin.Context) {
+	// 이미 미들웨어에서 서명 검사 및 redis에 존재여부를 모두 확인하고 호출하기 때문에 200만 응답해줍니다.
+	c.Status(http.StatusOK)
 }
 
 func UserTokenRefresh(c *gin.Context) {
