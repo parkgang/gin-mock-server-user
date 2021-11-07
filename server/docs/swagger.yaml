@@ -32,6 +32,11 @@ definitions:
       password:
         type: string
     type: object
+  models.Config:
+    properties:
+      kakao:
+        $ref: '#/definitions/models.Kakao'
+    type: object
   models.ErrResponse:
     properties:
       message:
@@ -49,6 +54,15 @@ definitions:
     required:
     - accessToken
     - refreshToken
+    type: object
+  models.Kakao:
+    properties:
+      redirectUri:
+        example: http://localhost:8080/api/users/login/kakao
+        type: string
+      restApiKey:
+        example: 111aaaa1a111aaa1a111a1a1a11a1a11
+        type: string
     type: object
   models.Pong:
     properties:
@@ -111,6 +125,21 @@ definitions:
 info:
   contact: {}
 paths:
+  /configs:
+    get:
+      consumes:
+      - application/json
+      description: client가 앱을 실행하기 위해 필요한 구성을 조회합니다.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Config'
+      summary: 구성 조회
+      tags:
+      - App
   /ping:
     get:
       description: gin server의 헬스를 체크합니다.
@@ -293,7 +322,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: 올바르게 서명된 token인지 검증합니다.
+      description: 올바르게 서명된 엑세스 토큰인지 검증합니다.
       parameters:
       - description: Bearer {jwt token}
         in: header
@@ -309,7 +338,7 @@ paths:
           description: Unauthorized
           schema:
             $ref: '#/definitions/models.ErrResponse'
-      summary: 토큰 검증
+      summary: 엑세스 토큰 검증
       tags:
       - User
 swagger: "2.0"

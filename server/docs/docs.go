@@ -24,6 +24,29 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/configs": {
+            "get": {
+                "description": "client가 앱을 실행하기 위해 필요한 구성을 조회합니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "App"
+                ],
+                "summary": "구성 조회",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Config"
+                        }
+                    }
+                }
+            }
+        },
         "/ping": {
             "get": {
                 "description": "gin server의 헬스를 체크합니다.",
@@ -296,7 +319,7 @@ var doc = `{
         },
         "/users/token/valid": {
             "get": {
-                "description": "올바르게 서명된 token인지 검증합니다.",
+                "description": "올바르게 서명된 엑세스 토큰인지 검증합니다.",
                 "consumes": [
                     "application/json"
                 ],
@@ -306,7 +329,7 @@ var doc = `{
                 "tags": [
                     "User"
                 ],
-                "summary": "토큰 검증",
+                "summary": "엑세스 토큰 검증",
                 "parameters": [
                     {
                         "type": "string",
@@ -381,6 +404,14 @@ var doc = `{
                 }
             }
         },
+        "models.Config": {
+            "type": "object",
+            "properties": {
+                "kakao": {
+                    "$ref": "#/definitions/models.Kakao"
+                }
+            }
+        },
         "models.ErrResponse": {
             "type": "object",
             "properties": {
@@ -404,6 +435,19 @@ var doc = `{
                 "refreshToken": {
                     "type": "string",
                     "example": "header.payLoad.signature"
+                }
+            }
+        },
+        "models.Kakao": {
+            "type": "object",
+            "properties": {
+                "redirectUri": {
+                    "type": "string",
+                    "example": "http://localhost:8080/api/users/login/kakao"
+                },
+                "restApiKey": {
+                    "type": "string",
+                    "example": "111aaaa1a111aaa1a111a1a1a11a1a11"
                 }
             }
         },
