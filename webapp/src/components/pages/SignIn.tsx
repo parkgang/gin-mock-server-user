@@ -1,5 +1,4 @@
 import { Alert, Button, Input } from "@fluentui/react-northstar";
-import { HomePath } from "App";
 import axios from "axios";
 import StandardLayout from "components/templates/StandardLayout";
 import useConfigQuery from "hooks/query/useConfigQuery";
@@ -41,7 +40,7 @@ export default function SignIn() {
     try {
       await UserLogin(email, password);
       setAlertMessage("");
-      navigate(HomePath, { replace: true });
+      navigate(-1);
     } catch (error) {
       if (error instanceof Error) {
         const cause = getErrorsCause(error);

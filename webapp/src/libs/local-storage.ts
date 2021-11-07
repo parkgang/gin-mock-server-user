@@ -23,7 +23,7 @@ export function getLocalStorageAccessToken() {
 export function setLocalStorageAccessToken(token: string) {
   localStorage.setItem(accessTokenKey, token);
 }
-export function delLocalStorageAccessToken(token: string) {
+export function delLocalStorageAccessToken() {
   localStorage.removeItem(accessTokenKey);
 }
 
@@ -33,6 +33,6 @@ export function getLocalStorageRefreshToken() {
 export function setLocalStorageRefreshToken(token: string) {
   localStorage.setItem(refreshTokenKey, token);
 }
-export function delLocalStorageRefreshToken(token: string) {
+export function delLocalStorageRefreshToken() {
   localStorage.removeItem(refreshTokenKey);
 }
