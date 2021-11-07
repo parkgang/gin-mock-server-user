@@ -88,7 +88,7 @@ func UserSignup(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param data body models.UserLogin true "로그인 정보"
-// @Success 200 {object} models.JWTToken
+// @Success 201 {object} models.JWTToken
 // @Failure 400 {object} models.ErrResponse
 // @Failure 401 {object} models.ErrResponse
 // @Failure 404
@@ -139,7 +139,7 @@ func UserLogin(c *gin.Context) {
 		AccessToken:  ts.AccessToken,
 		RefreshToken: ts.RefreshToken,
 	}
-	c.JSON(http.StatusOK, tokens)
+	c.JSON(http.StatusCreated, tokens)
 }
 
 // @Summary 카카오 로그인
@@ -257,7 +257,7 @@ func UserKakaoLoginCallBack(c *gin.Context) {
 // @Tags User
 // @Accept json
 // @Produce json
-// @Param Authorization header string true "Bearer {jwt token}"
+// @Param Authorization header string true "Bearer {AccessToken}"
 // @Success 200 {object} models.UserInfo
 // @Failure 401 {object} models.ErrResponse
 // @Failure 404
@@ -315,7 +315,7 @@ func UserInfo(c *gin.Context) {
 // @Tags User
 // @Accept json
 // @Produce json
-// @Param Authorization header string true "Bearer {jwt token}"
+// @Param Authorization header string true "Bearer {AccessToken}"
 // @Success 200
 // @Failure 401 {object} models.ErrResponse
 // @Failure 500 {object} models.ErrResponse
@@ -344,7 +344,7 @@ func UserLogout(c *gin.Context) {
 // @Tags User
 // @Accept json
 // @Produce json
-// @Param Authorization header string true "Bearer {jwt token}"
+// @Param Authorization header string true "Bearer {AccessToken}"
 // @Success 200
 // @Failure 401 {object} models.ErrResponse
 // @Router /users/token/valid [get]
@@ -353,15 +353,28 @@ func UserTokenValid(c *gin.Context) {
 	c.Status(http.StatusOK)
 }
 
+// @Summary 리프레쉬 토큰 발급
+// @Description 엑세스 토큰이 만료되었을때 리프레쉬 토큰을 이용하여 새롭게 발급하기 위하여 사용됩니다.
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param data body models.JWTRefreshToken true "리프레쉬 토큰 정보"
+// @Success 201 {object} models.JWTToken
+// @Failure 401 {object} models.ErrResponse
+// @Failure 403 {object} models.ErrResponse
+// @Failure 422 {object} models.ErrResponse
+// @Router /users/token/refresh [post]
 func UserTokenRefresh(c *gin.Context) {
 	refreshSecret := viper.GetString("REFRESH_SECRET")
 
-	mapToken := map[string]string{}
+	mapToken := models.JWTRefreshToken{}
 	if err := c.ShouldBindJSON(&mapToken); err != nil {
-		c.JSON(http.StatusUnprocessableEntity, err.Error())
+		c.JSON(http.StatusUnprocessableEntity, models.ErrResponse{
+			Message: err.Error(),
+		})
 		return
 	}
-	refreshToken := mapToken["refresh_token"]
+	refreshToken := mapToken.RefreshToken
 
 	//verify the token
 	token, err := jwt.Parse(refreshToken, func(token *jwt.Token) (interface{}, error) {
@@ -373,12 +386,16 @@ func UserTokenRefresh(c *gin.Context) {
 	})
 	//if there is an error, the token must have expired
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, "Refresh token expired")
+		c.JSON(http.StatusUnauthorized, models.ErrResponse{
+			Message: "Refresh token expired",
+		})
 		return
 	}
 	//is token valid?
 	if _, ok := token.Claims.(jwt.Claims); !ok && !token.Valid {
-		c.JSON(http.StatusUnauthorized, err)
+		c.JSON(http.StatusUnauthorized, models.ErrResponse{
+			Message: err.Error(),
+		})
 		return
 	}
 	//Since token is valid, get the uuid:
@@ -386,38 +403,50 @@ func UserTokenRefresh(c *gin.Context) {
 	if ok && token.Valid {
 		refreshUuid, ok := claims["refresh_uuid"].(string) //convert the interface to string
 		if !ok {
-			c.JSON(http.StatusUnprocessableEntity, err)
+			c.JSON(http.StatusUnprocessableEntity, models.ErrResponse{
+				Message: err.Error(),
+			})
 			return
 		}
 		userId, err := strconv.ParseUint(fmt.Sprintf("%.f", claims["user_id"]), 10, 64)
 		if err != nil {
-			c.JSON(http.StatusUnprocessableEntity, "Error occurred")
+			c.JSON(http.StatusUnprocessableEntity, models.ErrResponse{
+				Message: "Error occurred",
+			})
 			return
 		}
 		//Delete the previous Refresh Token
 		deleted, delErr := auth.DeleteAuth(refreshUuid)
 		if delErr != nil || deleted == 0 {
-			c.JSON(http.StatusUnauthorized, "unauthorized")
+			c.JSON(http.StatusUnauthorized, models.ErrResponse{
+				Message: "unauthorized",
+			})
 			return
 		}
 		//Create new pairs of refresh and access tokens
 		ts, createErr := auth.CreateToken(userId)
 		if createErr != nil {
-			c.JSON(http.StatusForbidden, createErr.Error())
+			c.JSON(http.StatusForbidden, models.ErrResponse{
+				Message: createErr.Error(),
+			})
 			return
 		}
 		//save the tokens metadata to redis
 		saveErr := auth.CreateAuth(userId, ts)
 		if saveErr != nil {
-			c.JSON(http.StatusForbidden, saveErr.Error())
+			c.JSON(http.StatusForbidden, models.ErrResponse{
+				Message: saveErr.Error(),
+			})
 			return
 		}
-		tokens := map[string]string{
-			"access_token":  ts.AccessToken,
-			"refresh_token": ts.RefreshToken,
+		tokens := models.JWTToken{
+			AccessToken:  ts.AccessToken,
+			RefreshToken: ts.RefreshToken,
 		}
 		c.JSON(http.StatusCreated, tokens)
 	} else {
-		c.JSON(http.StatusUnauthorized, "refresh expired")
+		c.JSON(http.StatusUnauthorized, models.ErrResponse{
+			Message: "refresh expired",
+		})
 	}
 }

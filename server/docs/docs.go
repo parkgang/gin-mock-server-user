@@ -80,7 +80,7 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Bearer {jwt token}",
+                        "description": "Bearer {AccessToken}",
                         "name": "Authorization",
                         "in": "header",
                         "required": true
@@ -136,8 +136,8 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/models.JWTToken"
                         }
@@ -234,7 +234,7 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Bearer {jwt token}",
+                        "description": "Bearer {AccessToken}",
                         "name": "Authorization",
                         "in": "header",
                         "required": true
@@ -317,6 +317,58 @@ var doc = `{
                 }
             }
         },
+        "/users/token/refresh": {
+            "post": {
+                "description": "엑세스 토큰이 만료되었을때 리프레쉬 토큰을 이용하여 새롭게 발급하기 위하여 사용됩니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "리프레쉬 토큰 발급",
+                "parameters": [
+                    {
+                        "description": "리프레쉬 토큰 정보",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.JWTRefreshToken"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.JWTToken"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/users/token/valid": {
             "get": {
                 "description": "올바르게 서명된 엑세스 토큰인지 검증합니다.",
@@ -333,7 +385,7 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Bearer {jwt token}",
+                        "description": "Bearer {AccessToken}",
                         "name": "Authorization",
                         "in": "header",
                         "required": true
@@ -418,6 +470,18 @@ var doc = `{
                 "message": {
                     "type": "string",
                     "example": "여기에 에러 메시지가 전달됩니다."
+                }
+            }
+        },
+        "models.JWTRefreshToken": {
+            "type": "object",
+            "required": [
+                "refreshToken"
+            ],
+            "properties": {
+                "refreshToken": {
+                    "type": "string",
+                    "example": "header.payLoad.signature"
                 }
             }
         },
