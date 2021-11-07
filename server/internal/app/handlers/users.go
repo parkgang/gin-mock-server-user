@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/base64"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -18,6 +19,7 @@ import (
 	"github.com/parkgang/modern-board/internal/pkg/auth"
 	"github.com/parkgang/modern-board/internal/pkg/kakao"
 	"github.com/parkgang/modern-board/internal/pkg/util"
+	"gorm.io/gorm"
 )
 
 // @Summary 회원가입
@@ -248,6 +250,62 @@ func UserKakaoLoginCallBack(c *gin.Context) {
 	}
 	redUrl := auth.AuthSuccessRedUrl(jwtToken)
 	c.Redirect(http.StatusFound, redUrl)
+}
+
+// @Summary 사용자 정보 조회
+// @Description token 클레임에 있는 id 값으로 사용자를 조회합니다.
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer {jwt token}"
+// @Success 200 {object} models.UserInfo
+// @Failure 401
+// @Failure 404
+// @Failure 500 {object} models.ErrResponse
+// @Router /users [get]
+func UserInfo(c *gin.Context) {
+	au, err := auth.ExtractTokenMetadata(c.Request)
+	if err != nil {
+		c.Status(http.StatusUnauthorized)
+		return
+	}
+
+	users := entitys.User{
+		Id: uint(au.UserId),
+	}
+	if err := orm.Client.First(&users).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.Status(http.StatusNotFound)
+			return
+		}
+
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+
+	// [base64 encoding for any image](https://freshman.tech/snippets/go/image-to-base64/)
+	var base64Encoding string
+
+	// 이미지 파일의 콘텐츠 유형에 맞게 적절한 URI 체계 헤더를 추가합니다.
+	mimeType := http.DetectContentType(users.AvatarImage)
+	switch mimeType {
+	case "image/jpeg":
+		base64Encoding += "data:image/jpeg;base64,"
+	case "image/png":
+		base64Encoding += "data:image/png;base64,"
+	}
+
+	base64Encoding += base64.StdEncoding.EncodeToString(users.AvatarImage)
+
+	res := models.UserInfo{
+		Id:          int(users.Id),
+		Email:       users.Email,
+		Name:        users.Name,
+		AvatarImage: base64Encoding,
+	}
+	c.JSON(http.StatusOK, res)
 }
 
 func UserLogout(c *gin.Context) {

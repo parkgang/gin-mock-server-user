@@ -56,6 +56,26 @@ definitions:
         example: pong
         type: string
     type: object
+  models.UserInfo:
+    properties:
+      avatarImage:
+        example: base64으로 인코딩된 이미지
+        type: string
+      email:
+        example: user01@test.com
+        type: string
+      id:
+        example: 1
+        type: integer
+      name:
+        example: 사용자01
+        type: string
+    required:
+    - avatarImage
+    - email
+    - id
+    - name
+    type: object
   models.UserLogin:
     properties:
       email:
@@ -102,6 +122,35 @@ paths:
           schema:
             $ref: '#/definitions/models.Pong'
       summary: Server Health Check
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: token 클레임에 있는 id 값으로 사용자를 조회합니다.
+      parameters:
+      - description: Bearer {jwt token}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserInfo'
+        "401":
+          description: ""
+        "404":
+          description: ""
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrResponse'
+      summary: 사용자 정보 조회
+      tags:
+      - User
   /users/login:
     post:
       consumes:
