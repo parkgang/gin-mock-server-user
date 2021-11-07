@@ -17,12 +17,14 @@ const Home = lazy(() => import("components/pages/Home"));
 const Users = lazy(() => import("components/pages/Users"));
 const SignIn = lazy(() => import("components/pages/SignIn"));
 const SignUp = lazy(() => import("components/pages/SignUp"));
+const AuthEnd = lazy(() => import("components/pages/AuthEnd"));
 const NotFound = lazy(() => import("components/pages/NotFound"));
 
 export const HomePath = "/";
 export const UsersPath = "/users";
 export const SignInPath = "/sign-in";
 export const SignUpPath = "/sign-up";
+export const AuthEndPath = "/auth-end";
 
 export default function App() {
   const theme = useRecoilValue(FluentuiNorthstarThemeState);
@@ -47,6 +49,7 @@ export default function App() {
               <Route path={UsersPath} element={<Users />} />
               <Route path={SignInPath} element={<SignIn />} />
               <Route path={SignUpPath} element={<SignUp />} />
+              <Route path={AuthEndPath} element={<AuthEnd />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

@@ -7,6 +7,8 @@ import {
 import { name } from "../../package.json";
 
 const themeKey = `${name}-theme`;
+const accessTokenKey = `${name}-accessToken`;
+const refreshTokenKey = `${name}-refreshToken`;
 
 export function getLocalStorageTheme() {
   return getStringToFluentuiNorthstarTheme(localStorage.getItem(themeKey));
@@ -14,4 +16,20 @@ export function getLocalStorageTheme() {
 
 export function setLocalStorageTheme(theme: ThemePrepared) {
   localStorage.setItem(themeKey, getFluentuiNorthstarThemeToString(theme));
+}
+
+export function getLocalStorageAccessToken() {
+  return localStorage.getItem(accessTokenKey);
+}
+
+export function setLocalStorageAccessToken(token: string) {
+  localStorage.setItem(accessTokenKey, token);
+}
+
+export function getLocalStorageRefreshToken() {
+  return localStorage.getItem(refreshTokenKey);
+}
+
+export function setLocalStorageRefreshToken(token: string) {
+  localStorage.setItem(refreshTokenKey, token);
 }
