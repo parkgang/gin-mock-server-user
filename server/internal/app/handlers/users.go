@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
 	"strconv"
 	"strings"
 
@@ -19,6 +18,7 @@ import (
 	"github.com/parkgang/modern-board/internal/pkg/auth"
 	"github.com/parkgang/modern-board/internal/pkg/kakao"
 	"github.com/parkgang/modern-board/internal/pkg/util"
+	"github.com/spf13/viper"
 	"gorm.io/gorm"
 )
 
@@ -323,6 +323,8 @@ func UserLogout(c *gin.Context) {
 }
 
 func UserTokenRefresh(c *gin.Context) {
+	refreshSecret := viper.GetString("REFRESH_SECRET")
+
 	mapToken := map[string]string{}
 	if err := c.ShouldBindJSON(&mapToken); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, err.Error())
@@ -331,13 +333,12 @@ func UserTokenRefresh(c *gin.Context) {
 	refreshToken := mapToken["refresh_token"]
 
 	//verify the token
-	os.Setenv("REFRESH_SECRET", "mcmvmkmsdnfsdmfdsjf") //this should be in an env file
 	token, err := jwt.Parse(refreshToken, func(token *jwt.Token) (interface{}, error) {
 		//Make sure that the token method conform to "SigningMethodHMAC"
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
-		return []byte(os.Getenv("REFRESH_SECRET")), nil
+		return []byte(refreshSecret), nil
 	})
 	//if there is an error, the token must have expired
 	if err != nil {

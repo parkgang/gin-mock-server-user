@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/contrib/static"
@@ -26,8 +27,14 @@ func main() {
 
 	router := gin.Default()
 
-	// CORS
-	router.Use(cors.Default())
+	// CORS: 원래는 "router.Use(cors.Default())" 으로 대부분 해결이 되었는데 사용자 인증을 위해서 "Authorization" header를 사용해야하는데 Default가 그부분 까지는 코딩되어 있지 않아 아래와 같이 커스텀 합니다.
+	router.Use(cors.New(cors.Config{
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"},
+		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
+		AllowCredentials: false,
+		MaxAge:           12 * time.Hour,
+		AllowAllOrigins:  true,
+	}))
 
 	// API
 	api := router.Group("/api")

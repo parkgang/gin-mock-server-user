@@ -4,3 +4,10 @@ export type UserDTO = {
   passwordConfirm: string;
   name: string;
 };
+
+export type UserInfo = {
+  id: number;
+  email: string;
+  name: string;
+  avatarImage: string;
+};

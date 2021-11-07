@@ -1,11 +1,12 @@
 import client from "libs/api/client";
 import { errorWrap } from "libs/error";
 import {
+  getLocalStorageAccessToken,
   setLocalStorageAccessToken,
   setLocalStorageRefreshToken,
 } from "libs/local-storage";
 import { JWTToken } from "types/jwt-token";
-import { UserDTO } from "types/user";
+import { UserDTO, UserInfo } from "types/user";
 
 export async function PostUser(user: UserDTO): Promise<void> {
   try {
@@ -28,5 +29,19 @@ export async function UserLogin(
     setLocalStorageRefreshToken(data.refreshToken);
   } catch (error) {
     throw errorWrap(error, `${UserLogin.name}() 에러`);
+  }
+}
+
+export async function GetUserInfo(): Promise<UserInfo> {
+  try {
+    const accessToken = getLocalStorageAccessToken();
+    const { data } = await client.get<UserInfo>(`/users`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return data;
+  } catch (error) {
+    throw errorWrap(error, `${GetUserInfo.name}() 에러`);
   }
 }
