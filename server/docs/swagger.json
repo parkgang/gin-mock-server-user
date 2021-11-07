@@ -82,6 +82,52 @@
                 }
             }
         },
+        "/users/login/kakao": {
+            "get": {
+                "description": "카카오 oauth 인증 시 콜백되는 API 입니다. 환경변수에 주입된 경로로 token을 queryString에 실어서 리디렉션 합니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "카카오 로그인",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "카카오 로그인 성공 시 전달되는 인가 코드",
+                        "name": "code",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "",
+                        "headers": {
+                            "Location": {
+                                "type": "string",
+                                "description": "http://localhost:3000/auth-end?accessToken=header.payLoad.signature\u0026refreshToken=header.payLoad.signature"
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/users/signup": {
             "post": {
                 "description": "사용자를 생성합니다.",

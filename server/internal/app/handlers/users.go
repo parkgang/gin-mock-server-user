@@ -140,6 +140,17 @@ func UserLogin(c *gin.Context) {
 	c.JSON(http.StatusOK, tokens)
 }
 
+// @Summary 카카오 로그인
+// @Description 카카오 oauth 인증 시 콜백되는 API 입니다. 환경변수에 주입된 경로로 token을 queryString에 실어서 리디렉션 합니다.
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param code query string false "카카오 로그인 성공 시 전달되는 인가 코드"
+// @Success 302
+// @Header 302 {string} Location "http://localhost:3000/auth-end?accessToken=header.payLoad.signature&refreshToken=header.payLoad.signature"
+// @Failure 422 {object} models.ErrResponse
+// @Failure 500 {object} models.ErrResponse
+// @Router /users/login/kakao [get]
 func UserKakaoLoginCallBack(c *gin.Context) {
 	code := c.Query("code")
 	if code == "" {
