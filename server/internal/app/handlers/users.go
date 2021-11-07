@@ -141,20 +141,13 @@ func UserLogin(c *gin.Context) {
 
 	// 토큰 생성
 	userIdUint64 := uint64(user.Id)
-	ts, err := auth.CreateToken(userIdUint64)
+	ts, err := auth.CreateSession(userIdUint64)
 	if err != nil {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{
 			"message": err.Error(),
 		})
 		return
 	}
-	if err := auth.CreateAuth(userIdUint64, ts); err != nil {
-		c.JSON(http.StatusUnprocessableEntity, gin.H{
-			"message": err.Error(),
-		})
-		return
-	}
-
 	tokens := models.JWTToken{
 		AccessToken:  ts.AccessToken,
 		RefreshToken: ts.RefreshToken,
@@ -164,9 +157,6 @@ func UserLogin(c *gin.Context) {
 
 func UserKakaoLoginCallBack(c *gin.Context) {
 	webappUrl := viper.GetString("WEBAPP_URL")
-	signUpUrl := func(userId uint) string {
-		return fmt.Sprintf("%s/sign-up/%d", webappUrl, userId)
-	}
 
 	code := c.Query("code")
 	if code == "" {
@@ -235,7 +225,7 @@ func UserKakaoLoginCallBack(c *gin.Context) {
 		}
 		res.Body.Close()
 
-		user := entitys.User{
+		user = entitys.User{
 			Email:              kakaoTalkSocial.Email,
 			Name:               kakaoTalkSocial.NickName,
 			AvatarImage:        avatarImageBinary,
@@ -247,20 +237,23 @@ func UserKakaoLoginCallBack(c *gin.Context) {
 			})
 			return
 		}
-		c.Redirect(http.StatusFound, signUpUrl(user.Id))
-	} else if user.Password == "" {
-		// 카카오 oauth 인증은 된 사용자 이지만 아직 회원가입을 모두 마치지 않은 경우
-		c.Redirect(http.StatusFound, signUpUrl(user.Id))
-	} else {
-		// 있다면 토큰 생성 후 쿼리스트링으로 응답
-		// TODO: 토큰 생성하는 코드 추가해야됨
-		jwtToken := models.JWTToken{
-			AccessToken:  "AccessToken",
-			RefreshToken: "RefreshToken",
-		}
-		redUrl := fmt.Sprintf("%s/auth-end?accessToken=%s&refreshToken=%s", webappUrl, jwtToken.AccessToken, jwtToken.RefreshToken)
-		c.Redirect(http.StatusFound, redUrl)
 	}
+
+	// 토큰 생성
+	userIdUint64 := uint64(user.Id)
+	ts, err := auth.CreateSession(userIdUint64)
+	if err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+	jwtToken := models.JWTToken{
+		AccessToken:  ts.AccessToken,
+		RefreshToken: ts.RefreshToken,
+	}
+	redUrl := fmt.Sprintf("%s/auth-end?accessToken=%s&refreshToken=%s", webappUrl, jwtToken.AccessToken, jwtToken.RefreshToken)
+	c.Redirect(http.StatusFound, redUrl)
 }
 
 func UserLogout(c *gin.Context) {

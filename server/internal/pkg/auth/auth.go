@@ -11,6 +11,7 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"github.com/parkgang/modern-board/internal/app/data/redis"
+	"github.com/pkg/errors"
 	"github.com/twinj/uuid"
 )
 
@@ -29,6 +30,7 @@ type AccessDetails struct {
 	UserId     uint64
 }
 
+// jwt 토큰을 생성합니다.
 func CreateToken(userid uint64) (*TokenDetails, error) {
 	td := &TokenDetails{}
 	td.AtExpires = time.Now().Add(time.Minute * 15).Unix()
@@ -64,6 +66,7 @@ func CreateToken(userid uint64) (*TokenDetails, error) {
 	return td, nil
 }
 
+// 토큰을 redis에 저장합니다.
 func CreateAuth(userid uint64, td *TokenDetails) error {
 	// converting Unix to UTC
 	at := time.Unix(td.AtExpires, 0)
@@ -167,4 +170,18 @@ func DeleteAuth(givenUuid string) (int64, error) {
 		return 0, err
 	}
 	return deleted, nil
+}
+
+// jwt token 발급과 동시에 redis에 세션을 저장합니다.
+func CreateSession(userid uint64) (*TokenDetails, error) {
+	ts, err := CreateToken(userid)
+	if err != nil {
+		return nil, errors.Wrap(err, "jwt token 생성에 실패하였습니다")
+	}
+
+	if err := CreateAuth(userid, ts); err != nil {
+		return nil, errors.Wrap(err, "token을 redis에 저장하지 못하였습니다")
+	}
+
+	return ts, nil
 }

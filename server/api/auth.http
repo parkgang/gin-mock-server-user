@@ -12,10 +12,10 @@ POST {{API_END_POINT}}/users/signup
 Content-Type: application/json
 
 {
-    "name": "user-name",
-    "email": "user-email",
-    "password": "user-password",
-    "passwordConfirm": "user-password"
+    "name": "사용자01",
+    "email": "user01@test.com",
+    "password": "test1!",
+    "passwordConfirm": "test1!"
 }
 
 ### 로그인 (AccessToken 발급)
