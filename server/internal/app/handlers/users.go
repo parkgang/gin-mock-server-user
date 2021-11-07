@@ -18,22 +18,7 @@ import (
 	"github.com/parkgang/modern-board/internal/pkg/auth"
 	"github.com/parkgang/modern-board/internal/pkg/kakao"
 	"github.com/parkgang/modern-board/internal/pkg/util"
-	"github.com/spf13/viper"
 )
-
-type User struct {
-	ID       uint64 `json:"id"`
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Phone    string `json:"phone"`
-}
-
-var user = User{
-	ID:       1,
-	Username: "username",
-	Password: "password",
-	Phone:    "49123454322",
-}
 
 // @Summary 회원가입
 // @Description 사용자를 생성합니다.
@@ -156,8 +141,6 @@ func UserLogin(c *gin.Context) {
 }
 
 func UserKakaoLoginCallBack(c *gin.Context) {
-	webappUrl := viper.GetString("WEBAPP_URL")
-
 	code := c.Query("code")
 	if code == "" {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -252,7 +235,7 @@ func UserKakaoLoginCallBack(c *gin.Context) {
 		AccessToken:  ts.AccessToken,
 		RefreshToken: ts.RefreshToken,
 	}
-	redUrl := fmt.Sprintf("%s/auth-end?accessToken=%s&refreshToken=%s", webappUrl, jwtToken.AccessToken, jwtToken.RefreshToken)
+	redUrl := auth.AuthSuccessRedUrl(jwtToken)
 	c.Redirect(http.StatusFound, redUrl)
 }
 
