@@ -1,11 +1,13 @@
 import { Alert, Button, Input } from "@fluentui/react-northstar";
+import { HomePath } from "App";
 import axios from "axios";
 import StandardLayout from "components/templates/StandardLayout";
 import useKeyword from "hooks/useKeyword";
-import { PostUser } from "libs/api/user";
+import { PostUser, UserLogin } from "libs/api/user";
 import { getErrorsCause } from "libs/error";
 import { useState } from "react";
 import { useErrorHandler } from "react-error-boundary";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ElementCenter from "styles/ElementCenter";
 
@@ -26,12 +28,15 @@ export default function SignUp() {
   const [passwordConfirm, , handlePasswordConfirm] = useKeyword();
   const [name, , handleName] = useKeyword();
 
+  const navigate = useNavigate();
   const handleError = useErrorHandler();
 
   async function handleSignUp() {
     try {
       await PostUser({ name, email, password, passwordConfirm });
+      await UserLogin(email, password);
       setAlertMessage("");
+      navigate(HomePath, { replace: true });
     } catch (error) {
       if (error instanceof Error) {
         const cause = getErrorsCause(error);
