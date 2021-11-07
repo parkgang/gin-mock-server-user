@@ -1,5 +1,4 @@
 import { Alert, Button, Input } from "@fluentui/react-northstar";
-import { HomePath } from "App";
 import axios from "axios";
 import StandardLayout from "components/templates/StandardLayout";
 import useKeyword from "hooks/useKeyword";
@@ -36,7 +35,7 @@ export default function SignUp() {
       await PostUser({ name, email, password, passwordConfirm });
       await UserLogin(email, password);
       setAlertMessage("");
-      navigate(HomePath, { replace: true });
+      navigate(-1);
     } catch (error) {
       if (error instanceof Error) {
         const cause = getErrorsCause(error);
