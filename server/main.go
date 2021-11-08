@@ -13,14 +13,15 @@ import (
 	_ "github.com/parkgang/modern-board/internal/app/data/orm"
 	"github.com/parkgang/modern-board/internal/app/middlewares"
 	apiRouter "github.com/parkgang/modern-board/internal/app/routers"
+	"github.com/parkgang/modern-board/internal/pkg/project"
 	"github.com/spf13/viper"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-const (
-	version string = "0.1.0"
-)
+func init() {
+	fmt.Printf("version: %s\n", project.AppVersion)
+}
 
 func main() {
 	port := viper.GetString("server.port")
@@ -60,7 +61,7 @@ func main() {
 	{
 		docs.SwaggerInfo.Title = "Modern Board API"
 		docs.SwaggerInfo.Description = "게시판 데이터를 관리할 수 있는 API를 제공합니다."
-		docs.SwaggerInfo.Version = version
+		docs.SwaggerInfo.Version = project.AppVersion
 		docs.SwaggerInfo.Host = fmt.Sprintf("localhost%s", port)
 		docs.SwaggerInfo.BasePath = "/api"
 		docs.SwaggerInfo.Schemes = []string{"http", "https"}

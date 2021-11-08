@@ -3,7 +3,7 @@ services:
   mysql:
     build:
       context: ./docker/mysql
-      dockerfile: .
+      dockerfile: Dockerfile
     image: modern-board-mysql
     container_name: mysql-dev
     volumes:
