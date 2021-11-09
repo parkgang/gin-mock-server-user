@@ -1,3 +1,4 @@
+import { HomePath } from "App";
 import useQueryString from "hooks/useQueryString";
 import {
   setLocalStorageAccessToken,
@@ -14,7 +15,7 @@ export default function AuthEnd() {
   const refreshToken = queryString.get("refreshToken");
 
   useEffect(() => {
-    navigate(-2);
+    navigate(HomePath, { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
